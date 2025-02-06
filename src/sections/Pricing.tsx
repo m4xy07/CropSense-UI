@@ -1,19 +1,19 @@
+import { BentoCard } from "@/components/bentogrid";
+import { Keyboard } from "@/components/keyboard";
+import { LogoCluster } from "@/components/logocluster";
+import { Map } from "@/components/map";
+import ManyOffersVariant1, { SelectOfferTab } from "@/components/pricingcomp";
 import React from "react";
 
-import { MacbookScrollDemo } from "@/components/Macbook";
-import { LampDemo } from "@/components/Lamp";
-
-const MacbookSec = () => {
+const PricingSec = () => {
   return (
-    
-    <section id="team" className="pb-10 mb-40 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]">
-      <LampDemo/>
+    <section id="team" className="pb-10 mb-40 pt-10 dark:bg-dark lg:pb-20 lg:pt-[120px]">
       <div className="container mx-auto">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
             <div className="mx-auto mb-[60px] max-w-[510px] text-center">
               <h2 className="text-5xl text-center tracking-tighter font-medium">
-                Macbook Section
+                Features Section
               </h2>
               <p className="text-white/70 text-lg text-center mt-5 tracking-tight">
                 text
@@ -21,13 +21,15 @@ const MacbookSec = () => {
             </div>
           </div>
         </div>
-
-        <MacbookScrollDemo/>
+        <div className="mt-10">
+      <ManyOffersVariant1 />
+    </div>
+        
       </div>
     </section>
   );
 };
 
-export default MacbookSec;
+export default PricingSec;
 
 

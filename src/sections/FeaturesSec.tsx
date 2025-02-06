@@ -6,7 +6,7 @@ import React from "react";
 
 const FeaturesSec = () => {
   return (
-    <section id="team" className="pb-10 mb-40 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]">
+    <section id="team" className="pb-10 mb-40 pt-10 dark:bg-dark lg:pb-20 lg:pt-[120px]">
       <div className="container mx-auto">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
@@ -20,7 +20,7 @@ const FeaturesSec = () => {
             </div>
           </div>
         </div>
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-8 lg:grid-cols-6 lg:grid-rows-2">
       <BentoCard
         eyebrow="Insight"
         title="Get perfect clarity"
