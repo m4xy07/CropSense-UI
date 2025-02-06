@@ -7,15 +7,15 @@ import React from "react";
 
 const PricingSec = () => {
   return (
-    <section id="team" className="pb-10 mb-40 pt-10 dark:bg-dark lg:pb-20 lg:pt-[120px]">
+    <section id="team" className="pb-10 mb-40 pt-10 lg:pt-[120px]">
       <div className="container mx-auto">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
-            <div className="mx-auto mb-[60px] max-w-[510px] text-center">
-              <h2 className="text-5xl text-center tracking-tighter font-medium">
-                Features Section
+            <div className="mx-auto mb-2 max-w-[510px] text-center">
+              <h2 className="text-[3.5rem] pt-4 text-center tracking-tight effect-font-hero effect-font-gradient">
+                Pricing
               </h2>
-              <p className="text-white/70 text-lg text-center mt-5 tracking-tight">
+              <p className="text-white/70 text-lg text-center mt-4 tracking-tight">
                 text
               </p>
             </div>

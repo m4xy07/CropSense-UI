@@ -8,10 +8,23 @@ const FeaturesSec = () => {
   return (
     <section id="team" className="pb-10 mb-40 pt-10 dark:bg-dark lg:pb-20 lg:pt-[120px]">
       <div className="container mx-auto">
+        <div className="flex h-40">
+        <video 
+                src="/videos/globe2.mp4"
+                autoPlay
+                loop
+                playsInline
+                height={170}
+                className="mx-auto"
+                muted />
+        </div>
+            
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
+              
             <div className="mx-auto mb-[60px] max-w-[510px] text-center">
-              <h2 className="text-5xl text-center tracking-tighter font-medium">
+                
+              <h2 className="text-[3.5rem] pt-4 text-center tracking-tight effect-font-hero effect-font-gradient">
                 Features Section
               </h2>
               <p className="text-white/70 text-lg text-center mt-5 tracking-tight">

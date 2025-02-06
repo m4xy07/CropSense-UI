@@ -70,7 +70,7 @@ export const CallToAction = () => {
         }}>
         </motion.div>
         <div className="relative">
-        <h2 className="text-5xl md:text-6xl max-w-sm mx-auto tracking-tighter text-center font-medium">
+        <h2 className="text-[3.5rem] pt-4 text-center tracking-tight effect-font-hero effect-font-gradient">
           Make the Earth Greener 
         </h2>
         <p className="text-center text-lg md:text-xl max-w-sm mx-auto text-white/70 px-4 mt-5 tracking-tight">

@@ -11,7 +11,7 @@ export const LogoTicker = () => {
       id="clients"
       className="mx-auto max-w-4xl px-6 text-center md:px-8"
     >
-      <div className="py-14">
+      <div className="pt-14">
         <div className="mx-auto max-w-screen-xl px-4 md:px-8">
           <h2 className="text-center text-lg  font-medium text-white/70">
             Trusted by Teams Around the World
