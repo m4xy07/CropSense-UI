@@ -11,7 +11,6 @@ const MacbookSec = () => {
       <LampDemo/>
       <div className="container -mt-48 mx-auto">
         <MacbookScrollDemo/>
-        <Page />
       </div>
     </section>
   );
