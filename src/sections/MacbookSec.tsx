@@ -2,6 +2,7 @@ import React from "react";
 
 import { MacbookScrollDemo } from "@/components/Macbook";
 import { LampDemo } from "@/components/ui/lamps";
+import Page from "@/app/dashboard/page";
 
 const MacbookSec = () => {
   return (
@@ -10,6 +11,7 @@ const MacbookSec = () => {
       <LampDemo/>
       <div className="container -mt-48 mx-auto">
         <MacbookScrollDemo/>
+        <Page />
       </div>
     </section>
   );

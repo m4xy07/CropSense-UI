@@ -4,14 +4,14 @@ import Link from "next/link";
 
 export function MacbookScrollDemo() {
   return (
-    <div className="overflow-hidden bg-dark w-full">
+    <div className=" bg-dark w-full">
       <MacbookScroll
         badge={
           <Link href="#">
             <Badge className="h-10 w-10 transform -rotate-12" />
           </Link>
         }
-        src={`/linear.webp`}
+        src={`/screenshot-metrics.webp`}
         showGradient={false}
       />
     </div>

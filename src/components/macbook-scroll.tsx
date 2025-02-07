@@ -24,6 +24,7 @@ import { IconCommand } from "@tabler/icons-react";
 import { IconCaretLeftFilled } from "@tabler/icons-react";
 import { IconCaretDownFilled } from "@tabler/icons-react";
 import Image from "next/image";
+import LogoIcon from "../assets/Logo_Rev_1_Transparent.png";
 
 export const MacbookScroll = ({
   src,
@@ -68,7 +69,7 @@ export const MacbookScroll = ({
   return (
     <div
       ref={ref}
-      className="min-h-[170vh]  flex flex-col items-center py-0 md:pb-10 justify-start flex-shrink-0 [perspective:800px] transform md:scale-100  scale-[0.35] sm:scale-50"
+      className="min-h-[150vh]  flex flex-col items-center py-0 md:pb-10 justify-start flex-shrink-0 [perspective:800px] transform md:scale-100  scale-[0.35] sm:scale-50"
     >
 
       {/* Lid */}
@@ -135,6 +136,10 @@ export const Lid = ({
           }}
           className="absolute inset-0 bg-[#010101] rounded-lg flex items-center justify-center"
         >
+          <span className="text-white">
+          <img src={LogoIcon.src} className="mx-auto items-center justify-center h-[40%] w-[40%]" />
+          </span>
+          
         </div>
       </div>
       <motion.div

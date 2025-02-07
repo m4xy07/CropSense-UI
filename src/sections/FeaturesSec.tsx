@@ -6,11 +6,11 @@ import React from "react";
 
 const FeaturesSec = () => {
   return (
-    <section id="team" className="pb-10 mb-40 pt-10 dark:bg-dark lg:pb-20 lg:pt-[120px]">
+    <section id="team" className="pb-10 mb-40 pt-[32rem] dark:bg-dark lg:pb-20 ">
       <div className="container mx-auto">
         <div className="flex h-40">
         <video 
-                src="/videos/globe2.mp4"
+                src="/videos/globe.mp4"
                 autoPlay
                 loop
                 playsInline
