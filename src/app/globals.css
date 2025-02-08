@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+  scroll-behavior: smooth;
+}
+
 
 .effect-font-hero {
     -webkit-text-stroke: .4px #ffffff80;
