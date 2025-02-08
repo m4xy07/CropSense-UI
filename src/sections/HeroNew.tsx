@@ -102,7 +102,7 @@ export default function Example() {
             style={{ width: 1200, height: 1200 }}
           />
           <div className="z-20 -mt-32 h-[36rem] w-full overflow-hidden md:-mt-36">
-            <div className="absolute bottom-0 h-3/5 w-full bg-gradient-to-b from-transparent via-gray-950/95 to-black" />
+            <div className="absolute bottom-0 h-3/5 w-full bg-gradient-to-b from-transparent via-gray-950/75 to-black" />
             <div className="absolute inset-x-6 bottom-12 m-auto max-w-4xl md:top-2/3">
               
             </div>
