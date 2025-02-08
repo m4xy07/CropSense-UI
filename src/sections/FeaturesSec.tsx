@@ -39,7 +39,7 @@ const FeaturesSec = () => {
         title="Get perfect clarity"
         description="Radiant uses social engineering to build a detailed financial picture of your leads. Know their budget, compensation package, social security number, and more."
         graphic={
-          // eslint-disable-next-line tailwindcss/no-contradicting-classname
+
           <div className="h-80 bg-[url(https://res.cloudinary.com/eldoraui/image/upload/v1734021365/profile_ldoiwc.png)] bg-[size:1000px_560px] bg-[left_-109px_top_-112px] bg-no-repeat" />
         }
         fade={["bottom"]}
@@ -50,7 +50,7 @@ const FeaturesSec = () => {
         title="Undercut your competitors"
         description="With our advanced data mining, you’ll know which companies your leads are talking to and exactly how much they’re being charged."
         graphic={
-          // eslint-disable-next-line tailwindcss/no-contradicting-classname
+
           <div className="absolute inset-0 bg-[url(https://res.cloudinary.com/eldoraui/image/upload/v1734021357/competitors_ouucah.png)] bg-[size:1100px_650px] bg-[left_-38px_top_-73px] bg-no-repeat" />
         }
         fade={["bottom"]}
