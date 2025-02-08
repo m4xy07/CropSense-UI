@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "motion/react";
-import { CheckIcon, EuroIcon } from "lucide-react";
+import { CheckIcon, DollarSignIcon, EuroIcon } from "lucide-react";
+import { RiCheckboxCircleFill } from '@remixicon/react';
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 type BilledType = "monthly" | "annually";
@@ -45,20 +46,7 @@ const pricingData: OfferCardProps[] = [
     ],
     infos: ["30 users included", "15 GB of storage", "Phone and email support"],
   },
-  {
-    title: "Custom",
-    description: "For large businesses",
-    price: {
-      monthly: 59,
-      annually: 49,
-    },
-    features: [
-      "30 users included",
-      "15 GB of storage",
-      "Phone and email support",
-    ],
-    infos: ["30 users included", "15 GB of storage", "Phone and email support"],
-  },
+  
 ];
 
 export default function ManyOffersVariant1() {
@@ -68,12 +56,12 @@ export default function ManyOffersVariant1() {
     setSelectedBilledType(tab);
   }
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col items-center gap-12">
       <SelectOfferTab
         handleSwitchTab={handleSwitchTab}
         selectedBilledType={selectedBilledType}
       />
-      <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+      <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
         {pricingData.map((offer) => (
           <OfferCard
             key={offer.title}
@@ -114,12 +102,26 @@ const OfferCard = ({
   }
   return (
     <div
-      className={cn(
-        "hover:-translate-y-1 h-full transform-gpu overflow-hidden rounded-2xl border bg-neutral-800/95 transition-all duration-300 ease-in-out hover:bg-neutral-800/100 dark:bg-neutral-800/50",
-        "text-white dark:text-neutral-400",
-        isBestValue ? "border-[#ed8445]" : "border-neutral-500/50 ",
-      )}
-    >
+  style={{
+    borderTop: "ridge 1px rgb(115 115 115 / 0.5)",
+  }}
+  className={cn(
+    "relative group hover:-translate-y-1 h-full transform-gpu overflow-hidden rounded-2xl transition-all duration-500 ease-in-out",
+    "bg-neutral-800/50 text-neutral-400",
+    isBestValue ? "border-[#ed8445]" : "border-neutral-500/50"
+  )}
+>
+      <div
+  className="absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
+  style={{
+    backgroundImage: "radial-gradient(circle at top right, rgba(115, 115, 115, 0.2) 0%, rgba(115, 115, 115, 0.1) 15%, transparent 30%)"
+  }}
+>
+</div>
+
+  
+
+
       <div
         className={cn("p-6")}
         style={
@@ -131,39 +133,36 @@ const OfferCard = ({
             : {}
         }
       >
-        <div className="font-semiboldtext-neutral-200 text-lg">{title}</div>
-        <div className="mt-2 text-neutral-400 text-sm">{description}</div>
-        <div className="mt-4">
-          <div className="font-semibold text-4xl text-neutral-200">
-            {price[selectedBilledType]}
-            <EuroIcon className="inline size-5" />
+        <div className="font-bold text-[20px] text-white">{title}</div>
+        <div className="mt-0 text-neutral-400 text-[16px]">{description}</div>
+        <div className="mt-4 flex flex-row gap-2">
+          <div className="font-semibold text-6xl text-white pb-2">
+            ${price[selectedBilledType]}
           </div>
-          <div className="text-neutral-400 text-sm">
+          <div className="text-neutral-400 text-sm flex items-center">
             {selectedBilledType === "monthly"
-              ? "billed monthly"
+              ? "/ month"
               : `${getAnnualPrice()}€ billed annually`}
           </div>
         </div>
 
         <button
           className={cn(
-            "my-12 inline-flex w-full transform-gpu items-center justify-center rounded-full border border-neutral-400/20 px-12 py-2.5 font-semibold text-neutral-50 tracking-tight transition-all hover:scale-105",
+            "my-12 inline-flex w-full transform-gpu items-center justify-center rounded-full border border-neutral-400/20 px-12 py-2.5 font-semibold text-neutral-50 tracking-tight transition-all",
             isBestValue
               ? " bg-gradient-to-br from-[#f6d4a1] to-[#ed8445]"
               : "bg-neutral-700 ",
           )}
           type="button"
         >
-          Select
+          Get Started
         </button>
-        <p className={cn("mb-4 font-semibold text-sm tracking-tight ")}>
-          This plan include :
-        </p>
+
         <ul className="space-y-2">
           {features.map((feature) => (
             <li className="flex items-center gap-2" key={feature}>
-              <CheckIcon className="size-3.5 rounded-full stroke-neutral-300" />
-              <div className=" text-sm">{feature}</div>
+              <RiCheckboxCircleFill className="size-4 rounded-full  fill-[#2DAA6E]" />
+              <div className="text-white text-sm">{feature}</div>
             </li>
           ))}
         </ul>
@@ -194,11 +193,20 @@ export function SelectOfferTab({
 }>) {
   const OfferList = ["monthly", "annually"] as const;
   return (
-    <nav className="flex flex-col sm:flex-row">
+    <nav
+  className="flex flex-col sm:flex-row px-2 py-2 rounded-full shadow-[inset_0_1px_0_0_hsla(0,0%,100%,.1)]"
+  style={{
+    background: 'linear-gradient(137deg, #111214 4.87%, #0c0d0f 75.88%)',
+    borderTop: '1px solid hsla(0, 0%, 100%, .06)',
+    borderRight: '1px solid hsla(0, 0%, 100%, .06)',
+    borderLeft: '1px solid hsla(0, 0%, 100%, .06)',
+  }}
+>
+
       {OfferList.map((button, _index) => (
         <button
           className={cn(
-            " relative inline-flex w-fit transform-gpu whitespace-nowrap px-6 py-2.5 font-semibold text-lg capitalize tracking-tight transition-colors",
+            " relative inline-flex w-fit transform-gpu whitespace-nowrap px-6 py-2.5 font-normal text-base capitalize tracking-tight transition-colors",
             selectedBilledType === button
               ? "text-neutral-700 dark:text-neutral-50"
               : "text-neutral-800 hover:text-neutral-600 dark:text-neutral-300 dark:hover:text-neutral-300 ",
@@ -211,7 +219,7 @@ export function SelectOfferTab({
           {selectedBilledType === button && (
             <motion.div
               animate={{ opacity: 1, scale: 1 }}
-              className="-z-10 absolute top-0 right-0 bottom-0 left-0 rounded-full bg-neutral-200 dark:bg-neutral-800 "
+              className="-z-10 absolute top-0 right-0 bottom-0 left-0 border-t border-neutral-500/50 rounded-full bg-neutral-200 dark:bg-neutral-800 "
               exit={{ opacity: 0, scale: 0.9 }}
               initial={{ opacity: 0, scale: 0.95 }}
               layout={true}

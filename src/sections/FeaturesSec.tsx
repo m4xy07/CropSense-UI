@@ -6,7 +6,7 @@ import React from "react";
 
 const FeaturesSec = () => {
   return (
-    <section id="team" className="pb-10 mb-40 pt-[32rem] dark:bg-dark lg:pb-20 ">
+    <section id="team" className="pb-12 mb-20 pt-[32rem] bg-dark ">
       <div className="container mx-auto">
         <div className="flex h-40">
         <video 

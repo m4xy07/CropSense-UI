@@ -26,7 +26,7 @@ export default function Footerdemo() {
             <div className=" h-[5rem] -mt-2 w-full inline-flex justify-center items-center ">
             <img src={LogoIcon.src} className="h-full w-full" />
             </div>
-            <p className="mb-6 text-muted-foreground text-white/70">
+            <p className="mb-6  text-white/70">
               Join our newsletter for the latest updates and exclusive offers.
             </p>
             <form className="relative">
@@ -135,8 +135,8 @@ export default function Footerdemo() {
           </div>
         </div>
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/20 pt-8 text-center md:flex-row">
-          <p className="text-sm text-white/70 text-muted-foreground">
-            © 2024 Your Company. All rights reserved.
+          <p className="text-sm text-white/70 ">
+            © 2025 CropSense. All rights reserved.
           </p>
           <nav className="flex gap-4 text-sm">
             <a href="#" className="transition-colors text-white/70 hover:text-white">

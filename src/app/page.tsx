@@ -6,12 +6,13 @@ import MacbookSec from "@/sections/MacbookSec";
 import { CallToAction } from "@/sections/CallToAction";
 import FeaturesSec from "@/sections/FeaturesSec";
 import PricingSec from "@/sections/Pricing";
+import Example from "@/sections/HeroNew";
 
 export default function Home() {
   return (
     <>
       <Header />
-      <Hero/> 
+      <Example/> 
       <LogoTicker />
       <MacbookSec/>
       <FeaturesSec/>

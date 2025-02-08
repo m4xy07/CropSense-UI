@@ -44,7 +44,7 @@ export const CallToAction = () => {
   const maskImage = useMotionTemplate`radial-gradient(50% 50% at ${mouseX}px ${mouseY}px, black, transparent)`;
 
   return (
-    <section className="py-20 md:py-24" ref={sectionRef}>
+    <section className="py-20" ref={sectionRef}>
       <div className="container">
         <motion.div ref={borderedDivRef} className="border border-white/15 py-24 rounded-xl overflow-hidden relative group" 
         animate={{
@@ -74,10 +74,10 @@ export const CallToAction = () => {
           Make the Earth Greener 
         </h2>
         <p className="text-center text-lg md:text-xl max-w-sm mx-auto text-white/70 px-4 mt-5 tracking-tight">
-          Turn Plastic into Profit with EcoCred and Earn Financial Credits!
+          Increase your revenue and make informed decisions with our powerful analytics tools!
         </p>
         <div className="flex justify-center mt-8">
-        <Button>Join waitlist</Button>
+        <Button>Start Today!</Button>
         </div>
         </div>  
         </motion.div>

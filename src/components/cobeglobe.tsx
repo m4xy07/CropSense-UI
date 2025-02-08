@@ -19,16 +19,14 @@ export function Cobe() {
       phi: 0,
       theta: 0.3,
       dark: 1,
-      diffuse: 3,
+      diffuse: 1.8, // Reduced to soften the glow
       mapSamples: 16000,
-      mapBrightness: 1.2,
-      baseColor: [1, 1, 1],
+      mapBrightness: 1,
+      baseColor: [.8, .8, .8],
       markerColor: [251 / 255, 100 / 255, 21 / 255],
-      glowColor: [1.2, 1.2, 1.2],
+      glowColor: [0, 0.5, 0.384], // Darker version of (0, 255, 196) to reduce glow intensity
       markers: [],
       onRender: (state) => {
-        // Called on every animation frame.
-        // `state` will be an empty object, return updated params.
         state.phi = phi;
         phi += 0.005;
         state.width = width * 2;

@@ -9,7 +9,7 @@ export const LogoTicker = () => {
   return (
      <section
       id="clients"
-      className="mx-auto max-w-4xl px-6 text-center md:px-8"
+      className="mx-auto max-w-4xl px-6 bg-black z-40 overflow-hidden text-center md:px-8"
     >
       <div className="pt-14">
         <div className="mx-auto max-w-screen-xl px-4 md:px-8">

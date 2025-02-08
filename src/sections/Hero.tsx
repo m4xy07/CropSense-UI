@@ -34,9 +34,10 @@ export const Hero = () => {
       backgroundPositionY,  
     }}
     >
-    <div className="absolute inset-0 bg-[radial-gradient(75%_75%_at_center_center,rgb(140,69,255,.5)_15%,rgb(14,0,36,.5)_78%,transparent)]"></div>
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgb(0,255,196,.6)_15%,rgb(14,0,36,.5)_30%,transparent)]"></div>
+
     {/*Start Planet*/}
-    <div className="absolute h-64 w-64 md:h-[500px] md:w-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <div className="absolute h-64 w-64 md:h-[800px] md:w-[800px] -mb-[25%] -bottom-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <Cobe />
     </div>
     {/*End Planet*/}
@@ -54,7 +55,7 @@ export const Hero = () => {
       ease: "linear",
     }
     }
-    className="absolute h-[344px] w-[344px] md:h-[580px] md:w-[580px] border opacity-20 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    className="absolute h-[344px] w-[344px] md:h-[880px] md:w-[880px] border opacity-20 rounded-full -mb-[30%] -bottom-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <div className="absolute h-2 w-2 bg-white rounded-full top-1/2 left-0 -translate-x-1/2 -translate-y-1/2"></div>
       <div className="absolute h-2 w-2 bg-white rounded-full top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
       <div className="absolute h-5 w-5 border border-white rounded-full top-1/2 left-full -translate-x-1/2 -translate-y-1/2 inline-flex items-center justify-center">
@@ -75,7 +76,7 @@ export const Hero = () => {
     style={{translateY: '-50%',
       translateX: '-50%',
 }} 
-    className="absolute h-[444px] w-[444px] md:h-[780px] md:w-[780px] rounded-full border border-white/20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-dashed"></motion.div>
+    className="absolute h-[444px] w-[444px] md:h-[1080px] md:w-[1080px] rounded-full border border-white/20 -mb-[40%] -bottom-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-dashed"></motion.div>
     {/*End Ring 2*/}
     {/*Start Ring 3*/}
     <motion.div 
@@ -90,7 +91,7 @@ export const Hero = () => {
     style={{translateY: '-50%',
       translateX: '-50%',
     }} 
-    className="absolute h-[544px] w-[544px] md:h-[980px] md:w-[980px] rounded-full border opacity-20 border-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    className="absolute h-[544px] w-[544px] md:h-[1280px] md:w-[1280px] rounded-full border opacity-20 border-white -mb-[50%] -bottom-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <div className="absolute h-2 w-2 bg-white rounded-full top-1/2 left-0 -translate-x-1/2 -translate-y-1/2"></div>
       <div className="absolute h-2 w-2 bg-white rounded-full top-1/2 left-full -translate-x-1/2 -translate-y-1/2"></div>
     </motion.div>
