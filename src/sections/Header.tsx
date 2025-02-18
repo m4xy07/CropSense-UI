@@ -2,7 +2,8 @@
 import LogoIcon from "../assets/Logo_Rev_1_Transparent.png";
 import MenuIcon from "@/assets/icon-menu.svg";
 import Button from "@/components/Button";
-import { Link } from "react-scroll";
+import { Link as ScrollLink } from "react-scroll";
+import Link from "next/link";
 
 
 export const Header = () => {
@@ -23,16 +24,18 @@ export const Header = () => {
 
         <nav className="flex gap-8 text-sm">
     
-            <Link to="team" spy={true} smooth={true} offset={50} duration={200} className="text-white/70 hover:text-white transition" style={{cursor:'pointer'}}>Features</Link>
-            <Link to="team" spy={true} smooth={true} offset={50} duration={200} className="text-white/70 hover:text-white transition" style={{cursor:'pointer'}}>Team</Link>
-            <Link to="team" spy={true} smooth={true} offset={50} duration={200} className="text-white/70 hover:text-white transition" style={{cursor:'pointer'}}>About</Link>
-            <Link to="team" spy={true} smooth={true} offset={50} duration={200} className="text-white/70 hover:text-white transition" style={{cursor:'pointer'}}>Pricing</Link>
+            <ScrollLink to="team" spy={true} smooth={true} offset={50} duration={200} className="text-white/70 hover:text-white transition" style={{cursor:'pointer'}}>Features</ScrollLink>
+            <ScrollLink to="team" spy={true} smooth={true} offset={50} duration={200} className="text-white/70 hover:text-white transition" style={{cursor:'pointer'}}>Team</ScrollLink>
+            <ScrollLink to="team" spy={true} smooth={true} offset={50} duration={200} className="text-white/70 hover:text-white transition" style={{cursor:'pointer'}}>About</ScrollLink>
+            <ScrollLink to="team" spy={true} smooth={true} offset={50} duration={200} className="text-white/70 hover:text-white transition" style={{cursor:'pointer'}}>Pricing</ScrollLink>
 
           </nav>
           
         </div>
         <div className="flex gap-4 items-center">
-          <Button>Login</Button>
+          <Link href="/admindashboard">
+          <Button>Sign In</Button>
+          </Link>
           <MenuIcon className="md:hidden" />
         </div>
       </div>
