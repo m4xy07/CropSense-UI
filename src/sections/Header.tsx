@@ -4,6 +4,7 @@ import MenuIcon from "@/assets/icon-menu.svg";
 import Button from "@/components/Button";
 import { Link as ScrollLink } from "react-scroll";
 import Link from "next/link";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 
 export const Header = () => {
@@ -33,10 +34,26 @@ export const Header = () => {
           
         </div>
         <div className="flex gap-4 items-center">
-          <Link href="/admindashboard">
-          <Button>Sign In</Button>
-          </Link>
-          <MenuIcon className="md:hidden" />
+          
+          <SignedIn>
+            
+            <div>
+              <Link href="/admindashboard">
+            <Button>Dashboard</Button>
+              </Link>
+            </div>
+            <UserButton />
+          </SignedIn>
+
+          <SignedOut>
+            <SignInButton>
+              <Link href="/sign-in">
+            <Button>Sign In</Button>
+            </Link>
+            </SignInButton>
+          </SignedOut>
+
+          {/* <MenuIcon className="md:hidden" /> */}
         </div>
       </div>
     </div>

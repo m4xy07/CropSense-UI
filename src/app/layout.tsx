@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { twMerge } from "tailwind-merge";
-import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkProvider, SignedIn } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,14 +22,14 @@ export default function RootLayout({
       appearance={{
         layout:{
           logoImageUrl: '/Logo_Rev_1_Transparent.png',
-          socialButtonsVariant: 'iconButton'
         },
         variables: {
           colorText: '#fff',
           colorPrimary: '#0E78F9',
-          colorBackground: '#1c1f2e',
-          colorInputBackground: '#252a41',
+          colorBackground: '#000000',
+          colorInputBackground: '#ddeaf814',
           colorInputText: '#fff'
+          
         }
       }}
       >
