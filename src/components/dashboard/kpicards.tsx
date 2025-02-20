@@ -1,35 +1,35 @@
 // 'use client';
 
-import { useState } from 'react';
-import { AreaChart, Card } from '@tremor/react';
+import { useState } from "react";
+import { AreaChart, Card } from "@tremor/react";
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
 }
 
-const numberFormatter = (number: number) => {
-  return Intl.NumberFormat('us').format(number).toString();
+const numberFormatter = (number) => {
+  return Intl.NumberFormat("us").format(number).toString();
 };
 
-const currencyFormatter = (number: number) => {
-  return '$' + Intl.NumberFormat('us').format(number).toString();
+const currencyFormatter = (number) => {
+  return "$" + Intl.NumberFormat("us").format(number).toString();
 };
 
 function formatChange(
-  payload: any,
-  percentageChange: number | undefined,
-  absoluteChange: number | undefined,
-  valueFormatter: (value: number) => string,
+  payload,
+  percentageChange,
+  absoluteChange,
+  valueFormatter
 ) {
-  if (!payload || isNaN(percentageChange!)) {
-    return '--';
+  if (!payload || isNaN(percentageChange)) {
+    return "--";
   }
 
   const formattedPercentage = `${
-    percentageChange! > 0 ? '+' : ''
-  }${percentageChange!.toFixed(1)}%`;
-  const formattedAbsolute = `${absoluteChange! >= 0 ? '+' : '-'}${valueFormatter(
-    Math.abs(absoluteChange!),
+    percentageChange > 0 ? "+" : ""
+  }${percentageChange.toFixed(1)}%`;
+  const formattedAbsolute = `${absoluteChange >= 0 ? "+" : "-"}${valueFormatter(
+    Math.abs(absoluteChange)
   )}`;
 
   return `${formattedPercentage} (${formattedAbsolute})`;
@@ -49,73 +49,73 @@ const customTooltipHandler = (props: any, setselectedChartData: React.Dispatch<R
 
 const data = [
   {
-    date: 'Jan 23',
+    date: "Jan 23",
     users: 234,
     sessions: 1432,
     revenue: 2340,
   },
   {
-    date: 'Feb 23',
+    date: "Feb 23",
     users: 431,
     sessions: 1032,
     revenue: 3110,
   },
   {
-    date: 'Mar 23',
+    date: "Mar 23",
     users: 543,
     sessions: 1089,
     revenue: 4643,
   },
   {
-    date: 'Apr 23',
+    date: "Apr 23",
     users: 489,
     sessions: 988,
     revenue: 4650,
   },
   {
-    date: 'May 23',
+    date: "May 23",
     users: 391,
     sessions: 642,
     revenue: 3980,
   },
   {
-    date: 'Jun 23',
+    date: "Jun 23",
     users: 582,
     sessions: 786,
     revenue: 4702,
   },
   {
-    date: 'Jul 23',
+    date: "Jul 23",
     users: 482,
     sessions: 673,
     revenue: 5990,
   },
   {
-    date: 'Aug 23',
+    date: "Aug 23",
     users: 389,
     sessions: 761,
     revenue: 5700,
   },
   {
-    date: 'Sep 23',
+    date: "Sep 23",
     users: 521,
     sessions: 793,
     revenue: 4250,
   },
   {
-    date: 'Oct 23',
+    date: "Oct 23",
     users: 434,
     sessions: 543,
     revenue: 4182,
   },
   {
-    date: 'Nov 23',
+    date: "Nov 23",
     users: 332,
     sessions: 678,
     revenue: 3812,
   },
   {
-    date: 'Dec 23',
+    date: "Dec 23",
     users: 275,
     sessions: 873,
     revenue: 4900,
@@ -124,49 +124,49 @@ const data = [
 
 const categories = [
   {
-    name: 'Monthly users',
-    chartCategory: 'users',
+    name: "Monthly users",
+    chartCategory: "users",
     valueFormatter: numberFormatter,
   },
   {
-    name: 'Monthly sessions',
-    chartCategory: 'sessions',
+    name: "Monthly sessions",
+    chartCategory: "sessions",
     valueFormatter: numberFormatter,
   },
   {
-    name: 'Monthly revenue',
-    chartCategory: 'revenue',
+    name: "Monthly revenue",
+    chartCategory: "revenue",
     valueFormatter: currencyFormatter,
   },
 ];
 
-interface CustomChartProps {
-  item: {
-    name: string;
-    chartCategory: string;
-    valueFormatter: (value: number) => string;
+interface ChartData {
+  payload: {
+    payload: {
+      [key: string]: any;
+    };
   };
 }
 
-function CustomChart({ item }: CustomChartProps) {
-  const [selectedChartData, setselectedChartData] = useState<any>(null);
-  const payload = selectedChartData?.payload?.[0];
+function CustomChart({ item }) {
+  const [selectedChartData, setselectedChartData] = useState<ChartData | null>(null);
+  const payload = selectedChartData ? selectedChartData.payload[0] : null;
 
-  const value = payload?.payload?.[item.chartCategory];
+  const value = payload?.payload[item.chartCategory];
 
-  const customTooltipIndex = 'date';
+  const customTooltipIndex = "date";
 
   const previousIndex = data.findIndex(
-    (e) => e[customTooltipIndex] === payload?.payload?.date,
+    (e) => e[customTooltipIndex] === payload?.payload?.date
   );
   const previousValues = previousIndex > 0 ? data[previousIndex - 1] : {};
 
   const prev = previousValues ? previousValues[item.chartCategory] : undefined;
-  const percentageChange = prev !== undefined ? ((value - prev) / prev) * 100 : undefined;
-  const absoluteChange = prev !== undefined ? value - prev : undefined;
+  const percentageChange = ((value - prev) / prev) * 100;
+  const absoluteChange = value - prev;
 
   const formattedValue = payload
-    ? item.valueFormatter(payload?.payload?.[item.chartCategory])
+    ? item.valueFormatter(payload?.payload[item.chartCategory])
     : item.valueFormatter(data[0][item.chartCategory]);
   return (
     <Card>
@@ -182,24 +182,24 @@ function CustomChart({ item }: CustomChartProps) {
         </span>
         <span
           className={classNames(
-            'rounded-tremor-small p-2 text-tremor-default font-medium',
+            "rounded-tremor-small p-2 text-tremor-default font-medium",
             formatChange(
               payload,
               percentageChange,
               absoluteChange,
-              item.valueFormatter,
-            ) === '--'
-              ? 'text-tremor-content-emphasis dark:text-dark-tremor-content-emphasis'
-              : payload && percentageChange! > 0
-                ? 'text-emerald-700 dark:text-emerald-500'
-                : 'text-red-700 dark:text-red-500',
+              item.valueFormatter
+            ) === "--"
+              ? "text-tremor-content-emphasis dark:text-dark-tremor-content-emphasis"
+              : payload && percentageChange > 0
+              ? "text-emerald-700 dark:text-emerald-500"
+              : "text-red-700 dark:text-red-500"
           )}
         >
           {formatChange(
             payload,
             percentageChange,
             absoluteChange,
-            item.valueFormatter,
+            item.valueFormatter
           )}
         </span>
       </dd>
@@ -213,9 +213,11 @@ function CustomChart({ item }: CustomChartProps) {
         showGradient={false}
         startEndOnly={true}
         className="-mb-2 mt-3 h-24"
-        customTooltip={(props) => {
-          customTooltipHandler(props, setselectedChartData);
-        }}
+        customTooltip={(props) => (
+          <div>
+            {customTooltipHandler(props, setselectedChartData)}
+          </div>
+        )}
       />
     </Card>
   );
