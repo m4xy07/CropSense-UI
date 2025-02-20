@@ -35,7 +35,10 @@ function formatChange(
   return `${formattedPercentage} (${formattedAbsolute})`;
 }
 
-const customTooltipHandler = (props: any, setselectedChartData: React.Dispatch<React.SetStateAction<any>>) => {
+const customTooltipHandler = (
+  props: any,
+  setselectedChartData: React.Dispatch<React.SetStateAction<any>>
+) => {
   if (props.active) {
     setselectedChartData((prev) => {
       if (prev?.label === props?.label) return prev;
@@ -149,7 +152,9 @@ interface ChartData {
 }
 
 function CustomChart({ item }) {
-  const [selectedChartData, setselectedChartData] = useState<ChartData | null>(null);
+  const [selectedChartData, setselectedChartData] = useState<ChartData | null>(
+    null
+  );
   const payload = selectedChartData ? selectedChartData.payload[0] : null;
 
   const value = payload?.payload[item.chartCategory];
@@ -214,16 +219,14 @@ function CustomChart({ item }) {
         startEndOnly={true}
         className="-mb-2 mt-3 h-24"
         customTooltip={(props) => (
-          <div>
-            {customTooltipHandler(props, setselectedChartData)}
-          </div>
+          <div>{customTooltipHandler(props, setselectedChartData)}</div>
         )}
       />
     </Card>
   );
 }
 
-function Example() {
+function EExample() {
   return (
     <>
       <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -235,4 +238,4 @@ function Example() {
   );
 }
 
-export default Example;
+export default EExample;
