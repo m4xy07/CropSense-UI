@@ -1,15 +1,12 @@
 'use client';
 import { LogoCloud } from '@/components/LogoCloud';
-import logo1 from "@/assets/python-logo.png";
-import logo2 from "@/assets/raspberry-logo.png";
-import logo3 from "@/assets/opencv-logo.png";
 
 
 export const LogoTicker = () => {
   return (
      <section
       id="clients"
-      className="mx-auto max-w-4xl px-6 bg-black z-40 overflow-hidden text-center md:px-8"
+      className="mx-auto max-w-7xl px-6 bg-black z-[60] overflow-hidden text-center md:px-8"
     >
       <div className="pt-14">
         <div className="mx-auto max-w-screen-xl px-4 md:px-8">
@@ -25,88 +22,77 @@ export const LogoTicker = () => {
       href: "https://enroll.dopler.app",
       icon: false,
       size: "xs",
-      wordmarkSrc: "/assets/trademark/apex.png",
+      wordmarkSrc: "/assets/trademark/NextJSLogo.png",
     },
     {
       href: "https://dopler.app",
       icon: false,
       size: "xs",
-      wordmarkSrc: "/assets/trademark/apex.png",
+      wordmarkSrc: "/assets/trademark/GoogleCollab.png",
     },
     {
       href: "https://club.dopler.io",
       icon: false,
       size: "xs",
-      wordmarkSrc: "/assets/trademark/apex.png",
+      wordmarkSrc: "/assets/trademark/ReactLogo.png",
     },
     {
       href: "https://magic-portfolio.com",
       icon: false,
       size: "xs",
-      wordmarkSrc: "/assets/trademark/apex.png",
+      wordmarkSrc: "/assets/trademark/TwilioLogo.png",
     },
     {
       href: "https://enroll.dopler.app",
       icon: false,
       size: "xs",
-      wordmarkSrc: "/assets/trademark/apex.png",
+      wordmarkSrc: "/assets/trademark/ExpressLogo.png",
     },
     {
       href: "https://dopler.app",
       icon: false,
       size: "xs",
-      wordmarkSrc: "/assets/trademark/apex.png",
+      wordmarkSrc: "/assets/trademark/ollamaLogo.png",
     },
     {
       href: "https://enroll.dopler.app",
       icon: false,
       size: "xs",
-      wordmarkSrc: "/assets/trademark/apex.png",
+      wordmarkSrc: "/assets/trademark/kaggleLogo.png",
     },
     {
       href: "https://dopler.app",
       icon: false,
       size: "xs",
-      wordmarkSrc: "/assets/trademark/apex.png",
+      wordmarkSrc: "/assets/trademark/nodeJSLogo.png",
     },
     {
       href: "https://enroll.dopler.app",
       icon: false,
       size: "xs",
-      wordmarkSrc: "/assets/trademark/apex.png",
+      wordmarkSrc: "/assets/trademark/PythonLogo.png",
     },
     {
       href: "https://dopler.app",
       icon: false,
       size: "xs",
-      wordmarkSrc: "/assets/trademark/apex.png",
+      wordmarkSrc: "/assets/trademark/huggingfaceLogo.png",
     },
     {
       href: "https://club.dopler.io",
       icon: false,
       size: "xs",
-      wordmarkSrc: "/assets/trademark/apex.png",
+      wordmarkSrc: "/assets/trademark/MongoDBLogo.png",
     },
     {
       href: "https://magic-portfolio.com",
       icon: false,
       size: "xs",
-      wordmarkSrc: "/assets/trademark/apex.png",
+      wordmarkSrc: "/assets/trademark/raspberryLogo.png",
     },
-    {
-      href: "https://enroll.dopler.app",
-      icon: false,
-      size: "xs",
-      wordmarkSrc: "/assets/trademark/apex.png",
-    },
-    {
-      href: "https://dopler.app",
-      icon: false,
-      size: "xs",
-      wordmarkSrc: "/assets/trademark/apex.png",
-    },
+
   ]}
-  columns={3} // Keep 2 columns
+  columns={3} 
   mobileColumns={1} // Stack on mobile
 />
 

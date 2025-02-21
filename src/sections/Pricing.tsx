@@ -1,7 +1,3 @@
-import { BentoCard } from "@/components/bentogrid";
-import { Keyboard } from "@/components/keyboard";
-import { LogoCluster } from "@/components/logocluster";
-import { Map } from "@/components/map";
 import ManyOffersVariant1, { SelectOfferTab } from "@/components/pricingcomp";
 import React from "react";
 

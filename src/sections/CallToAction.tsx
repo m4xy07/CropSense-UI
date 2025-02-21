@@ -59,11 +59,11 @@ export const CallToAction = () => {
           backgroundPositionY,
           backgroundImage: `url(${starsBg.src})`,
         }}>
-        <div className="absolute inset-0 bg-[rgb(74,32,138)] bg-blend-overlay [mask-image:radial-gradient(50%_50%_at_50%_35%,black,transparent)] group-hover:opacity-0 transition duration-700" style={{
+        <div className="absolute inset-0 bg-[rgba(0,40,198,.5)] bg-blend-overlay [mask-image:radial-gradient(50%_50%_at_50%_35%,black,transparent)] group-hover:opacity-0 transition duration-700" style={{
           backgroundImage: `url(${gridlines.src})`,
         }}>
         </div>
-        <motion.div className="absolute inset-0 bg-[rgb(74,32,138)] bg-blend-overlay opacity-0 group-hover:opacity-100 transition duration-700" 
+        <motion.div className="absolute inset-0 bg-[rgba(0,40,198,.5)] bg-blend-overlay opacity-0 group-hover:opacity-100 transition duration-700" 
         style={{
           maskImage,
           backgroundImage: `url(${gridlines.src})`,

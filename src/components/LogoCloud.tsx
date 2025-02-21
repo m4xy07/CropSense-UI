@@ -37,7 +37,7 @@ const LogoCloud = forwardRef<HTMLDivElement, LogoCloudProps>(
           const currentIndices = currentLogos.map((logo) => logos.findIndex((l) => l === logo));
 
           const nextIndices = currentIndices
-            .map((index) => (index + 1) % logos.length)
+            .map((index) => (index + 6) % logos.length)
             .sort((a, b) => a - b);
 
           const nextLogos = nextIndices.map((index) => logos[index]);
@@ -61,7 +61,7 @@ const LogoCloud = forwardRef<HTMLDivElement, LogoCloudProps>(
     justifyContent: "center",
     alignItems: "center",
     gap: "8px", // General gap
-    rowGap: "56px", // Reduce only the row gap
+    rowGap: "0px", // Reduce only the row gap
     columnGap: "12px", // Adjust the column gap separately if needed
     ...style,
   }}
@@ -77,7 +77,7 @@ const LogoCloud = forwardRef<HTMLDivElement, LogoCloudProps>(
             paddingX="24"
             paddingY="12"
             radius="l"
-            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+            style={{ display: "flex", justifyContent: "center", alignItems: "center", zIndex: 60 }}
           >
             <Logo
               className={styles.logo}

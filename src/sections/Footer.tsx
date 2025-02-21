@@ -49,19 +49,19 @@ export default function Footerdemo() {
           <div>
             <h3 className="mb-4 text-lg font-semibold text-white">Quick Links</h3>
             <nav className="space-y-2 text-sm">
-              <a href="#" className="block transition-colors text-white/70 hover:text-white">
+              <a href="#" className="block w-fit transition-colors text-white/70 hover:text-white">
                 Home
               </a>
-              <a href="#" className="block transition-colors text-white/70 hover:text-white">
+              <a href="#" className="block w-fit transition-colors text-white/70 hover:text-white">
                 About Us
               </a>
-              <a href="#" className="block transition-colors text-white/70 hover:text-white">
+              <a href="#" className="block w-fit transition-colors text-white/70 hover:text-white">
                 Services
               </a>
-              <a href="#" className="block transition-colors text-white/70 hover:text-white">
+              <a href="#" className="block w-fit transition-colors text-white/70 hover:text-white">
                 Products
               </a>
-              <a href="#" className="block transition-colors text-white/70 hover:text-white">
+              <a href="#" className="block w-fit transition-colors text-white/70 hover:text-white">
                 Contact
               </a>
             </nav>

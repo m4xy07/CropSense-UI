@@ -4,15 +4,16 @@ import { CheckIcon, DollarSignIcon, EuroIcon } from "lucide-react";
 import { RiCheckboxCircleFill } from '@remixicon/react';
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-type BilledType = "monthly" | "annually";
+type BilledType = "monthly" | "annually" | "lifetime";
 
 const pricingData: OfferCardProps[] = [
   {
     title: "Starter",
     description: "For small teams",
     price: {
-      monthly: 19,
-      annually: 9,
+      monthly: 199,
+      annually: 149,
+      lifetime: 7999,
     },
     features: ["10 users included", "2 GB of storage", "Email support"],
     infos: ["30 users included", "15 GB of storage", "Phone and email support"],
@@ -21,8 +22,9 @@ const pricingData: OfferCardProps[] = [
     title: "Pro",
     description: "For medium-sized businesses",
     price: {
-      monthly: 39,
-      annually: 29,
+      monthly: 499,
+      annually: 449,
+      lifetime: 19999,
     },
     features: [
       "20 users included",
@@ -36,8 +38,9 @@ const pricingData: OfferCardProps[] = [
     title: "Enterprise",
     description: "For large businesses",
     price: {
-      monthly: 59,
-      annually: 49,
+      monthly: 999,
+      annually: 899,
+      lifetime: 44999,
     },
     features: [
       "30 users included",
@@ -80,6 +83,7 @@ type OfferCardProps = {
   price: {
     monthly: number;
     annually: number;
+    lifetime: number;
   };
   features: string[];
   infos?: string[];
@@ -103,12 +107,12 @@ const OfferCard = ({
   return (
     <div
   style={{
-    borderTop: "ridge 1px rgb(115 115 115 / 0.5)",
+    borderTop: "ridge 1px rgb(0 237 255 / 0.27)",
   }}
   className={cn(
     "relative group hover:-translate-y-1 h-full transform-gpu overflow-hidden rounded-2xl transition-all duration-500 ease-in-out",
     "bg-neutral-800/50 text-neutral-400",
-    isBestValue ? "border-[#ed8445]" : "border-neutral-500/50"
+    isBestValue ? "border border-[rgba(0,237,255,.27)]" : "border-neutral-500/50"
   )}
 >
       <div
@@ -125,10 +129,10 @@ const OfferCard = ({
       <div
         className={cn("p-6")}
         style={
-          isBestValue
+          isBestValue 
             ? {
                 background:
-                  "radial-gradient(58.99% 10.42% at 50% 100.46%, rgba(251, 188, 5, .07) 0, transparent 100%), radial-gradient(135.76% 66.69% at 92.19% -3.15%, rgba(251, 5, 153, .1) 0, transparent 100%), radial-gradient(127.39% 38.15% at 22.81% -2.29%, rgba(239, 145, 84, .4) 0, transparent 100%)",
+                  "radial-gradient(58.99% 10.42% at 50% 100.46%, rgba(0,237,255,.1) 0, transparent 100%), radial-gradient(135.76% 66.69% at 92.19% -3.15%, rgba(0,40,198,.15) 0, transparent 100%), radial-gradient(127.39% 38.15% at 22.81% -2.29%, rgba(0,237,255,.27) 0, transparent 100%)",
               }
             : {}
         }
@@ -137,20 +141,22 @@ const OfferCard = ({
         <div className="mt-0 text-neutral-400 text-[16px]">{description}</div>
         <div className="mt-4 flex flex-row gap-2">
           <div className="font-semibold text-6xl text-white pb-2">
-            ${price[selectedBilledType]}
+            ₹{price[selectedBilledType]}
           </div>
           <div className="text-neutral-400 text-sm flex items-center">
             {selectedBilledType === "monthly"
               ? "/ month"
-              : `${getAnnualPrice()}€ billed annually`}
+              : selectedBilledType === "annually"
+              ? `₹${getAnnualPrice()} billed annually`
+              : "one-time payment"}
           </div>
         </div>
 
         <button
           className={cn(
-            "my-12 inline-flex w-full transform-gpu items-center justify-center rounded-full border border-neutral-400/20 px-12 py-2.5 font-semibold text-neutral-50 tracking-tight transition-all",
+            "my-12 inline-flex w-full transform-gpu items-center justify-center rounded-lg border border-neutral-400/20 px-12 py-2.5 font-medium text-neutral-50 tracking-tight transition-all",
             isBestValue
-              ? " bg-gradient-to-br from-[#f6d4a1] to-[#ed8445]"
+              ? " bg-[#00edff] text-black"
               : "bg-neutral-700 ",
           )}
           type="button"
@@ -191,7 +197,7 @@ export function SelectOfferTab({
   handleSwitchTab: (tab: BilledType) => void;
   selectedBilledType: BilledType;
 }>) {
-  const OfferList = ["monthly", "annually"] as const;
+  const OfferList = ["monthly", "annually", "lifetime"] as const;
   return (
     <nav
   className="flex flex-col sm:flex-row px-2 py-2 rounded-full shadow-[inset_0_1px_0_0_hsla(0,0%,100%,.1)]"
