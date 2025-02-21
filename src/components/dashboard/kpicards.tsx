@@ -152,11 +152,17 @@ interface CustomChartProps {
 }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 function CustomChart({ item }) {
   const [selectedChartData, setselectedChartData] = useState<ChartData | null>(
     null
   );
   const payload = selectedChartData ? selectedChartData.payload[0] : null;
+=======
+function CustomChart({ item }: CustomChartProps) {
+  const [selectedChartData, setselectedChartData] = useState<any>(null);
+  const payload = selectedChartData?.payload?.[0];
+>>>>>>> Stashed changes
 =======
 function CustomChart({ item }: CustomChartProps) {
   const [selectedChartData, setselectedChartData] = useState<any>(null);
@@ -225,14 +231,20 @@ function CustomChart({ item }: CustomChartProps) {
         startEndOnly={true}
         className="-mb-2 mt-3 h-24"
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         customTooltip={(props) => (
           <div>{customTooltipHandler(props, setselectedChartData)}</div>
         )}
 =======
+=======
+>>>>>>> Stashed changes
         customTooltip={(props) => {
           customTooltipHandler(props, setselectedChartData);
           return null;
         }}
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
       />
     </Card>
@@ -252,7 +264,11 @@ function EExample() {
 }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 export default EExample;
+=======
+export default Example;
+>>>>>>> Stashed changes
 =======
 export default Example;
 >>>>>>> Stashed changes
