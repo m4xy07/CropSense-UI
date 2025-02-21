@@ -138,19 +138,23 @@ const OfferCard = ({
         }
       >
         <div className="font-bold text-[20px] text-white">{title}</div>
-        <div className="mt-0 text-neutral-400 text-[16px]">{description}</div>
-        <div className="mt-4 flex flex-row gap-2">
-          <div className="font-semibold text-6xl text-white pb-2">
-            ₹{price[selectedBilledType]}
-          </div>
-          <div className="text-neutral-400 text-sm flex items-center">
-            {selectedBilledType === "monthly"
-              ? "/ month"
-              : selectedBilledType === "annually"
-              ? `₹${getAnnualPrice()} billed annually`
-              : "one-time payment"}
-          </div>
-        </div>
+<div className="mt-0 text-neutral-400 text-[16px]">{description}</div>
+<div className="mt-4 flex flex-row gap-2">
+  <div className="font-semibold text-6xl text-white pb-2">
+    ₹{price[selectedBilledType]}
+  </div>
+  {selectedBilledType !== "lifetime" && (
+    <div className="text-neutral-400 text-sm flex items-center">
+      / month
+    </div>
+  )}
+</div>
+{selectedBilledType === "annually" && (
+  <div className="text-neutral-400 text-sm mt-1">
+    ₹{getAnnualPrice()} billed annually
+  </div>
+)}
+
 
         <button
           className={cn(
