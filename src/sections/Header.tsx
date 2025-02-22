@@ -38,7 +38,7 @@ export const Header = () => {
           <SignedIn>
             
             <div>
-              <Link href="/admindashboard">
+              <Link href="/dashboard">
             <Button>Dashboard</Button>
               </Link>
             </div>

@@ -45,7 +45,7 @@ export function NavProjects({
             <SidebarMenuButton asChild>
               <a href={item.url}>
                 <item.icon />
-                <span className="text-[8px]">{item.name}</span>
+                <span>{item.name}</span>
               </a>
             </SidebarMenuButton>
             <DropdownMenu>
@@ -56,7 +56,7 @@ export function NavProjects({
                 </SidebarMenuAction>
               </DropdownMenuTrigger>
               <DropdownMenuContent
-                className="w-48  rounded-lg"
+                className="w-48 dark rounded-lg"
                 side={isMobile ? "bottom" : "right"}
                 align={isMobile ? "end" : "start"}
               >

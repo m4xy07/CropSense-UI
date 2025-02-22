@@ -25,12 +25,13 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import Image from "next/image"
 
 // This is sample data.
 const data = {
   user: {
     name: "shadcn",
-    email: "m@ex.com",
+    email: "m@example.com",
     avatar: "/avatars/shadcn.jpg",
   },
   teams: [
@@ -61,6 +62,14 @@ const data = {
           title: "History",
           url: "#",
         },
+        {
+          title: "Starred",
+          url: "#",
+        },
+        {
+          title: "Settings",
+          url: "#",
+        },
       ],
     },
     {
@@ -82,7 +91,29 @@ const data = {
         },
       ],
     },
-    
+    {
+      title: "Documentation",
+      url: "#",
+      icon: BookOpen,
+      items: [
+        {
+          title: "Introduction",
+          url: "#",
+        },
+        {
+          title: "Get Started",
+          url: "#",
+        },
+        {
+          title: "Tutorials",
+          url: "#",
+        },
+        {
+          title: "Changelog",
+          url: "#",
+        },
+      ],
+    },
     {
       title: "Settings",
       url: "#",
@@ -91,7 +122,19 @@ const data = {
         {
           title: "General",
           url: "#",
-        }
+        },
+        {
+          title: "Team",
+          url: "#",
+        },
+        {
+          title: "Billing",
+          url: "#",
+        },
+        {
+          title: "Limits",
+          url: "#",
+        },
       ],
     },
   ],
@@ -116,12 +159,19 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+    <Sidebar  collapsible="icon" {...props}>
+      <SidebarHeader >
+        <Image 
+          src="/Logo_Rev_1_Transparent.png"
+          alt="Logo"
+          width={150}
+          height={50}
+          className="mx-auto py-4"
+        />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent >
         <NavMain items={data.navMain} />
+        <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
