@@ -1,6 +1,11 @@
 {
   "name": "cropsense",
   "version": "0.1.0",
+  "description": "Cropsense - Sustainable Farming Ecosytsem",
+  "author": {
+    "name": "Cropsense",
+    "email": "hey@m4xy.org",
+    "url": "https://cropsense.m4xy.org"},
   "private": true,
   "scripts": {
     "dev": "next dev",
