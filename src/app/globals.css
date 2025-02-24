@@ -6,6 +6,20 @@ body{
   scroll-behavior: smooth;
 }
 
+[type='text'], [type='password'] {
+  appearance: none;
+  background-color: rgba(217, 232, 247, 0.08) !important;
+  border-color: unset ;
+  border-width: unset ;
+  border-radius: .375rem ;
+  padding-top: unset ;
+  padding-right: unset ;
+  padding-bottom: unset ;
+  padding-left: 0.75rem !important;
+  font-size: .875rem !important ;
+  line-height: unset ;
+  --tw-shadow: unset ;
+}
 
 .effect-font-hero {
     -webkit-text-stroke: .4px #ffffff80;
@@ -178,28 +192,29 @@ body{
 }
 
 .cl-internal-1l5nvfx{
-  padding-top: 10px;
-  padding-bottom: 10px;
-  max-height: 2.5rem;
-  font-size: .875rem;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  max-height: 2.5rem !important;
+  font-size: .875rem !important;
+  border-radius: .375rem !important;
 }
 
 .cl-internal-1l5nvfx:focus{
-  outline-width: 2px;
+  outline-width: 2px !important;
 }
 
 .cl-internal-1l5nvfx[data-variant="default"]{
-  border-width: 1px;
-  border-color: #d6ebfd30;
+  border-width: 1px !important;
+  border-color: #d6ebfd30 !important;
 }
 
 .cl-internal-1l5nvfx[data-variant="default"]:focus{
-  border-width: 1px;
-  border-color: #d6ebfd30;
-  outline-width: 2px;
-  outline-color: #d6ebfd30;
-  outline-offset: unset;
-  transition: border-color 0.2s ease-in-out, outline-color 0.2s ease-in-out;
+  border-width: 1px !important;
+  border-color: #d6ebfd30 !important;
+  outline-width: 2px !important;
+  outline-color: #d6ebfd30 !important;
+  outline-offset: unset !important;
+  transition: border-color 0.2s ease-in-out, outline-color 0.2s ease-in-out !important;
 }
 
 .cl-internal-b6u84v{
@@ -369,3 +384,5 @@ body{
     @apply bg-background text-foreground;
   }
 }
+
+

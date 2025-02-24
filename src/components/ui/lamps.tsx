@@ -14,9 +14,9 @@ export function LampDemo() {
           duration: 0.8,
           ease: "easeInOut",
         }}
-        className="text-[3.5rem] -mt-24 text-center tracking-tight"
+        className="text-[3.5rem] -mt-40 text-center tracking-tight"
       >
-        Macbook Section
+        Beyond Expectations.
       </motion.h1>
       <motion.p
       initial={{ opacity: 0.5, y: 80 }}
