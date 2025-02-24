@@ -16,7 +16,7 @@ export function LampDemo() {
         }}
         className="text-[3.5rem] -mt-40 text-center tracking-tight"
       >
-        Beyond Expectations.
+        Available. 24/7.
       </motion.h1>
       <motion.p
       initial={{ opacity: 0.5, y: 80 }}
@@ -26,9 +26,9 @@ export function LampDemo() {
         duration: 0.8,
         ease: "easeInOut",
       }}
-      className="text-white/70 text-lg text-center mt-5 tracking-tight"
+      className="text-white/70 text-lg text-center mt-4 tracking-tight"
       >
-        text
+        Real-time access, anytime, anywhere.
       </motion.p>
     </LampContainer>
   );

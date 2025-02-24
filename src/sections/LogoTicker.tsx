@@ -6,12 +6,12 @@ export const LogoTicker = () => {
   return (
      <section
       id="clients"
-      className="mx-auto max-w-7xl px-6 bg-black z-[60] overflow-hidden text-center md:px-8"
+      className="mx-auto max-w-7xl h-[35rem] px-6 bg-black z-[60] overflow-hidden text-center md:px-8"
     >
       <div className="pt-14">
         <div className="mx-auto max-w-screen-xl px-4 md:px-8">
           <h2 className="text-center text-lg  font-medium text-white/70">
-            Trusted by Teams Around the World
+            Built on
           </h2>
           <div className="mt-12">
             

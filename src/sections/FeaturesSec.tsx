@@ -22,13 +22,13 @@ const FeaturesSec = () => {
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
               
-            <div className="mx-auto mb-[60px] max-w-[510px] text-center">
+            <div className="mx-auto mb-[20px] max-w-[510px] text-center">
                 
               <h2 className="text-[3.5rem] pt-4 text-center tracking-tight effect-font-hero effect-font-gradient">
-                Features Section
+                Above and beyond
               </h2>
-              <p className="text-white/70 text-lg text-center mt-5 tracking-tight">
-                text
+              <p className="text-white/70 text-lg text-center mt-4 tracking-tight">
+              Next-level features to power your growth.
               </p>
             </div>
           </div>
@@ -36,8 +36,8 @@ const FeaturesSec = () => {
         <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-8 lg:grid-cols-6 lg:grid-rows-2">
       <BentoCard
         eyebrow="Insight"
-        title="Get perfect clarity"
-        description="Radiant uses social engineering to build a detailed financial picture of your leads. Know their budget, compensation package, social security number, and more."
+        title="Farm-Specific Real-Time Data"
+        description="CropSense gathers real-time temperature, humidity, soil moisture, and air quality data directly from on-site sensors, ensuring farmers get hyper-local and highly accurate environmental information."
         graphic={
 
           <div className="h-80 bg-[url(https://res.cloudinary.com/eldoraui/image/upload/v1734021365/profile_ldoiwc.png)] bg-[size:1000px_560px] bg-[left_-109px_top_-112px] bg-no-repeat" />
@@ -47,8 +47,8 @@ const FeaturesSec = () => {
       />
       <BentoCard
         eyebrow="Analysis"
-        title="Undercut your competitors"
-        description="With our advanced data mining, you’ll know which companies your leads are talking to and exactly how much they’re being charged."
+        title="AI-Powered Crop & Disease Predictions"
+        description="The system recommends the best crops to sow based on real-time conditions and market trends while also identifying crop diseases using AI image recognition for proactive management."
         graphic={
 
           <div className="absolute inset-0 bg-[url(https://res.cloudinary.com/eldoraui/image/upload/v1734021357/competitors_ouucah.png)] bg-[size:1100px_650px] bg-[left_-38px_top_-73px] bg-no-repeat" />
@@ -58,8 +58,8 @@ const FeaturesSec = () => {
       />
       <BentoCard
         eyebrow="Speed"
-        title="Built for power users"
-        description="It’s never been faster to cold email your entire contact list using our streamlined keyboard shortcuts."
+        title="Instant Alerts & Notifications"
+        description="Farmers get instant alerts on droughts, fires, soil issues, and pests via SMS, app, and IVR."
         graphic={
           <div className="flex size-full pl-10 pt-10">
             <Keyboard highlighted={["LeftCommand", "C", "S"]} />
@@ -69,15 +69,15 @@ const FeaturesSec = () => {
       />
       <BentoCard
         eyebrow="Source"
-        title="Get the furthest reach"
-        description="Bypass those inconvenient privacy laws to source leads from the most unexpected places."
+        title="Community & Expert Support"
+        description="Farmers connect, get expert advice, and join mentorships to improve techniques and knowledge."
         graphic={<LogoCluster />}
         className="lg:col-span-2"
       />
       <BentoCard
         eyebrow="Limitless"
-        title="Sell globally"
-        description="Radiant helps you sell in locations currently under international embargo."
+        title="Government Scheme Integration"
+        description="CropSense links farmers to government schemes, insurance, and financial aid for maximum support."
         graphic={<Map />}
         className="max-lg:rounded-b-4xl lg:rounded-br-4xl lg:col-span-2"
       />
