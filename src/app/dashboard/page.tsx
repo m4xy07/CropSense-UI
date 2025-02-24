@@ -2,6 +2,8 @@ import { AppSidebar } from "@/components/app-sidebar"
 import { GroupChartComponent } from "@/components/dashboard/groupchart"
 import { LineChartComponent } from "@/components/dashboard/linecharts"
 import { StackedChartComponent } from "@/components/dashboard/stackedchart"
+import { BlendingModeIcon, OpacityIcon, ClockIcon } from "@radix-ui/react-icons"
+import { FaMountain } from "react-icons/fa";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -23,7 +25,8 @@ export default function Page() {
       <AppSidebar />
       <SidebarInset>
         <header className="flex  h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-          <div className="flex items-center gap-2 px-4">
+          <div className="flex justify-between w-full pr-4">
+            <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
             <Breadcrumb>
@@ -39,6 +42,31 @@ export default function Page() {
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
+            </div>
+            <div className="flex flex-row items-center gap-6">
+
+            <div className="flex flex-row  items-center gap-2">
+                <ClockIcon className="w-5 h-5 " />
+                <div className="text-[rgba(255,255,255,0.8)] text-sm">
+                  Current time
+                </div>
+              </div>
+              
+              <div className="flex flex-row  items-center gap-2">
+                <OpacityIcon className="w-5 h-5 " />
+                <div className="text-[rgba(255,255,255,0.8)] text-sm">
+                  Not raining
+                </div>
+              </div>
+              
+              <div className="flex flex-row  items-center gap-2">
+                <FaMountain className="w-5 h-5 " />
+                <div className="text-[rgba(255,255,255,0.8)] text-sm">
+                  Altitude
+                </div>
+              </div>
+              
+            </div>
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
