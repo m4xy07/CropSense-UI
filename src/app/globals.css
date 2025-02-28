@@ -9,17 +9,25 @@ body{
 [type='text'], [type='password'] {
   appearance: none;
   background-color: rgba(217, 232, 247, 0.08) !important;
-  border-color: unset ;
-  border-width: unset ;
+  border-color: #d6ebfd30;
+  border-width: 1px !important;
   border-radius: .375rem ;
-  padding-top: unset ;
-  padding-right: unset ;
-  padding-bottom: unset ;
-  padding-left: 0.75rem !important;
+  padding: 0.5rem 0.75rem;
   font-size: .875rem !important ;
-  line-height: unset ;
+  line-height: 1.5rem;
+  max-height: 2.5rem;
   --tw-shadow: unset ;
 }
+
+[type='text']:focus, [type='password']:focus {
+  border-color: #d6ebfd30 !important;
+  outline-width: 2px !important;
+  outline-color: #d6ebfd30 !important;
+  outline-offset: unset !important;
+  transition: border-color 0.2s ease-in-out, outline-color 0.2s ease-in-out !important;
+}
+
+
 
 .effect-font-hero {
     -webkit-text-stroke: .4px #ffffff80;
@@ -374,6 +382,14 @@ body{
   color: #fff;
 }
 
+.cl-internal-1g00631[data-variant="default"]:focus{
+  border-width: 1px !important;
+  border-color: #d6ebfd30 !important;
+  outline-width: 2px !important;
+  outline-color: #d6ebfd30 !important;
+  outline-offset: unset !important;
+  transition: border-color 0.2s ease-in-out, outline-color 0.2s ease-in-out !important;
+}
 
 
 @layer base {
