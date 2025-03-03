@@ -9,6 +9,27 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "CropSense",
   description: "Tech So Bright, Crops Grow Right!",
+  openGraph: {
+    images: [
+      {
+        url: "/Logo_Rev_1_Transparent.png",
+        width: 800,
+        height: 600,
+        alt: "CropSense Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: [
+      {
+        url: "/Logo_Rev_1_Transparent.png",
+        width: 800,
+        height: 600,
+        alt: "CropSense Logo",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
@@ -19,25 +40,28 @@ export default function RootLayout({
   return (
     <html lang="en">
       <ClerkProvider
-      appearance={{
-        layout:{
-          logoImageUrl: '/Logo_Rev_1_Transparent.png',
-        },
-        variables: {
-          colorText: '#fff',
-          colorPrimary: '#0E78F9',
-          colorBackground: '#000000',
-          colorInputBackground: '#ddeaf814',
-          colorInputText: '#fff'
-          
-        }
-      }}
+        appearance={{
+          layout: {
+            logoImageUrl: "/Logo_Rev_1_Transparent.png",
+          },
+          variables: {
+            colorText: "#fff",
+            colorPrimary: "#0E78F9",
+            colorBackground: "#000000",
+            colorInputBackground: "#ddeaf814",
+            colorInputText: "#fff",
+          },
+        }}
       >
-      <body className={twMerge(inter.className, "bg-black text-white antialiased")}>
-        {children}
+        <body
+          className={twMerge(
+            inter.className,
+            "bg-black text-white antialiased"
+          )}
+        >
+          {children}
         </body>
-        </ClerkProvider>
-      
+      </ClerkProvider>
     </html>
   );
 }
