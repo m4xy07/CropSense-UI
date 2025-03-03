@@ -1,8 +1,7 @@
 "use client"
 
 import { TrendingUp, TrendingDown } from "lucide-react"
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
-
+import { useEffect, useState } from "react"
 import {
   Card,
   CardContent,
@@ -11,43 +10,52 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-import { useEffect, useState } from "react"
 import { TemperatureChart } from "./temperaturechart"
+import { HumidityChart } from "./humiditychart"
+import { AQIChart } from "./aqichart"
+import { HeatIndexChart } from "./hichart"
+import { PressureChart } from "./pressurechart"
+import { MoistureChart } from "./moisturechart"
 
+const API_URL = "https://data.cropsense.tech/data";
 
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-]
+const chartComponents = {
+  temperature: TemperatureChart,
+  humidity: HumidityChart,
+  aqi: AQIChart,
+  heatIndex: HeatIndexChart,
+  pressure: PressureChart,
+  moisture: MoistureChart,
+};
 
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
-  },
-} satisfies ChartConfig
+const dataFieldMap = {
+  temperature: 'temperature',
+  humidity: 'humidity',
+  aqi: 'aqi',
+  heatIndex: 'hi', // Correct field name for heat index
+  pressure: 'pres', // Correct field name for pressure
+  moisture: 'moisture',
+};
 
-export function LineChartComponent({ cardTitle }: { cardTitle: string }) {
+const unitMap = {
+  temperature: ' °C',
+  humidity: '%',
+  aqi: '',
+  heatIndex: ' °C',
+  pressure: ' hPa',
+  moisture: '%',
+};
 
-  const [temperature, setTemperature] = useState<number | null>(null);
-  const [temperatureChange, setTemperatureChange] = useState<number | null>(null);
+export function LineChartComponent({ cardTitle, dataType }: { cardTitle: string, dataType: string }) {
+  const [value, setValue] = useState<number | null>(null);
+  const [valueChange, setValueChange] = useState<number | null>(null);
   const [dateRange, setDateRange] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchTemperature = async () => {
-      console.log("Fetching temperature..."); // Debug log
+    const fetchData = async () => {
+      console.log(`Fetching ${dataType} data...`);
       try {
-        const response = await fetch('https://data.cropsense.tech/data');
+        const response = await fetch(API_URL);
         console.log("Response received:", response);
 
         if (!response.ok) {
@@ -58,18 +66,24 @@ export function LineChartComponent({ cardTitle }: { cardTitle: string }) {
         console.log("API Response:", data);
 
         if (Array.isArray(data) && data.length > 0) {
-          const latestTemperature = data[data.length - 1]?.temperature;
-          console.log("Latest temperature:", latestTemperature);
-          setTemperature(parseFloat(latestTemperature.toFixed(2)));
+          let latestValue = data[data.length - 1]?.[dataFieldMap[dataType]];
+          if (dataType === 'pressure') {
+            latestValue /= 100; // Divide pressure value by 100
+          }
+          console.log(`Latest ${dataType}:`, latestValue);
+          setValue(parseFloat(latestValue.toFixed(2)));
 
-          // Calculate the average temperature of the week before the recorded week
+          // Calculate the average value of the week before the recorded week
           const weekBeforeData = data.slice(-14, -7);
-          const weekBeforeAvgTemp = weekBeforeData.reduce((sum, entry) => sum + entry.temperature, 0) / weekBeforeData.length;
-          console.log("Week before average temperature:", weekBeforeAvgTemp);
+          let weekBeforeAvgValue = weekBeforeData.reduce((sum, entry) => sum + entry[dataFieldMap[dataType]], 0) / weekBeforeData.length;
+          if (dataType === 'pressure') {
+            weekBeforeAvgValue /= 100; // Divide pressure value by 100
+          }
+          console.log(`Week before average ${dataType}:`, weekBeforeAvgValue);
 
           // Calculate the percentage change
-          const change = ((latestTemperature - weekBeforeAvgTemp) / weekBeforeAvgTemp) * 100;
-          setTemperatureChange(parseFloat(change.toFixed(2)));
+          const change = ((latestValue - weekBeforeAvgValue) / weekBeforeAvgValue) * 100;
+          setValueChange(parseFloat(change.toFixed(2)));
 
           // Set the date range
           const earliestMonth = new Date(data[0].time).toLocaleString('default', { month: 'long' });
@@ -79,13 +93,14 @@ export function LineChartComponent({ cardTitle }: { cardTitle: string }) {
           console.warn("API returned an empty or invalid response.");
         }
       } catch (error) {
-        console.error("Error fetching temperature:", error);
+        console.error(`Error fetching ${dataType} data:`, error);
       }
     };
 
-    fetchTemperature();
-  }, []);
+    fetchData();
+  }, [dataType]);
 
+  const ChartComponent = chartComponents[dataType];
 
   return (
     <Card>
@@ -95,50 +110,18 @@ export function LineChartComponent({ cardTitle }: { cardTitle: string }) {
           <CardDescription>{dateRange || 'Loading date range...'}</CardDescription>
         </div>
         <div>
-          {temperature !== null ? `${temperature}°C` : 'Loading...'}
+          {value !== null ? `${value}${unitMap[dataType]}` : 'Loading...'}
         </div>
-        
       </CardHeader>
       <CardContent>
-        <TemperatureChart/>
-        {/* <ChartContainer config={chartConfig}>
-          <LineChart
-            accessibilityLayer
-            data={chartData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Line
-              dataKey="desktop"
-              type="natural"
-              stroke="var(--color-desktop)"
-              strokeWidth={2}
-              dot={false}
-            />
-          </LineChart>
-        </ChartContainer> */}
+        {ChartComponent && <ChartComponent />}
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 font-medium leading-none">
-          {temperatureChange !== null ? (
+          {valueChange !== null ? (
             <>
-              
-              {`Trending ${temperatureChange > 0 ? 'up' : 'down'} by ${Math.abs(temperatureChange)}% this week`}
-              {temperatureChange > 0 ? (
+              {`Trending ${valueChange > 0 ? 'up' : 'down'} by ${Math.abs(valueChange)}% this week`}
+              {valueChange > 0 ? (
                 <TrendingUp className="h-4 w-4" />
               ) : (
                 <TrendingDown className="h-4 w-4" />
@@ -147,7 +130,7 @@ export function LineChartComponent({ cardTitle }: { cardTitle: string }) {
           ) : 'Calculating change...'}
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing temperature trends for the last week
+          Showing {dataType} trends for the last week
         </div>
       </CardFooter>
     </Card>

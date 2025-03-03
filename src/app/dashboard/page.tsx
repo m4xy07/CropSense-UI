@@ -72,25 +72,25 @@ export default function Page() {
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <div className="grid auto-rows-min gap-4 md:grid-cols-4">
             <div className="aspect-video rounded-xl bg-muted/50" >
-              <LineChartComponent cardTitle="Temperature" />
+              <LineChartComponent cardTitle="Temperature" dataType="temperature"/>
             </div>
             <div className="aspect-video rounded-xl bg-muted/50" >
-              <LineChartComponent cardTitle="Humidity" />
+              <LineChartComponent cardTitle="Humidity" dataType="humidity" />
             </div>
             <div className="aspect-video rounded-xl bg-muted/50" >
-            <LineChartComponent cardTitle="Air Quality Index (AQI)" />
+            <LineChartComponent cardTitle="Air Quality Index (AQI)" dataType="aqi" />
             </div>
             <div className="aspect-video rounded-xl bg-muted/50" >
-            <LineChartComponent cardTitle="Heat Index (HI)" />
+            <LineChartComponent cardTitle="Heat Index (HI)" dataType="heatIndex" />
             </div>
           </div>
           {/* <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" /> */}
           <div className="grid auto-rows-min gap-4 md:grid-cols-4">
           <div className="aspect-video rounded-xl bg-muted/50" >
-              <LineChartComponent cardTitle="Pressure" />
+              <LineChartComponent cardTitle="Pressure" dataType="pressure"/>
             </div>
             <div className="aspect-video rounded-xl bg-muted/50" >
-              <LineChartComponent cardTitle="Moisture" />
+              <LineChartComponent cardTitle="Moisture" dataType="moisture"/>
             </div>
             <div className="aspect-video rounded-xl bg-muted/50" >
               <StackedChartComponent cardTitle="Soil Nutrient Uptake" />

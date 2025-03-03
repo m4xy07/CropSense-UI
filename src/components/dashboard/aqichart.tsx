@@ -17,7 +17,7 @@ const API_URL = "https://data.cropsense.tech/data";
 const chartConfig = {
   aqi: {
     label: "AQI",
-    color: "hsl(var(--chart-3))",
+    color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig;
 

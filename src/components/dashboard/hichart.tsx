@@ -15,18 +15,14 @@ import {
 const API_URL = "https://data.cropsense.tech/data";
 
 const chartConfig = {
-  aqi: {
-    label: "AQI",
-    color: "hsl(var(--chart-3))",
-  },
   heatIndex: {
     label: "Heat Index",
-    color: "hsl(var(--chart-6))",
+    color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig;
 
-export function AQIChart() {
-    const [chartData, setChartData] = React.useState<{ time: string; aqi: number }[]>([]);
+export function HIChart() {
+    const [chartData, setChartData] = React.useState<{ time: string; hi: number }[]>([]);
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState<string | null>(null);
 
@@ -47,11 +43,11 @@ export function AQIChart() {
                     return entryDate >= sevenDaysAgo && entryDate <= now;
                 });
 
-                const formattedData = filteredData.map((entry: { time: string; aqi: number }) => ({
+                const formattedData = filteredData.map((entry: { time: string; hi: number }) => ({
                     time: new Date(entry.time).toLocaleDateString("en-US", {
                         weekday: "short",
                     }),
-                    aqi: entry.aqi,
+                    hi: entry.hi,
                 }));
 
                 setChartData(formattedData);
@@ -91,14 +87,14 @@ export function AQIChart() {
                             content={
                                 <ChartTooltipContent
                                     className="w-[175px]"
-                                    nameKey="aqi"
+                                    nameKey="hi"
                                 />
                             }
                         />
                         <Line
-                            dataKey="aqi"
+                            dataKey="hi"
                             type="monotone"
-                            stroke={`var(--color-aqi)`}
+                            stroke={`var(--color-hi)`}
                             strokeWidth={2}
                             dot={false}
                         />

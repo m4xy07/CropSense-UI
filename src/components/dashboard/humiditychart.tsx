@@ -12,12 +12,12 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-const API_URL = "http://159.65.139.84:3000/data";
+const API_URL = "https://data.cropsense.tech/data";
 
 const chartConfig = {
   humidity: {
     label: "Humidity",
-    color: "hsl(var(--chart-2))",
+    color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig;
 

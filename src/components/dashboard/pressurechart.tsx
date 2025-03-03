@@ -17,7 +17,7 @@ const API_URL = "https://data.cropsense.tech/data";
 const chartConfig = {
     pressure: {
         label: "Pressure",
-        color: "hsl(var(--chart-4))",
+        color: "hsl(var(--chart-1))",
     },
 } satisfies ChartConfig;
 
@@ -47,7 +47,7 @@ export function PressureChart() {
                     time: new Date(entry.time).toLocaleDateString("en-US", {
                         weekday: "short",
                     }),
-                    pressure: entry.pres, // Map pres field to pressure for the chart
+                    pressure: entry.pres / 100, // Divide pres field by 100 for the chart
                 }));
 
                 setChartData(formattedData);

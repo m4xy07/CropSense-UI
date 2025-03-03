@@ -17,7 +17,7 @@ const API_URL = "https://data.cropsense.tech/data";
 const chartConfig = {
   moisture: {
     label: "Moisture",
-    color: "hsl(var(--chart-5))",
+    color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig;
 
