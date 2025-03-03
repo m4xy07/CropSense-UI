@@ -1,8 +1,13 @@
+"use client";
+
+import { useEffect, useState } from "react"
 import { AppSidebar } from "@/components/app-sidebar"
 import { GroupChartComponent } from "@/components/dashboard/groupchart"
 import { LineChartComponent } from "@/components/dashboard/linecharts"
 import { StackedChartComponent } from "@/components/dashboard/stackedchart"
 import { BlendingModeIcon, OpacityIcon, ClockIcon } from "@radix-ui/react-icons"
+import { WifiZero, WifiLow, WifiHigh } from 'lucide-react';
+
 import { FaMountain } from "react-icons/fa";
 import {
   Breadcrumb,
@@ -18,8 +23,47 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { BarChartComponent } from "@/components/dashboard/barchart"
+
+const API_URL = "https://data.cropsense.tech/data";
 
 export default function Page() {
+  const [currentTime, setCurrentTime] = useState<string>("");
+  const [altitude, setAltitude] = useState<number | null>(null);
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setCurrentTime(now.toLocaleTimeString());
+    };
+
+    updateTime();
+    const intervalId = setInterval(updateTime, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    const fetchAltitude = async () => {
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error("Failed to fetch data");
+
+        const data = await response.json();
+        if (Array.isArray(data) && data.length > 0) {
+          const latestAltitude = data[data.length - 1]?.alt;
+          setAltitude(parseFloat(latestAltitude.toFixed(2)));
+        } else {
+          console.warn("API returned an empty or invalid response.");
+        }
+      } catch (error) {
+        console.error("Error fetching altitude data:", error);
+      }
+    };
+
+    fetchAltitude();
+  }, []);
+
   return (
     <SidebarProvider className="dark">
       <AppSidebar />
@@ -45,10 +89,12 @@ export default function Page() {
             </div>
             <div className="flex flex-row items-center gap-6">
 
+            
+
             <div className="flex flex-row  items-center gap-2">
                 <ClockIcon className="w-5 h-5 " />
                 <div className="text-[rgba(255,255,255,0.8)] text-sm">
-                  Current time
+                  {currentTime}
                 </div>
               </div>
               
@@ -62,7 +108,14 @@ export default function Page() {
               <div className="flex flex-row  items-center gap-2">
                 <FaMountain className="w-5 h-5 " />
                 <div className="text-[rgba(255,255,255,0.8)] text-sm">
-                  Altitude
+                  {altitude !== null ? `${altitude} m` : 'Loading...'}
+                </div>
+              </div>
+
+              <div className="flex flex-row  items-center gap-2">
+                <WifiHigh className="w-6 h-6 mb-2 -mr-1" />
+                <div className="text-[rgba(255,255,255,0.8)] text-sm">
+                  Connected
                 </div>
               </div>
               
@@ -96,7 +149,7 @@ export default function Page() {
               <StackedChartComponent cardTitle="Soil Nutrient Uptake" />
             </div>
             <div className="aspect-video rounded-xl bg-muted/50" >
-              <GroupChartComponent cardTitle="Crop Harvest & Pricing" />
+              <BarChartComponent cardTitle="Crop Harvest & Pricing" />
             </div>
           </div>
         </div>

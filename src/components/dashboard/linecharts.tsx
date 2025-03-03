@@ -31,8 +31,8 @@ const chartComponents = {
 const dataFieldMap = {
   temperature: 'temperature',
   humidity: 'humidity',
-  aqi: 'aqi',
-  heatIndex: 'hi', // Correct field name for heat index
+  AQI: 'aqi',
+  HI: 'hi', // Correct field name for heat index
   pressure: 'pres', // Correct field name for pressure
   moisture: 'moisture',
 };

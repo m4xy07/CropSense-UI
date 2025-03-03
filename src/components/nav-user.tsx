@@ -89,10 +89,10 @@ export function NavUser({
             </DropdownMenuGroup> */}
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
-              </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => (window as any).Clerk?.openUserProfile()} className="cursor-pointer">
+                  <BadgeCheck />
+                  Account
+                  </DropdownMenuItem>
               <DropdownMenuItem>
                 <CreditCard />
                 Billing

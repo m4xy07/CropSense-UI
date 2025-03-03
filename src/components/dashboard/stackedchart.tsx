@@ -45,10 +45,10 @@ export function StackedChartComponent({ cardTitle }: { cardTitle: string }) {
     <Card>
       <CardHeader>
         <CardTitle>{cardTitle}</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
+        <ChartContainer config={chartConfig} className="pt-0 p-6">
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis

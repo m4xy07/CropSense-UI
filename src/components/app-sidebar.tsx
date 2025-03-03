@@ -1,17 +1,8 @@
 "use client"
 
 import * as React from "react"
+import { useUser } from "@clerk/nextjs"
 import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
   PanelsTopLeft,
   TrendingUpDown,
   Landmark,
@@ -19,7 +10,6 @@ import {
   Users,
 } from "lucide-react"
 
-import { NavMain } from "@/components/nav-main"
 import { NavProjects } from "@/components/nav-projects"
 import { NavUser } from "@/components/nav-user"
 import {
@@ -31,48 +21,47 @@ import {
 } from "@/components/ui/sidebar"
 import Image from "next/image"
 
-// This is sample data.
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  
-  
-  projects: [
-    {
-      name: "Overview",
-      url: "#",
-      icon: PanelsTopLeft,
-    },
-    {
-      name: "Predictions",
-      url: "#",
-      icon: TrendingUpDown,
-    },
-    {
-      name: "Government Schemes",
-      url: "#",
-      icon: Landmark,
-    },
-    {
-      name: "Disease Detection",
-      url: "#",
-      icon: ShieldCheck,
-    },
-    {
-      name: "Forums",
-      url: "#",
-      icon: Users,
-    },
-  ],
-}
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { user } = useUser();
+
+  const data = {
+    user: {
+      name: user?.fullName || "Guest",
+      email: user?.primaryEmailAddress?.emailAddress || "guest@example.com",
+      avatar: user?.imageUrl || "/avatars/default.jpg", // Corrected property for profile image URL
+    },
+    projects: [
+      {
+        name: "Overview",
+        url: "#",
+        icon: PanelsTopLeft,
+      },
+      {
+        name: "Predictions",
+        url: "#",
+        icon: TrendingUpDown,
+      },
+      {
+        name: "Government Schemes",
+        url: "#",
+        icon: Landmark,
+      },
+      {
+        name: "Disease Detection",
+        url: "#",
+        icon: ShieldCheck,
+      },
+      {
+        name: "Forums",
+        url: "#",
+        icon: Users,
+      },
+    ],
+  };
+
   return (
-    <Sidebar  collapsible="icon" {...props}>
-      <SidebarHeader >
+    <Sidebar collapsible="icon" {...props}>
+      <SidebarHeader>
         <Image 
           src="/Logo_Rev_1_Transparent.png"
           alt="Logo"
@@ -81,7 +70,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           className="mx-auto py-4"
         />
       </SidebarHeader>
-      <SidebarContent >
+      <SidebarContent>
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
