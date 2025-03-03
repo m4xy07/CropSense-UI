@@ -47,7 +47,7 @@ export function LineChartComponent({ cardTitle }: { cardTitle: string }) {
     const fetchTemperature = async () => {
       console.log("Fetching temperature..."); // Debug log
       try {
-        const response = await fetch('http://159.65.139.84:3000/data');
+        const response = await fetch('https://data.cropsense.tech/data');
         console.log("Response received:", response);
 
         if (!response.ok) {

@@ -29,6 +29,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { SignOutButton, useClerk } from "@clerk/nextjs"
 
 export function NavUser({
   user,
@@ -40,7 +41,7 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
-
+  const { signOut } = useClerk()
   return (
     <SidebarMenu >
       <SidebarMenuItem>
@@ -103,8 +104,10 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
+              <button className="flex flex-row gap-2 items-center justify-left w-full" onClick={() => signOut({ redirectUrl: '/' })}>
               <LogOut />
-              Log out
+              Sign Out
+              </button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

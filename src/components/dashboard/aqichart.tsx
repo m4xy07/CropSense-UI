@@ -12,7 +12,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-const API_URL = "http://159.65.139.84:3000/data";
+const API_URL = "https://data.cropsense.tech/data";
 
 const chartConfig = {
   aqi: {
