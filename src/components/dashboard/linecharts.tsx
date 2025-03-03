@@ -41,6 +41,7 @@ export function LineChartComponent({ cardTitle }: { cardTitle: string }) {
 
   const [temperature, setTemperature] = useState<number | null>(null);
   const [temperatureChange, setTemperatureChange] = useState<number | null>(null);
+  const [dateRange, setDateRange] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchTemperature = async () => {
@@ -69,6 +70,11 @@ export function LineChartComponent({ cardTitle }: { cardTitle: string }) {
           // Calculate the percentage change
           const change = ((latestTemperature - weekBeforeAvgTemp) / weekBeforeAvgTemp) * 100;
           setTemperatureChange(parseFloat(change.toFixed(2)));
+
+          // Set the date range
+          const earliestMonth = new Date(data[0].time).toLocaleString('default', { month: 'long' });
+          const latestMonth = new Date(data[data.length - 1].time).toLocaleString('default', { month: 'long' });
+          setDateRange(`${earliestMonth} - ${latestMonth} ${new Date().getFullYear()}`);
         } else {
           console.warn("API returned an empty or invalid response.");
         }
@@ -86,7 +92,7 @@ export function LineChartComponent({ cardTitle }: { cardTitle: string }) {
       <CardHeader>
         <div className="space-y-1.5">
           <CardTitle>{cardTitle}</CardTitle>
-          <CardDescription>January - June 2024</CardDescription>
+          <CardDescription>{dateRange || 'Loading date range...'}</CardDescription>
         </div>
         <div>
           {temperature !== null ? `${temperature}°C` : 'Loading...'}
@@ -141,7 +147,7 @@ export function LineChartComponent({ cardTitle }: { cardTitle: string }) {
           ) : 'Calculating change...'}
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+          Showing temperature trends for the last week
         </div>
       </CardFooter>
     </Card>
