@@ -24,12 +24,14 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { BarChartComponent } from "@/components/dashboard/barchart"
+import { SelectTime } from "@/components/select"
 
 const API_URL = "https://data.cropsense.tech/data";
 
 export default function Page() {
   const [currentTime, setCurrentTime] = useState<string>("");
   const [altitude, setAltitude] = useState<number | null>(null);
+  const [timeFrame, setTimeFrame] = useState<string>("7 days");
 
   useEffect(() => {
     const updateTime = () => {
@@ -89,11 +91,13 @@ export default function Page() {
             </div>
             <div className="flex flex-row items-center gap-6">
 
-            
+            <div className="flex">
+            <SelectTime timeFrame={timeFrame} setTimeFrame={setTimeFrame} />
+          </div>
 
-            <div className="flex flex-row  items-center gap-2">
-                <ClockIcon className="w-5 h-5 " />
-                <div className="text-[rgba(255,255,255,0.8)] text-sm">
+            <div className="flex flex-row w-[80px]  items-center gap-2">
+                <ClockIcon className="w-[20px] h-[20px] " />
+                <div className="text-[rgba(255,255,255,0.8)] w-[52px] text-sm">
                   {currentTime}
                 </div>
               </div>
@@ -123,27 +127,28 @@ export default function Page() {
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+          
           <div className="grid auto-rows-min gap-4 md:grid-cols-4">
             <div className="aspect-video rounded-xl bg-muted/50" >
-              <LineChartComponent cardTitle="Temperature" dataType="temperature"/>
+              <LineChartComponent cardTitle="Temperature" dataType="temperature" timeFrame={timeFrame} />
             </div>
             <div className="aspect-video rounded-xl bg-muted/50" >
-              <LineChartComponent cardTitle="Humidity" dataType="humidity" />
+              <LineChartComponent cardTitle="Humidity" dataType="humidity" timeFrame={timeFrame} />
             </div>
             <div className="aspect-video rounded-xl bg-muted/50" >
-            <LineChartComponent cardTitle="Air Quality Index (AQI)" dataType="aqi" />
+            <LineChartComponent cardTitle="Air Quality Index (AQI)" dataType="aqi" timeFrame={timeFrame} />
             </div>
             <div className="aspect-video rounded-xl bg-muted/50" >
-            <LineChartComponent cardTitle="Heat Index (HI)" dataType="heatIndex" />
+            <LineChartComponent cardTitle="Heat Index (HI)" dataType="heatIndex" timeFrame={timeFrame} />
             </div>
           </div>
           {/* <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" /> */}
           <div className="grid auto-rows-min gap-4 md:grid-cols-4">
           <div className="aspect-video rounded-xl bg-muted/50" >
-              <LineChartComponent cardTitle="Pressure" dataType="pressure"/>
+              <LineChartComponent cardTitle="Pressure" dataType="pressure" timeFrame={timeFrame} />
             </div>
             <div className="aspect-video rounded-xl bg-muted/50" >
-              <LineChartComponent cardTitle="Moisture" dataType="moisture"/>
+              <LineChartComponent cardTitle="Moisture" dataType="moisture" timeFrame={timeFrame} />
             </div>
             <div className="aspect-video rounded-xl bg-muted/50" >
               <StackedChartComponent cardTitle="Soil Nutrient Uptake" />

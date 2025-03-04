@@ -46,10 +46,11 @@ const unitMap = {
   moisture: '%',
 };
 
-export function LineChartComponent({ cardTitle, dataType }: { cardTitle: string, dataType: string }) {
+export function LineChartComponent({ cardTitle, dataType, timeFrame }: { cardTitle: string, dataType: string, timeFrame: string }) {
   const [value, setValue] = useState<number | null>(null);
   const [valueChange, setValueChange] = useState<number | null>(null);
   const [dateRange, setDateRange] = useState<string | null>(null);
+  const [chartData, setChartData] = useState<{ time: string; value: number }[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,22 +77,60 @@ export function LineChartComponent({ cardTitle, dataType }: { cardTitle: string,
           console.log(`Latest ${dataType}:`, latestValue);
           setValue(parseFloat(latestValue.toFixed(2)));
 
-          // Calculate the average value of the week before the recorded week
-          const weekBeforeData = data.slice(-14, -7);
-          let weekBeforeAvgValue = weekBeforeData.reduce((sum, entry) => sum + entry[dataFieldMap[dataType]], 0) / weekBeforeData.length;
-          if (dataType === 'pressure') {
-            weekBeforeAvgValue /= 100; // Divide pressure value by 100
+          // Filter data based on the selected time frame
+          const now = new Date();
+          let startDate;
+          switch (timeFrame) {
+            case '24 hours':
+              startDate = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+              break;
+            case '7 days':
+              startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+              break;
+            case '14 days':
+              startDate = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
+              break;
+            case '1 month':
+              startDate = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+              break;
+            case 'lifetime':
+              startDate = new Date(data[0].time);
+              break;
+            default:
+              startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
           }
-          console.log(`Week before average ${dataType}:`, weekBeforeAvgValue);
+
+          const filteredData = data.filter((entry: { time: string }) => {
+            const entryDate = new Date(entry.time);
+            return entryDate >= startDate && entryDate <= now;
+          });
+
+          const formattedData = filteredData.map((entry: { time: string } & { [key: string]: number }) => ({
+            time: new Date(entry.time).toLocaleDateString("en-US", {
+              weekday: timeFrame === '24 hours' || timeFrame === '7 days' ? 'short' : undefined,
+              month: timeFrame === '1 month' || timeFrame === 'lifetime' ? 'short' : undefined,
+              day: 'numeric',
+            }),
+            value: dataType === 'pressure' ? entry[dataFieldMap[dataType]] / 100 : entry[dataFieldMap[dataType]],
+          }));
+
+          setChartData(formattedData);
+
+          // Calculate the average value of the selected time frame
+          let timeFrameAvgValue = filteredData.reduce((sum, entry) => sum + entry[dataFieldMap[dataType]], 0) / filteredData.length;
+          if (dataType === 'pressure') {
+            timeFrameAvgValue /= 100; // Divide pressure value by 100
+          }
+          console.log(`Time frame average ${dataType}:`, timeFrameAvgValue);
 
           // Calculate the percentage change
-          const change = ((latestValue - weekBeforeAvgValue) / weekBeforeAvgValue) * 100;
+          const change = ((latestValue - timeFrameAvgValue) / timeFrameAvgValue) * 100;
           setValueChange(parseFloat(change.toFixed(2)));
 
           // Set the date range
-          const earliestMonth = new Date(data[0].time).toLocaleString('default', { month: 'long' });
-          const latestMonth = new Date(data[data.length - 1].time).toLocaleString('default', { month: 'long' });
-          setDateRange(`${earliestMonth} - ${latestMonth} ${new Date().getFullYear()}`);
+          const earliestDate = new Date(filteredData[0].time).toLocaleDateString();
+          const latestDate = new Date(filteredData[filteredData.length - 1].time).toLocaleDateString();
+          setDateRange(`${earliestDate} - ${latestDate}`);
         } else {
           console.warn("API returned an empty or invalid response.");
         }
@@ -101,7 +140,7 @@ export function LineChartComponent({ cardTitle, dataType }: { cardTitle: string,
     };
 
     fetchData();
-  }, [dataType]);
+  }, [dataType, timeFrame]);
 
   const ChartComponent = chartComponents[dataType];
 
@@ -117,13 +156,13 @@ export function LineChartComponent({ cardTitle, dataType }: { cardTitle: string,
         </div>
       </CardHeader>
       <CardContent>
-        {ChartComponent && <ChartComponent />}
+        {ChartComponent && <ChartComponent data={chartData} />}
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 font-medium leading-none">
           {valueChange !== null ? (
             <>
-              {`Trending ${valueChange > 0 ? 'up' : 'down'} by ${Math.abs(valueChange)}% this week`}
+              {`Trending ${valueChange > 0 ? 'up' : 'down'} by ${Math.abs(valueChange)}% last ${timeFrame}`}
               {valueChange > 0 ? (
                 <TrendingUp className="h-4 w-4" />
               ) : (
@@ -132,8 +171,8 @@ export function LineChartComponent({ cardTitle, dataType }: { cardTitle: string,
             </>
           ) : 'Calculating change...'}
         </div>
-        <div className="leading-none text-muted-foreground">
-          Showing {dataType} trends for the last week
+        <div className="leading-snug text-muted-foreground">
+          Showing {dataType} trends for the selected time frame
         </div>
       </CardFooter>
     </Card>
