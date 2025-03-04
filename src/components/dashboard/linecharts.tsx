@@ -31,8 +31,8 @@ const chartComponents = {
 const dataFieldMap = {
   temperature: 'temperature',
   humidity: 'humidity',
-  AQI: 'aqi',
-  HI: 'hi', // Correct field name for heat index
+  aqi: 'aqi',
+  heatIndex: 'hi', // Correct field name for heat index
   pressure: 'pres', // Correct field name for pressure
   moisture: 'moisture',
 };
@@ -67,6 +67,9 @@ export function LineChartComponent({ cardTitle, dataType }: { cardTitle: string,
 
         if (Array.isArray(data) && data.length > 0) {
           let latestValue = data[data.length - 1]?.[dataFieldMap[dataType]];
+          if (latestValue === undefined) {
+            throw new Error(`Data field ${dataFieldMap[dataType]} is undefined`);
+          }
           if (dataType === 'pressure') {
             latestValue /= 100; // Divide pressure value by 100
           }

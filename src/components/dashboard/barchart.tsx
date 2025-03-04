@@ -5,7 +5,6 @@ import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts"
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -49,8 +48,8 @@ export function BarChartComponent({ cardTitle }: { cardTitle: string }) {
           const latestMonthData = latestRecord.harvestable_months[latestRecord.harvestable_months.length - 1];
           setHarvestableMonth(latestMonthData.month);
           setChartData([
-            { label: "Wholesale", price: latestMonthData.wholesale_price },
-            { label: "Retail", price: latestMonthData.retail_price },
+            { label: "Wholesale", price: parseFloat(latestMonthData.wholesale_price.toFixed(2)) },
+            { label: "Retail", price: parseFloat(latestMonthData.retail_price.toFixed(2)) },
           ]);
         } else {
           console.warn("API returned an empty or invalid response.");
@@ -83,6 +82,7 @@ export function BarChartComponent({ cardTitle }: { cardTitle: string }) {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
+              hide // Hide the y-axis labels
             />
             <XAxis type="number" hide />
             <ChartTooltip
