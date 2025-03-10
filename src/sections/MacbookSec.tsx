@@ -6,7 +6,7 @@ import { LampDemo } from "@/components/ui/lamps";
 const MacbookSec = () => {
   return (
     
-    <section id="team" className="pb-10 mb-80 -mt-48 lg:pb-20">
+    <section id="team" className="pb-10 mb-24 -mt-48 lg:pb-20">
       <LampDemo/> 
       <div className="container -mt-48 mx-auto">
         <MacbookScrollDemo/>

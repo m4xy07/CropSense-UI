@@ -17,7 +17,7 @@ export default function Home() {
       <MacbookSec/>
       <FeaturesSec/>
       <PricingSec/>
-      {/* <CallToAction/> */}
+      <CallToAction/>
       <Footer />
     </>
   
