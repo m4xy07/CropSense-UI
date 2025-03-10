@@ -13,8 +13,8 @@ export default function Home() {
     <>
       <Header />
       <Example/> 
-      <LogoTicker />
-      {/* <MacbookSec/> */}
+      {/* <LogoTicker /> */}
+      <MacbookSec/>
       <FeaturesSec/>
       <PricingSec/>
       <CallToAction/>
