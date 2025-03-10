@@ -4,7 +4,7 @@ import "./globals.css";
 import { twMerge } from "tailwind-merge";
 import { ClerkProvider, SignedIn } from "@clerk/nextjs";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
   title: "CropSense",
@@ -38,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.variable}>
       <ClerkProvider
         appearance={{
           layout: {
@@ -55,7 +55,7 @@ export default function RootLayout({
       >
         <body
           className={twMerge(
-            inter.className,
+            "font-Rebond-Grotesque",
             "bg-black text-white antialiased"
           )}
         >

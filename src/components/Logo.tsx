@@ -8,7 +8,7 @@ import { SpacingToken } from "../types";
 import { Flex } from "./Flex";
 
 const sizeMap: Record<string, SpacingToken> = {
-  xs: "8",
+  xs: "2",
   s: "24",
   m: "32",
   l: "40",

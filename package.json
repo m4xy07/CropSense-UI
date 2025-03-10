@@ -55,6 +55,8 @@
     "lucide-react": "^0.474.0",
     "motion": "^12.3.1",
     "next": "^14.2.15",
+    "ogl": "^1.0.11",
+    "postprocessing": "^6.37.1",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.3.1",
@@ -65,7 +67,8 @@
     "sass": "^1.83.4",
     "scroll-lock": "^2.1.5",
     "tailwind-merge": "^2.6.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "three": "^0.167.1"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",

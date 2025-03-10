@@ -99,7 +99,7 @@ export const Hero = () => {
     <div className="container relative mt-16">
       <h1 className="text-7xl md:text-[120px] md:leading-none font-semibold tracking-tighter effect-font-gradient text-center">CropSense</h1>
       <p className="text-lg md:text-xl text-white/70 mt-5 text-center max-w-xl mx-auto">
-        Tech So Bright, Crops Grow Right!
+        An initiative towards a greener tomorrow.
       </p>
       <div className="flex justify-center mt-5">
         <Button>Get Started</Button>

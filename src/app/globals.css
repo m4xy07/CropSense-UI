@@ -2,8 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
+@layer base {
+  @font-face {
+    font-family: 'Rebond Grotesque';
+    font-weight: 400;
+    src: url("/fonts/RebondGrotesqueTRIAL-Regular.otf") format("opentype");
+  }
+  @font-face {
+    font-family: 'Rebond Grotesque';
+    font-weight: 500;
+    src: url("/fonts/RebondGrotesqueTRIAL-Medium.otf") format("opentype");
+  }
+  @font-face {
+    font-family: 'Rebond Grotesque';
+    font-weight: 600;
+    src: url("/fonts/RebondGrotesqueTRIAL-Semibold.otf") format("opentype");
+  }
+  @font-face {
+    font-family: 'Rebond Grotesque';
+    font-weight: 700;
+    src: url("/fonts/RebondGrotesqueTRIAL-Bold.otf") format("opentype");
+  }
+  @font-face {
+    font-family: 'Rebond Grotesque';
+    font-weight: 800;
+    src: url("/fonts/RebondGrotesqueTRIAL-ExtraBold.otf") format("opentype");
+  }
+}
+
+body {
   scroll-behavior: smooth;
+  font-family: 'Rebond Grotesque', sans-serif;
 }
 
 [type='text'], [type='password'] {
@@ -26,8 +55,6 @@ body{
   outline-offset: unset !important;
   transition: border-color 0.2s ease-in-out, outline-color 0.2s ease-in-out !important;
 }
-
-
 
 .effect-font-hero {
     -webkit-text-stroke: .4px #ffffff80;
@@ -121,6 +148,9 @@ body{
     }
 }
 
+.font-inter {
+  font-family: var(--font-inter), sans-serif;
+}
 
 .cl-userButtonPopoverActionButtonIcon {
   color: white;
@@ -290,8 +320,6 @@ body{
   color: #000;
 }
 
-
-
 .cl-internal-r26unt{
   font-size: 1rem;
   line-height: 1.5rem;
@@ -391,11 +419,9 @@ body{
   transition: border-color 0.2s ease-in-out, outline-color 0.2s ease-in-out !important;
 }
 
-
 .cl-internal-1hp5nqm{
   display: none !important;
 }
-
 
 @layer base {
   * {

@@ -20,6 +20,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import Image from "next/image"
+import Link from "next/link"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useUser();
@@ -62,6 +63,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
+        <Link href="/">
         <Image 
           src="/Logo_Rev_1_Transparent.png"
           alt="Logo"
@@ -69,6 +71,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           height={50}
           className="mx-auto py-4"
         />
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <NavProjects projects={data.projects} />

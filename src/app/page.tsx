@@ -7,6 +7,8 @@ import { CallToAction } from "@/sections/CallToAction";
 import FeaturesSec from "@/sections/FeaturesSec";
 import PricingSec from "@/sections/Pricing";
 import Example from "@/sections/HeroNew";
+import { TextRevealDemo } from "@/components/TextRevealDemo";
+import AnimatedTextSec from "@/sections/AnimatedTextSec";
 
 export default function Home() {
   return (
@@ -14,8 +16,10 @@ export default function Home() {
       <Header />
       <Example/> 
       <LogoTicker />
+      <TextRevealDemo/>
       <MacbookSec/>
       <FeaturesSec/>
+      <AnimatedTextSec/>
       <PricingSec/>
       <CallToAction/>
       <Footer />

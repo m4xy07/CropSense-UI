@@ -1,7 +1,10 @@
+"use client";
 import { BentoCard } from "@/components/bentogrid";
 import { Keyboard } from "@/components/keyboard";
 import { LogoCluster } from "@/components/logocluster";
 import { Map } from "@/components/map";
+import { AnimatedBeamMultipleOutputDemo } from "@/components/MultipleAnimatedBeam";
+import Orb from "@/components/Orb/Orb";
 import React from "react";
 
 const FeaturesSec = () => {
@@ -39,8 +42,9 @@ const FeaturesSec = () => {
         title="Farm-Specific Real-Time Data"
         description="CropSense gathers real-time temperature, humidity, soil moisture, and air quality data directly from on-site sensors, ensuring farmers get hyper-local and highly accurate environmental information."
         graphic={
-
-          <div className="h-80 bg-[url(https://res.cloudinary.com/eldoraui/image/upload/v1734021365/profile_ldoiwc.png)] bg-[size:1000px_560px] bg-[left_-109px_top_-112px] bg-no-repeat" />
+          <div style={{backgroundColor: '#030816' }}>
+          <AnimatedBeamMultipleOutputDemo />
+          </div>
         }
         fade={["bottom"]}
         className="max-lg:rounded-t-4xl lg:rounded-tl-4xl lg:col-span-3"
@@ -51,7 +55,17 @@ const FeaturesSec = () => {
         description="The system recommends the best crops to sow based on real-time conditions and market trends while also identifying crop diseases using AI image recognition for proactive management."
         graphic={
 
-          <div className="absolute inset-0 bg-[url(https://res.cloudinary.com/eldoraui/image/upload/v1734021357/competitors_ouucah.png)] bg-[size:1100px_650px] bg-[left_-38px_top_-73px] bg-no-repeat" />
+          // <div className="absolute inset-0 bg-[url(https://res.cloudinary.com/eldoraui/image/upload/v1734021357/competitors_ouucah.png)] bg-[size:1100px_650px] bg-[left_-38px_top_-73px] bg-no-repeat" />
+
+          <div style={{ width: '100%', height: '300px', position: 'relative', zIndex: 30, backgroundColor: '#030816' }}>
+          <Orb
+            hoverIntensity={0.5}
+            rotateOnHover={true}
+            hue={0}
+            forceHoverState={false}
+          />
+        </div>
+
         }
         fade={["bottom"]}
         className="lg:rounded-tr-4xl lg:col-span-3"

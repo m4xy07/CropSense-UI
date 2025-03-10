@@ -72,7 +72,7 @@ export default function Footerdemo() {
               <p>123 Innovation Street</p>
               <p>Tech City, TC 12345</p>
               <p>Phone: (123) 456-7890</p>
-              <p>Email: hello@example.com</p>
+              <p>Email: aman@cropsense.tech</p>
             </address>
           </div>
           <div className="relative">

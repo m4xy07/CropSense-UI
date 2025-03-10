@@ -6,6 +6,7 @@ import createGlobe from 'cobe';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import starsBg from "@/assets/stars.png";
 import Button from '@/components/Button';
+import Link from 'next/link';
 
 
 
@@ -91,10 +92,12 @@ export default function Example() {
             CropSense
           </h2>
           <p className="text-lg z-40 md:text-xl text-white/70 mt-5 text-center max-w-xl mx-auto">
-            Tech So Bright, Crops Grow Right!
+            An initiative towards a greener tomorrow.
         </p>
         <div className="flex z-40 justify-center mt-5">
+          <Link href={'/sign-up'}>
             <Button>Get Started</Button>
+            </Link>
         </div>
           <canvas
             className="absolute top-[10rem] z-20 aspect-square size-full max-w-fit sm:top-[7.1rem] md:top-[24rem]"

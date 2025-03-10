@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "motion/react";
 import { CheckIcon, DollarSignIcon, EuroIcon } from "lucide-react";
-import { RiCheckboxCircleFill } from '@remixicon/react';
+import { RiCheckboxCircleFill, RiCloseCircleFill } from '@remixicon/react';
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 type BilledType = "monthly" | "annually" | "lifetime";
@@ -15,8 +15,8 @@ const pricingData: OfferCardProps[] = [
       annually: 149,
       lifetime: 7999,
     },
-    features: ["10 users included", "2 GB of storage", "Email support"],
-    infos: ["30 users included", "15 GB of storage", "Phone and email support"],
+    features: ["Best crop suggestions", "Crop analysis", "1 month real time data", "Upto 1 acre of land coverage"],
+    infos: ["Detailed soil analysis", "Community driven", "Market price prediction", "Disease detection"],
   },
   {
     title: "Pro",
@@ -27,11 +27,10 @@ const pricingData: OfferCardProps[] = [
       lifetime: 19999,
     },
     features: [
-      "20 users included",
-      "10 GB of storage",
-      "Priority email support",
+      "Best crop suggestions", "Crop analysis", "6 months real time data", "Upto 5 acres of land coverage", "Detailed soil analysis", "Community driven", "Market price prediction", "Disease detection"
     ],
-    infos: ["30 users included", "15 GB of storage", "Phone and email support"],
+    infos: ["Custom analytics & reports", "24/7 premium support","Automated farm management system"],
+    
     isBestValue: true,
   },
   {
@@ -43,11 +42,14 @@ const pricingData: OfferCardProps[] = [
       lifetime: 44999,
     },
     features: [
-      "30 users included",
-      "15 GB of storage",
-      "Phone and email support",
+      "Everything in the Pro plan",
+      "Unlimited real-time data access",
+      "Up to 50 acres of land coverage",
+      "Automated farm management system",
+      "Custom analytics & reports",
+      "24/7 premium support",
     ],
-    infos: ["30 users included", "15 GB of storage", "Phone and email support"],
+    
   },
   
 ];
@@ -127,7 +129,7 @@ const OfferCard = ({
 
 
       <div
-        className={cn("p-6")}
+        className={cn("p-6 h-full")}
         style={
           isBestValue 
             ? {
@@ -182,7 +184,8 @@ const OfferCard = ({
             <ul className="space-y-2">
               {infos.map((feature) => (
                 <li className="flex items-center gap-2" key={feature}>
-                  <div className="size-1.5 rounded-full bg-neutral-500" />
+                  {/* <div className="size-1.5 rounded-full bg-neutral-500" /> */}
+                  <RiCloseCircleFill className="size-4 rounded-full  fill-[#FF4D4F]" />
                   <div className=" text-sm">{feature}</div>
                 </li>
               ))}

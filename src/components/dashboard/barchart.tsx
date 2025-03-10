@@ -35,6 +35,8 @@ const chartConfig = {
 export function BarChartComponent({ cardTitle }: { cardTitle: string }) {
   const [chartData, setChartData] = useState<{ label: string; price: number }[]>([]);
   const [harvestableMonth, setHarvestableMonth] = useState<string | null>(null);
+  const [bestCrop, setBestCrop] = useState<string | null>(null);
+  const [recommendedFertilizer, setRecommendedFertilizer] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,6 +53,8 @@ export function BarChartComponent({ cardTitle }: { cardTitle: string }) {
             { label: "Wholesale", price: parseFloat(latestMonthData.wholesale_price.toFixed(2)) },
             { label: "Retail", price: parseFloat(latestMonthData.retail_price.toFixed(2)) },
           ]);
+          setBestCrop(latestRecord?.best_crop || null);
+          setRecommendedFertilizer(latestRecord?.recommended_fertilizer || null);
         } else {
           console.warn("API returned an empty or invalid response.");
         }
@@ -117,8 +121,14 @@ export function BarChartComponent({ cardTitle }: { cardTitle: string }) {
         <div className="flex gap-2 font-medium leading-none">
           Harvestable month(s): {harvestableMonth || 'Loading...'}
         </div>
-        <div className="leading-snug text-muted-foreground">
+        {/* <div className="leading-snug text-muted-foreground">
           Showing the wholesale and retail prices
+        </div> */}
+        <div className="text-[rgba(255,255,255,0.8)] text-sm mt-2">
+          Best Crop: {bestCrop || 'Loading...'}
+        </div>
+        <div className="text-[rgba(255,255,255,0.8)] text-sm">
+          Recommended Fertilizer: {recommendedFertilizer || 'Loading...'}
         </div>
       </CardFooter>
     </Card>

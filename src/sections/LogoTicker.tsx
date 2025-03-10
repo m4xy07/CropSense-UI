@@ -1,5 +1,6 @@
 'use client';
-import { LogoCloud } from '@/components/LogoCloud';
+import PixelCard from '@/components/PixelCard/PixelCard';
+import Image from 'next/image';
 
 
 export const LogoTicker = () => {
@@ -10,91 +11,53 @@ export const LogoTicker = () => {
     >
       <div className="pt-14">
         <div className="mx-auto max-w-screen-xl px-4 md:px-8">
-          <h2 className="text-center text-lg  font-medium text-white/70">
-            Built on
+          <h2 className="text-center text-lg font-inter font-medium text-white/70">
+            Saving farms, one crop at a time using
           </h2>
-          <div className="mt-12">
-            
-          <LogoCloud
-  limit={6}
-  logos={[
-    {
-      href: "https://enroll.dopler.app",
-      icon: false,
-      size: "xs",
-      wordmarkSrc: "/assets/trademark/NextJSLogo.png",
-    },
-    {
-      href: "https://dopler.app",
-      icon: false,
-      size: "xs",
-      wordmarkSrc: "/assets/trademark/GoogleCollab.png",
-    },
-    {
-      href: "https://club.dopler.io",
-      icon: false,
-      size: "xs",
-      wordmarkSrc: "/assets/trademark/ReactLogo.png",
-    },
-    {
-      href: "https://magic-portfolio.com",
-      icon: false,
-      size: "xs",
-      wordmarkSrc: "/assets/trademark/TwilioLogo.png",
-    },
-    {
-      href: "https://enroll.dopler.app",
-      icon: false,
-      size: "xs",
-      wordmarkSrc: "/assets/trademark/ExpressLogo.png",
-    },
-    {
-      href: "https://dopler.app",
-      icon: false,
-      size: "xs",
-      wordmarkSrc: "/assets/trademark/ollamaLogo.png",
-    },
-    {
-      href: "https://enroll.dopler.app",
-      icon: false,
-      size: "xs",
-      wordmarkSrc: "/assets/trademark/kaggleLogo.png",
-    },
-    {
-      href: "https://dopler.app",
-      icon: false,
-      size: "xs",
-      wordmarkSrc: "/assets/trademark/nodeJSLogo.png",
-    },
-    {
-      href: "https://enroll.dopler.app",
-      icon: false,
-      size: "xs",
-      wordmarkSrc: "/assets/trademark/PythonLogo.png",
-    },
-    {
-      href: "https://dopler.app",
-      icon: false,
-      size: "xs",
-      wordmarkSrc: "/assets/trademark/huggingfaceLogo.png",
-    },
-    {
-      href: "https://club.dopler.io",
-      icon: false,
-      size: "xs",
-      wordmarkSrc: "/assets/trademark/MongoDBLogo.png",
-    },
-    {
-      href: "https://magic-portfolio.com",
-      icon: false,
-      size: "xs",
-      wordmarkSrc: "/assets/trademark/raspberryLogo.png",
-    },
+          <div className="mt-12 flex flex-col items-center justify-center">
+            <div className='flex flex-row items-center justify-center mx-auto'>
+          <PixelCard variant="default">
+            <Image src={"/assets/trademark/NextJSLogo.png"} width={65} height={100} alt="NextJS Logo"/>
+          </PixelCard>
+          <PixelCard variant="yellow">
+            <Image src={"/assets/trademark/GoogleCollab.png"} width={60} height={100} alt="NextJS Logo"/>
+          </PixelCard>
+          <PixelCard variant="blue">
+            <Image src={"/assets/trademark/ReactLogo.png"} width={40} height={100} alt="NextJS Logo"/>
+          </PixelCard>
+          <PixelCard variant="pink">
+            <Image src={"/assets/trademark/TwilioLogo.png"} width={60} height={100} alt="NextJS Logo"/>
+          </PixelCard>
+          <PixelCard variant="default">
+            <Image src={"/assets/trademark/ExpressLogo.png"} width={35} height={100} alt="NextJS Logo"/>
+          </PixelCard>
+          <PixelCard variant="pink">
+            <Image src={"/assets/trademark/raspberryLogo.png"} width={35} height={100} alt="NextJS Logo"/>
+          </PixelCard>
+          </div>
 
-  ]}
-  columns={3} 
-  mobileColumns={1} // Stack on mobile
-/>
+          <div className='flex flex-row items-center justify-center mx-auto'>
+          <PixelCard variant="default">
+            <Image src={"/assets/trademark/ollamaLogo.png"} width={45} height={100} alt="NextJS Logo"/>
+          </PixelCard>
+          <PixelCard variant="blue">
+            <Image src={"/assets/trademark/kaggleLogo.png"} width={60} height={100} alt="NextJS Logo"/>
+          </PixelCard>
+          <PixelCard variant="default">
+            <Image src={"/assets/trademark/nodeJSLogo.png"} width={70} height={100} alt="NextJS Logo"/>
+          </PixelCard>
+          <PixelCard variant="blue">
+            <Image src={"/assets/trademark/PythonLogo.png"} width={40} height={100} alt="NextJS Logo"/>
+          </PixelCard>
+          <PixelCard variant="yellow">
+            <Image src={"/assets/trademark/huggingfaceLogo.png"} width={55} height={100} alt="NextJS Logo"/>
+          </PixelCard>
+          <PixelCard variant="default">
+            <Image src={"/assets/trademark/MongoDBLogo.png"} width={20} height={100} alt="NextJS Logo"/>
+          </PixelCard>
+          </div>
+
+          
 
           </div>
         </div>
