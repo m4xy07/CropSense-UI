@@ -5,7 +5,7 @@ const PricingSec = () => {
   return (
     <section id="team" className="pb-12 mb-20 pt-12">
       <div className="container mx-auto">
-      <div className="flex h-40">
+      {/* <div className="flex h-40">
         <video 
                 src="/videos/3d-smtp.mp4"
                 autoPlay
@@ -14,7 +14,7 @@ const PricingSec = () => {
                 height={170}
                 className="mx-auto"
                 muted />
-        </div>
+        </div> */}
         <div className="-mx-4 flex flex-wrap">
         
           <div className="w-full px-4">

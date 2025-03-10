@@ -8,7 +8,7 @@ const FeaturesSec = () => {
   return (
     <section id="team" className="pb-12 mb-20 pt-[28rem] bg-dark ">
       <div className="container mx-auto">
-        <div className="flex h-40">
+        {/* <div className="flex h-40">
         <video 
                 src="/videos/3d-broadcast1.mp4"
                 autoPlay
@@ -17,7 +17,7 @@ const FeaturesSec = () => {
                 height={170}
                 className="mx-auto"
                 muted />
-        </div>
+        </div> */}
             
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
