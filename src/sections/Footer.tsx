@@ -53,13 +53,13 @@ export default function Footerdemo() {
                 Home
               </a>
               <a href="#" className="block w-fit transition-colors text-white/70 hover:text-white">
-                About Us
+                Features
               </a>
               <a href="#" className="block w-fit transition-colors text-white/70 hover:text-white">
-                Services
+                Team
               </a>
               <a href="#" className="block w-fit transition-colors text-white/70 hover:text-white">
-                Products
+                About
               </a>
               <a href="#" className="block w-fit transition-colors text-white/70 hover:text-white">
                 Contact
