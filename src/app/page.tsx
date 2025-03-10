@@ -14,7 +14,7 @@ export default function Home() {
       <Header />
       <Example/> 
       <LogoTicker />
-      <MacbookSec/>
+      {/* <MacbookSec/> */}
       <FeaturesSec/>
       <PricingSec/>
       <CallToAction/>
