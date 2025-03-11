@@ -95,7 +95,7 @@ export default function Example() {
             An initiative towards a greener tomorrow.
         </p>
         <div className="flex z-40 justify-center mt-5">
-          <Link href={'/sign-up'}>
+          <Link href={'/dashboard'}>
             <Button>Get Started</Button>
             </Link>
         </div>
