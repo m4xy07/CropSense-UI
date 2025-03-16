@@ -161,7 +161,7 @@ export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpande
             <AreaChart
               accessibilityLayer
               data={chartData}
-              margin={{ left: 12, right: 12, top: 12 }}
+              margin={{ left: 0, right: 0, top: 0 }}
               stackOffset="expand"
             >
               <CartesianGrid vertical={false} />

@@ -1,76 +1,93 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { useUser } from "@clerk/nextjs"
+import * as React from "react";
+import { useUser } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
 import {
   PanelsTopLeft,
   TrendingUpDown,
   Landmark,
   ShieldCheck,
   Users,
-} from "lucide-react"
+  ClipboardPlus,
+  TextSearch,
+} from "lucide-react";
 
-import { NavProjects } from "@/components/nav-projects"
-import { NavUser } from "@/components/nav-user"
+import { NavProjects } from "@/components/nav-projects";
+import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import Image from "next/image"
-import Link from "next/link"
+} from "@/components/ui/sidebar";
+import Image from "next/image";
+import Link from "next/link";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useUser();
+  const pathname = usePathname();
 
   const data = {
     user: {
       name: user?.fullName || "Guest",
       email: user?.primaryEmailAddress?.emailAddress || "guest@example.com",
-      avatar: user?.imageUrl || "/avatars/default.jpg", // Corrected property for profile image URL
+      avatar: user?.imageUrl || "/avatars/default.jpg",
     },
     projects: [
       {
         name: "Overview",
-        url: "#",
+        url: "/dashboard",
         icon: PanelsTopLeft,
       },
       {
         name: "Predictions",
-        url: "#",
+        url: "/dashboard/predictions",
         icon: TrendingUpDown,
       },
       {
+        name: "Data Insights",
+        url: "/dashboard/insights",
+        icon: TextSearch,
+      },
+      {
         name: "Government Schemes",
-        url: "#",
+        url: "/dashboard/schemes",
         icon: Landmark,
       },
       {
         name: "Disease Detection",
-        url: "#",
+        url: "/dashboard/disease-detection",
         icon: ShieldCheck,
       },
       {
         name: "Forums",
-        url: "#",
+        url: "/dashboard/forums",
         icon: Users,
       },
-    ],
+      {
+        name: "Soil Report",
+        url: "/dashboard/soil-report",
+        icon: ClipboardPlus,
+      },
+    ].map((project) => ({
+      ...project,
+      active: pathname === project.url || (project.url !== "/dashboard" && pathname.startsWith(project.url + "/")),
+    })),
   };
 
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <Link href="/">
-        <Image 
-          src="/Logo_Rev_1_Transparent.png"
-          alt="Logo"
-          width={150}
-          height={50}
-          className="mx-auto py-4"
-        />
+          <Image
+            src="/Logo_Rev_1_Transparent.png"
+            alt="Logo"
+            width={150}
+            height={50}
+            className="mx-auto py-4"
+          />
         </Link>
       </SidebarHeader>
       <SidebarContent>
@@ -81,5 +98,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

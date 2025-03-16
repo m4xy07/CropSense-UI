@@ -189,7 +189,7 @@ export function LineChartComponent({
             "No data"
           )}
         </div>
-        <div className="leading-snug text-muted-foreground">Showing {dataType} trends for the selected time frame</div>
+        
       </CardFooter>
     </Card>
   );
