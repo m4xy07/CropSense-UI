@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { TemperatureChart } from "./temperaturechart";
 import { HumidityChart } from "./humiditychart";
 import { AQIChart } from "./aqichart";
@@ -32,8 +33,8 @@ const dataFieldMap = {
   temperature: "temperature",
   humidity: "humidity",
   aqi: "aqi",
-  heatIndex: "hi", // Correct field name for heat index
-  pressure: "pres", // Correct field name for pressure
+  heatIndex: "hi",
+  pressure: "pres",
   moisture: "moisture",
 };
 
@@ -63,7 +64,6 @@ export function LineChartComponent({
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(`Fetching ${dataType} data for ${timeFrame}...`);
       setLoading(true);
       setChartData([]);
       setValue(null);
@@ -71,30 +71,17 @@ export function LineChartComponent({
       setDateRange(null);
 
       try {
-        // **If API supports timeframe filtering, modify URL**
         const requestUrl = `${API_URL}?timeFrame=${encodeURIComponent(timeFrame)}`;
         const response = await fetch(requestUrl);
-        console.log("Response received:", response);
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const data = await response.json();
-        console.log("API Response:", data);
 
         if (Array.isArray(data) && data.length > 0) {
           let latestValue = data[data.length - 1]?.[dataFieldMap[dataType]];
-          if (latestValue === undefined) {
-            throw new Error(`Data field ${dataFieldMap[dataType]} is undefined`);
-          }
-          if (dataType === "pressure") {
-            latestValue /= 100;
-          }
-          console.log(`Latest ${dataType}:`, latestValue);
+          if (latestValue === undefined) throw new Error(`Data field ${dataFieldMap[dataType]} is undefined`);
+          if (dataType === "pressure") latestValue /= 100;
           setValue(parseFloat(latestValue.toFixed(2)));
 
-          // **Filter data if API doesn't support timeframe filtering**
           const now = new Date();
           let startDate;
           switch (timeFrame) {
@@ -124,33 +111,22 @@ export function LineChartComponent({
 
           const formattedData = filteredData.map((entry: { time: string } & { [key: string]: number }) => ({
             time: new Date(entry.time).toLocaleDateString("en-US", {
-              weekday: timeFrame === "24 hours" || timeFrame === "7 days" ? "short" : undefined,
-              month: timeFrame === "1 month" || timeFrame === "lifetime" ? "short" : undefined,
+              month: "short",
               day: "numeric",
+              weekday: timeFrame === "24 hours" || timeFrame === "7 days" ? "short" : undefined,
             }),
             value: dataType === "pressure" ? entry[dataFieldMap[dataType]] / 100 : entry[dataFieldMap[dataType]],
           }));
 
           setChartData(formattedData);
 
-          // **Recalculate average value for the selected timeframe**
           let timeFrameAvgValue =
             filteredData.reduce((sum, entry) => sum + entry[dataFieldMap[dataType]], 0) / filteredData.length;
-          if (dataType === "pressure") {
-            timeFrameAvgValue /= 100;
-          }
-          console.log(`Time frame average ${dataType}:`, timeFrameAvgValue);
-
-          // **Calculate percentage change**
+          if (dataType === "pressure") timeFrameAvgValue /= 100;
           const change = ((latestValue - timeFrameAvgValue) / timeFrameAvgValue) * 100;
           setValueChange(parseFloat(change.toFixed(2)));
 
-          // **Set date range**
-          const earliestDate = new Date(filteredData[0].time).toLocaleDateString();
-          const latestDate = new Date(filteredData[filteredData.length - 1].time).toLocaleDateString();
-          setDateRange(`${earliestDate} - ${latestDate}`);
-        } else {
-          console.warn("API returned an empty or invalid response.");
+          setDateRange(`${formattedData[0].time} - ${formattedData[formattedData.length - 1].time}`);
         }
       } catch (error) {
         console.error(`Error fetching ${dataType} data:`, error);
@@ -160,36 +136,33 @@ export function LineChartComponent({
     };
 
     fetchData();
-  }, [dataType, timeFrame]); // ✅ `timeFrame` included as dependency
+  }, [dataType, timeFrame]);
 
   const ChartComponent = chartComponents[dataType];
 
   return (
     <Card>
       <CardHeader>
-        <div className="space-y-1.5">
-          <CardTitle>{cardTitle}</CardTitle>
-          <CardDescription>{dateRange || "Loading date range..."}</CardDescription>
+        <div className="flex flex-col gap-2 font-inter">
+        <CardTitle>{cardTitle}</CardTitle>
+        <CardDescription>{loading ? <Skeleton className="h-4 w-32" /> : dateRange}</CardDescription>
         </div>
-        <div>{loading ? "Loading..." : value !== null ? `${value}${unitMap[dataType]}` : "No data available"}</div>
+        <div className="font-inter">{loading ? <Skeleton className="h-6 w-20" /> : value !== null ? `${value}${unitMap[dataType]}` : "No data available"}</div>
       </CardHeader>
       <CardContent>
-  {chartData.length === 0 ? <p>Loading chart...</p> : ChartComponent && <ChartComponent data={chartData} />}
-</CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          {loading ? (
-            "Calculating change..."
-          ) : valueChange !== null ? (
-            <>
-              {`Trending ${valueChange > 0 ? "up" : "down"} by ${Math.abs(valueChange)}% last ${timeFrame}`}
-              {valueChange > 0 ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />}
-            </>
-          ) : (
-            "No data"
-          )}
-        </div>
-        
+        {loading ? <Skeleton className="h-[205px] w-full" /> : ChartComponent && <ChartComponent data={chartData} />}
+      </CardContent>
+      <CardFooter>
+        {loading ? (
+          <Skeleton className="h-4 w-48" />
+        ) : valueChange !== null ? (
+          <div className="flex items-center gap-2 text-sm font-inter">
+            {`Trending ${valueChange > 0 ? "up" : "down"} by ${Math.abs(valueChange)}% last ${timeFrame}`}
+            {valueChange > 0 ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />}
+          </div>
+        ) : (
+          "No data"
+        )}
       </CardFooter>
     </Card>
   );

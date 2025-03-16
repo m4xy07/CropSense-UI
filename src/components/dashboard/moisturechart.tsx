@@ -15,7 +15,7 @@ const chartConfig = {
 export function MoistureChart({ data }: { data: { time: string; value: number }[] }) {
   return (
     <CardContent>
-      <ChartContainer config={chartConfig} className="p-6 pt-0">
+      <ChartContainer config={chartConfig} className="p-0">
         <LineChart accessibilityLayer data={data} margin={{ left: -35, right: 12 }}>
           <CartesianGrid vertical={false} />
           <XAxis dataKey="time" tickLine={false} axisLine={false} tickMargin={8} minTickGap={32} />
