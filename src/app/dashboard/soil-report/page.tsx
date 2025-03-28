@@ -100,7 +100,7 @@ export default function Page() {
                   </BreadcrumbItem>
                   <BreadcrumbSeparator className="hidden md:block" />
                   <BreadcrumbItem>
-                    <BreadcrumbPage>Predictions</BreadcrumbPage>
+                    <BreadcrumbPage>Soil Report</BreadcrumbPage>
                   </BreadcrumbItem>
                 </BreadcrumbList>
               </Breadcrumb>
@@ -142,12 +142,41 @@ export default function Page() {
         </header>
 
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-4">
-            
+          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+            <div className="aspect-video rounded-xl bg-muted/50">
+              <LineChartComponent cardTitle="Temperature" dataType="temperature" timeFrame={timeFrame} />
+            </div>
+            <div className="aspect-video rounded-xl bg-muted/50">
+              <LineChartComponent cardTitle="Humidity" dataType="humidity" timeFrame={timeFrame} />
+            </div>
+            <div className="aspect-video rounded-xl bg-muted/50">
+              <LineChartComponent cardTitle="Air Quality Index (AQI)" dataType="aqi" timeFrame={timeFrame} />
+            </div>
+            <div className="aspect-video rounded-xl bg-muted/50">
+              <LineChartComponent cardTitle="Heat Index (HI)" dataType="heatIndex" timeFrame={timeFrame} />
+            </div>
+            <div className="aspect-video rounded-xl bg-muted/50">
+            <LineChartComponent cardTitle="Pressure" dataType="pressure" timeFrame={timeFrame} />
+          </div>
+          <div className="aspect-video rounded-xl bg-muted/50">
+            <LineChartComponent cardTitle="Soil Moisture" dataType="moisture" timeFrame={timeFrame} />
+          </div>
+          <div className="aspect-video rounded-xl bg-muted/50 w-full md:col-span-2">
+          <StackedChartExpandedComponent timeFrame={timeFrame} />
+        </div>
           </div>
 
-          <div className="grid auto-rows-min gap-4 md:grid-cols-4">
-            
+          <div className="flex flex-wrap gap-4">
+      
+      
+      
+            {/* <div className="aspect-video rounded-xl bg-muted/50">
+              {chartData ? (
+                <BarChartComponent cardTitle="Crop Harvest & Pricing" data={chartData} />
+              ) : (
+                <p className="text-center text-gray-500">Loading...</p>
+              )}
+            </div> */}
           </div>
         </div>
       </SidebarInset>

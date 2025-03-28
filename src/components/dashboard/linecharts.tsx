@@ -109,13 +109,9 @@ export function LineChartComponent({
             return entryDate >= startDate && entryDate <= now;
           });
 
-          const formattedData = filteredData.map((entry: { time: string } & { [key: string]: number }) => ({
-            time: new Date(entry.time).toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-              weekday: timeFrame === "24 hours" || timeFrame === "7 days" ? "short" : undefined,
-            }),
-            value: dataType === "pressure" ? entry[dataFieldMap[dataType]] / 100 : entry[dataFieldMap[dataType]],
+          const formattedData = filteredData.map((entry) => ({
+            time: new Date(entry.time).toISOString().split("T")[0], // Keeps YYYY-MM-DD format
+            value: entry[dataFieldMap[dataType]],
           }));
 
           setChartData(formattedData);
@@ -150,7 +146,7 @@ export function LineChartComponent({
         <div className="font-inter">{loading ? <Skeleton className="h-6 w-20" /> : value !== null ? `${value}${unitMap[dataType]}` : "No data available"}</div>
       </CardHeader>
       <CardContent>
-        {loading ? <Skeleton className="h-[205px] w-full" /> : ChartComponent && <ChartComponent data={chartData} />}
+        {loading ? <Skeleton className="h-[277px] w-full" /> : ChartComponent && <ChartComponent data={chartData} />}
       </CardContent>
       <CardFooter>
         {loading ? (
