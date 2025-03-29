@@ -118,17 +118,6 @@ const OfferCard = ({
     return price.annually * 12;
   }
 
-  <div
-          className="best-value-wrapper absolute inset-0 -z-10 rounded-2xl"
-          style={{
-            border: "1px solid rgba(0, 237, 255, 0.27)",
-            margin: "-1px",
-          }}
-        />
-
-
-
-
   return (
     <div className="relative">
       <div className="gradient-border-div"></div> 
@@ -146,11 +135,6 @@ const OfferCard = ({
       )}
       
       <div
-        // style={{
-        //   borderTop: "ridge 1px rgb(0 237 255 / 0.27)",
-        //   borderRight: "ridge 1px rgb(0 237 255 / 0.1)",
-        //   borderLeft: "ridge 1px rgb(0 237 255 / 0.1)",
-        // }}
         className={cn(
           "group h-full transform-gpu overflow-hidden rounded-2xl transition-all duration-500 ease-in-out",
           "bg-[#030816] text-neutral-400",
@@ -159,9 +143,6 @@ const OfferCard = ({
             : "border-neutral-500/50"
         )}
       >
-        
-        
-
         <div className={cn("pricing-card-inner h-[600px]")}>
           
           <div className="p-6 pb-0 pricing-card-top-div relative">
@@ -180,24 +161,16 @@ const OfferCard = ({
             </div>
             <div className="relative z-10 mt-4 flex flex-row gap-2">
               <div className="font-semibold text-5xl pricing-card-btn-amount pb-2 font-inter">
-                ₹{price[selectedBilledType]}
+                ₹{selectedBilledType === "annually" ? getAnnualPrice() : price[selectedBilledType]}
               </div>
-              {selectedBilledType !== "lifetime" && (
-                <div className="text-neutral-400 text-sm font-inter flex items-center">
-                  / month
-                </div>
-              )}
+              <div className="text-neutral-400 text-sm font-inter flex items-center">
+                / {selectedBilledType === "annually" ? "year" : selectedBilledType === "lifetime" ? "license" : "month"}
+              </div>
             </div>
-            {selectedBilledType === "annually" && (
-              <div className="relative z-10 text-neutral-400 font-inter text-sm mt-1">
-                ₹{getAnnualPrice()} billed annually
-              </div>
-            )}
-
             <button
               className={cn(
-                "relative z-10 mb-[24px] mt-[8px] inline-flex font-inter items-center justify-center rounded-lg border border-neutral-400/20 px-12 py-2.5 font-medium text-neutral-50 tracking-tight transition-all pricing-card-btn",
-                isBestValue ? "pricing-card-price transition-all" : "bg-neutral-700"
+                "relative z-10 mb-[24px] mt-[8px] inline-flex font-inter items-center justify-center rounded-lg border border-neutral-400/20 px-12 py-2.5 font-medium text-neutral-50 tracking-tight transition-all ",
+                isBestValue ? "pricing-card-price " : "pricing-card-btn"
               )}
               type="button"
             >

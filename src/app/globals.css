@@ -78,6 +78,61 @@ body {
   transition: all .2s ease;
   white-space: nowrap;
 }
+
+.pricing-card-btn:hover {
+  background: radial-gradient(89.06% 89.06% at 50% 100%, #ffffff12, #fff0 48.41%), #ffffff14;
+}
+
+.pricing-card-price {
+  background: radial-gradient(86.86% 86.86% at 50% 111.67%, #ffffff80, #fff0), #713dff;
+  border-radius: 99px;
+  min-width: 124px;
+  padding: 4px 12px;
+  text-align: center;
+  transition: all .2s ease;
+  
+}
+
+ .pricing-card-price:hover {
+  background: radial-gradient(86.86% 86.86% at 50% 111.67%, #ffffffcb, #fff0), #713dff;
+} 
+
+
+/* .pricing-card-price {
+  background: radial-gradient(86.86% 86.86% at 50% 111.67%, #ffffff80, #fff0), radial-gradient(198.77% 172.22% at 55.56% 112.78%, #887dff80, #887dff00), #713dff;
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 99px;
+  min-width: 124px;
+  padding: 4px 12px;
+  text-align: center;
+  transition: all .2s ease;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+} */
+
+/* .pricing-card-price:hover {
+  background: radial-gradient(86.86% 86.86% at 50% 111.67%, #fffc, #fff0), radial-gradient(198.77% 172.22% at 55.56% 112.78%, #887dff80, #887dff00), #713dff;
+} */
+
+/* .pricing-card-price::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(86.86% 86.86% at 50% 111.67%, #fffc, #fff0), 
+              radial-gradient(198.77% 172.22% at 55.56% 112.78%, #887dff80, #887dff00), 
+              #713dff;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.pricing-card-price:hover::before {
+  opacity: 1;
+} */
+
+
 .pricing-card-btn-text{
   background: linear-gradient(180deg, #fffffff2 22.92%, #fffc 81.25%);
   -webkit-background-clip: text;
@@ -91,9 +146,7 @@ body {
   -webkit-text-fill-color: transparent;
   z-index: 8;
 }
-.pricing-card-btn:hover {
-  background: radial-gradient(89.06% 89.06% at 50% 100%, #ffffff12, #fff0 48.41%), #ffffff14;
-}
+
 .pricing-card-btn-amount{
   background: linear-gradient(180deg, #fff 22.5%, #ffffffb3);
     -webkit-background-clip: text;
@@ -105,14 +158,7 @@ body {
     letter-spacing: -.56px;
     line-height: 56px;
 }
-.pricing-card-price {
-  background: radial-gradient(86.86% 86.86% at 50% 111.67%, #ffffff80, #fff0), radial-gradient(198.77% 172.22% at 55.56% 112.78%, #887dff80, #887dff00), #713dff;
 
-}
-
-.pricing-card-price:hover {
-  background: radial-gradient(86.86% 86.86% at 50% 111.67%, #ffffffdc, #fff0), radial-gradient(198.77% 172.22% at 55.56% 112.78%, #887dff80, #887dff00), #713dff;
-}
 
 .hr-fade{
   height: 1px;
