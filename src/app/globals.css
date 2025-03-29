@@ -56,17 +56,54 @@ body {
   transition: border-color 0.2s ease-in-out, outline-color 0.2s ease-in-out !important;
 }
 
-.effect-font-hero {
+/* .effect-font-hero {
     -webkit-text-stroke: .4px #ffffff80;
     -webkit-text-fill-color: transparent;
     text-shadow: -1px -1px 0 hsla(0, 0%, 100%, .2), 1px 1px 0 rgba(0, 0, 0, .1);
-}
+} */
 .effect-font-gradient {
-    background: linear-gradient(to right bottom, #fff 30%, hsla(0, 0%, 100%, .5));
+    background: linear-gradient(180deg, #fff 22.5%, #ffffffb3);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    color: unset;
+    color: transparent;
+}
+.pricing-card-btn{
+  background: radial-gradient(89.06% 89.06% at 50% 100%, #ffffff0a, #fff0 48.41%), #ffffff0d;
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 99px;
+  min-width: 124px;
+  padding: 4px 12px;
+  text-align: center;
+  transition: all .2s ease;
+  white-space: nowrap;
+}
+.pricing-card-btn-text{
+  background: linear-gradient(180deg, #fffffff2 22.92%, #fffc 81.25%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-feature-settings: "cv06" on, "liga" off, "calt" off;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -.14px;
+  line-height: 24px;
+  position: relative;
+  -webkit-text-fill-color: transparent;
+  z-index: 8;
+}
+.pricing-card-btn-amount{
+  background: linear-gradient(180deg, #fff 22.5%, #ffffffb3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    font-feature-settings: "dlig" on, "cv06" on, "liga" off, "calt" off;
+    font-weight: 500;
+    letter-spacing: -.56px;
+    line-height: 56px;
+}
+.pricing-card-price{
+  background: radial-gradient(86.86% 86.86% at 50% 111.67%, #ffffff80, #fff0), radial-gradient(198.77% 172.22% at 55.56% 112.78%, #887dff80, #887dff00), #713dff;
 }
 @layer base {
   :root {

@@ -19,7 +19,7 @@ const MacbookSec = () => {
                 muted />
         </div>
       <MorphingTextDemo />
-      <p className="text-white/70 text-lg text-center mt-0 tracking-normal">
+      <p className="text-white/70 text-xl font-inter text-center mt-0 tracking-normal">
         Real-time access, anytime, anywhere.
       </p>
       <div className="container mt-24 mx-auto">

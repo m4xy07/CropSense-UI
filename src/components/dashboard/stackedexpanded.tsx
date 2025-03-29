@@ -155,7 +155,7 @@ export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpande
         </div>
       </CardHeader>
       <CardContent>
-        {loading ? <Skeleton className="h-[205px] w-full" /> : (
+        {loading ? <Skeleton className="h-[600px] w-full" /> : (
           <ChartContainer config={chartConfig}>
             <AreaChart data={chartData} margin={{ left: 0, right: 0, top: 0 }}>
               <CartesianGrid vertical={false} />

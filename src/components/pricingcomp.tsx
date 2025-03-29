@@ -9,7 +9,7 @@ type BilledType = "monthly" | "annually" | "lifetime";
 const pricingData: OfferCardProps[] = [
   {
     title: "Starter",
-    description: "For small teams",
+    description: "For small teams.",
     price: {
       monthly: 199,
       annually: 149,
@@ -20,7 +20,7 @@ const pricingData: OfferCardProps[] = [
   },
   {
     title: "Pro",
-    description: "For medium-sized businesses",
+    description: "For medium-sized businesses.",
     price: {
       monthly: 499,
       annually: 449,
@@ -35,7 +35,7 @@ const pricingData: OfferCardProps[] = [
   },
   {
     title: "Enterprise",
-    description: "For large businesses",
+    description: "For large businesses.",
     price: {
       monthly: 999,
       annually: 899,
@@ -110,9 +110,11 @@ const OfferCard = ({
     <div
   style={{
     borderTop: "ridge 1px rgb(0 237 255 / 0.27)",
+    borderRight: "ridge 1px rgb(0 237 255 / 0.1)",
+    borderLeft: "ridge 1px rgb(0 237 255 / 0.1)",
   }}
   className={cn(
-    "relative group hover:-translate-y-1 h-full transform-gpu overflow-hidden rounded-2xl transition-all duration-500 ease-in-out",
+    "relative group h-full transform-gpu overflow-hidden rounded-2xl transition-all duration-500 ease-in-out",
     "bg-neutral-800/50 text-neutral-400",
     isBestValue ? "border border-[rgba(0,237,255,.27)]" : "border-neutral-500/50"
   )}
@@ -139,20 +141,20 @@ const OfferCard = ({
             : {}
         }
       >
-        <div className="font-bold text-[20px] text-white">{title}</div>
-<div className="mt-0 text-neutral-400 text-[16px]">{description}</div>
+        <div className="font-bold text-[28px] text-white tracking-normal effect-font-gradient">{title}</div>
+<div className="mt-0 text-neutral-400 text-[14px] font-inter tracking-[-.14px] leading-[24px]">{description}</div>
 <div className="mt-4 flex flex-row gap-2">
-  <div className="font-semibold text-6xl text-white pb-2">
+  <div className="font-semibold text-5xl pricing-card-btn-amount pb-2  font-inter">
     ₹{price[selectedBilledType]}
   </div>
   {selectedBilledType !== "lifetime" && (
-    <div className="text-neutral-400 text-sm flex items-center">
+    <div className="text-neutral-400 text-sm font-inter flex items-center">
       / month
     </div>
   )}
 </div>
 {selectedBilledType === "annually" && (
-  <div className="text-neutral-400 text-sm mt-1">
+  <div className="text-neutral-400 font-inter text-sm mt-1">
     ₹{getAnnualPrice()} billed annually
   </div>
 )}
@@ -160,21 +162,22 @@ const OfferCard = ({
 
         <button
           className={cn(
-            "my-12 inline-flex w-full transform-gpu items-center justify-center rounded-lg border border-neutral-400/20 px-12 py-2.5 font-medium text-neutral-50 tracking-tight transition-all",
+            "mb-[24px] mt-[8px] inline-flex font-inter transform-gpu items-center justify-center rounded-lg border border-neutral-400/20 px-12 py-2.5 font-medium text-neutral-50 tracking-tight transition-all pricing-card-btn",
             isBestValue
-              ? " bg-[#00edff] text-black"
+              ? " pricing-card-price"
               : "bg-neutral-700 ",
           )}
           type="button"
-        >
-          Get Started
+        ><span className="pricing-card-btn-text">
+          Subscribe
+          </span>
         </button>
 
         <ul className="space-y-2">
           {features.map((feature) => (
-            <li className="flex items-center gap-2" key={feature}>
+            <li className="flex items-center font-inter gap-2" key={feature}>
               <RiCheckboxCircleFill className="size-4 rounded-full  fill-[#2DAA6E]" />
-              <div className="text-white text-sm">{feature}</div>
+              <div className="text-white text-sm font-inter tracking-[-.14px]">{feature}</div>
             </li>
           ))}
         </ul>
@@ -186,7 +189,7 @@ const OfferCard = ({
                 <li className="flex items-center gap-2" key={feature}>
                   {/* <div className="size-1.5 rounded-full bg-neutral-500" /> */}
                   <RiCloseCircleFill className="size-4 rounded-full  fill-[#FF4D4F]" />
-                  <div className=" text-sm">{feature}</div>
+                  <div className=" text-sm font-inter tracking-[-.14px]">{feature}</div>
                 </li>
               ))}
             </ul>

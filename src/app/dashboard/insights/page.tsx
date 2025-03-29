@@ -2,12 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
-import { GroupChartComponent } from "@/components/dashboard/groupchart";
 import { LineChartComponent } from "@/components/dashboard/linecharts";
-import { StackedChartComponent } from "@/components/dashboard/stackedchart";
-import { BarChartComponent } from "@/components/dashboard/barchart";
-import { BlendingModeIcon, OpacityIcon, ClockIcon } from "@radix-ui/react-icons";
-import { WifiHigh } from "lucide-react";
+import { StackedChartExpandedComponent } from "@/components/dashboard/stackedexpanded";
+import { ClockIcon, OpacityIcon } from "@radix-ui/react-icons";
+import { WifiHigh, WifiLow, WifiZero, WifiOff } from "lucide-react";
 import { FaMountain } from "react-icons/fa";
 import {
   Breadcrumb,
@@ -18,36 +16,26 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { SelectTime } from "@/components/select";
-import { StackedChartExpandedComponent } from "@/components/dashboard/stackedexpanded";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const API_URL = "https://data.cropsense.tech/data";
 
 export default function Page() {
   const [currentTime, setCurrentTime] = useState<string>("");
   const [altitude, setAltitude] = useState<number | null>(null);
+  const [rainStatus, setRainStatus] = useState<string | null>(null);
+  const [wifiStrength, setWifiStrength] = useState<number | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const [timeFrame, setTimeFrame] = useState<string>("7 days");
-  const [chartData, setChartData] = useState<{
-    chartData: { label: string; price: number }[];
-    harvestableMonth: string;
-    bestCrop: string;
-    recommendedFertilizer: string;
-  } | null>(null);
 
   useEffect(() => {
     const updateTime = () => {
-      const now = new Date();
-      setCurrentTime(now.toLocaleTimeString());
+      setCurrentTime(new Date().toLocaleTimeString());
     };
-
     updateTime();
     const intervalId = setInterval(updateTime, 1000);
-
     return () => clearInterval(intervalId);
   }, []);
 
@@ -60,32 +48,38 @@ export default function Page() {
         const data = await response.json();
         if (Array.isArray(data) && data.length > 0) {
           const latestRecord = data[data.length - 1];
-          const latestMonthData = latestRecord.harvestable_months[latestRecord.harvestable_months.length - 1];
-
-          setAltitude(parseFloat(latestRecord?.alt?.toFixed(2)));
-
-          setChartData({
-            chartData: [
-              { label: "Wholesale", price: parseFloat(latestMonthData.wholesale_price.toFixed(2)) },
-              { label: "Retail", price: parseFloat(latestMonthData.retail_price.toFixed(2)) },
-            ],
-            harvestableMonth: latestMonthData.month,
-            bestCrop: latestRecord.best_crop || "Unknown",
-            recommendedFertilizer: latestRecord.recommended_fertilizer || "Unknown",
-          });
+          setAltitude(parseFloat(latestRecord?.alt?.toFixed(2)) || null);
+          setRainStatus(latestRecord?.raining || "Unknown");
+          setWifiStrength(latestRecord?.wifiStrength || null);
         } else {
           console.warn("API returned an empty or invalid response.");
         }
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
     };
-
     fetchData();
   }, []);
 
+  const getWifiStatus = () => {
+    if (wifiStrength === null) {
+      return { text: "Disconnected", icon: <WifiOff className="w-6 h-6 -mt-[8px]" /> };
+    }
+    if (wifiStrength > -70) {
+      return { text: "High Strength", icon: <WifiHigh className="w-6 h-6 -mt-[8px]" /> };
+    }
+    if (wifiStrength > -81) {
+      return { text: "Low Strength", icon: <WifiLow className="w-6 h-6 -mt-[8px]" /> };
+    }
+    return { text: "Unstable", icon: <WifiZero className="w-6 h-6 -mt-[8px]" /> };
+  };
+
+  const wifiStatus = getWifiStatus();
+
   return (
-    <SidebarProvider className="dark">
+    <SidebarProvider className="dark font-inter">
       <AppSidebar />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2">
@@ -106,36 +100,34 @@ export default function Page() {
               </Breadcrumb>
             </div>
             <div className="flex flex-row items-center gap-6">
-              <div className="flex">
-                <SelectTime timeFrame={timeFrame} setTimeFrame={setTimeFrame} />
-              </div>
+              <SelectTime timeFrame={timeFrame} setTimeFrame={setTimeFrame} />
 
               <div className="flex flex-row w-[80px] items-center gap-2">
-                <ClockIcon className="w-[20px] h-[20px]" />
-                <div className="text-[rgba(255,255,255,0.8)] w-[52px] text-sm">
-                  {currentTime}
-                </div>
+                <ClockIcon className="w-5 h-5" />
+                {loading ? <Skeleton className="h-4 w-16" /> : <div className="text-white text-sm">{currentTime}</div>}
               </div>
 
               <div className="flex flex-row items-center gap-2">
                 <OpacityIcon className="w-5 h-5" />
-                <div className="text-[rgba(255,255,255,0.8)] text-sm">
-                  Not raining
-                </div>
+                {loading ? <Skeleton className="h-4 w-16" /> : <div className="text-white text-sm">{rainStatus}</div>}
               </div>
 
               <div className="flex flex-row items-center gap-2">
-                <FaMountain className="w-5 h-5" />
-                <div className="text-[rgba(255,255,255,0.8)] text-sm">
-                  {altitude !== null ? `${altitude} m` : "Loading..."}
-                </div>
+                
+                {loading ? <Skeleton className="h-6 w-[80px]" /> :  <div className="text-white text-sm flex flex-row gap-2"> <FaMountain className="w-5 h-5" /> {altitude !== null ? `${altitude} m` : "N/A"}</div>}
               </div>
 
               <div className="flex flex-row items-center gap-2">
-                <WifiHigh className="w-6 h-6 mb-2 -mr-1" />
-                <div className="text-[rgba(255,255,255,0.8)] text-sm">
-                  Connected
-                </div>
+                {loading ? (
+                  <Skeleton className="h-6 w-[125px] flex flex-row items-center gap-2">
+                    
+                  </Skeleton>
+                ) : (
+                  <>
+                    {wifiStatus.icon}
+                    <div className="text-white text-sm">{wifiStatus.text}</div>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -143,40 +135,13 @@ export default function Page() {
 
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="aspect-video rounded-xl bg-muted/50">
-              <LineChartComponent cardTitle="Temperature" dataType="temperature" timeFrame={timeFrame} />
-            </div>
-            <div className="aspect-video rounded-xl bg-muted/50">
-              <LineChartComponent cardTitle="Humidity" dataType="humidity" timeFrame={timeFrame} />
-            </div>
-            <div className="aspect-video rounded-xl bg-muted/50">
-              <LineChartComponent cardTitle="Air Quality Index (AQI)" dataType="aqi" timeFrame={timeFrame} />
-            </div>
-            <div className="aspect-video rounded-xl bg-muted/50">
-              <LineChartComponent cardTitle="Heat Index (HI)" dataType="heatIndex" timeFrame={timeFrame} />
-            </div>
-            <div className="aspect-video rounded-xl bg-muted/50">
+            <LineChartComponent cardTitle="Temperature" dataType="temperature" timeFrame={timeFrame} />
+            <LineChartComponent cardTitle="Humidity" dataType="humidity" timeFrame={timeFrame} />
+            <LineChartComponent cardTitle="Air Quality Index (AQI)" dataType="aqi" timeFrame={timeFrame} />
+            <LineChartComponent cardTitle="Heat Index (HI)" dataType="heatIndex" timeFrame={timeFrame} />
             <LineChartComponent cardTitle="Pressure" dataType="pressure" timeFrame={timeFrame} />
-          </div>
-          <div className="aspect-video rounded-xl bg-muted/50">
             <LineChartComponent cardTitle="Soil Moisture" dataType="moisture" timeFrame={timeFrame} />
-          </div>
-          <div className="aspect-video rounded-xl bg-muted/50 w-full md:col-span-2">
-          <StackedChartExpandedComponent timeFrame={timeFrame} />
-        </div>
-          </div>
-
-          <div className="flex flex-wrap gap-4">
-      
-      
-      
-            {/* <div className="aspect-video rounded-xl bg-muted/50">
-              {chartData ? (
-                <BarChartComponent cardTitle="Crop Harvest & Pricing" data={chartData} />
-              ) : (
-                <p className="text-center text-gray-500">Loading...</p>
-              )}
-            </div> */}
+            <StackedChartExpandedComponent timeFrame={timeFrame} />
           </div>
         </div>
       </SidebarInset>

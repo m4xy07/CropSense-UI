@@ -85,7 +85,7 @@ export default function Page() {
   }, []);
 
   return (
-    <SidebarProvider className="dark">
+    <SidebarProvider className="dark font-inter">
       <AppSidebar />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2">
@@ -143,27 +143,7 @@ export default function Page() {
 
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="aspect-video rounded-xl bg-muted/50">
-              <LineChartComponent cardTitle="Temperature" dataType="temperature" timeFrame={timeFrame} />
-            </div>
-            <div className="aspect-video rounded-xl bg-muted/50">
-              <LineChartComponent cardTitle="Humidity" dataType="humidity" timeFrame={timeFrame} />
-            </div>
-            <div className="aspect-video rounded-xl bg-muted/50">
-              <LineChartComponent cardTitle="Air Quality Index (AQI)" dataType="aqi" timeFrame={timeFrame} />
-            </div>
-            <div className="aspect-video rounded-xl bg-muted/50">
-              <LineChartComponent cardTitle="Heat Index (HI)" dataType="heatIndex" timeFrame={timeFrame} />
-            </div>
-            <div className="aspect-video rounded-xl bg-muted/50">
-            <LineChartComponent cardTitle="Pressure" dataType="pressure" timeFrame={timeFrame} />
-          </div>
-          <div className="aspect-video rounded-xl bg-muted/50">
-            <LineChartComponent cardTitle="Soil Moisture" dataType="moisture" timeFrame={timeFrame} />
-          </div>
-          <div className="aspect-video rounded-xl bg-muted/50 w-full md:col-span-2">
-          <StackedChartExpandedComponent timeFrame={timeFrame} />
-        </div>
+            
           </div>
 
           <div className="flex flex-wrap gap-4">

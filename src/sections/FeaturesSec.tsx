@@ -27,10 +27,10 @@ const FeaturesSec = () => {
               
             <div className="mx-auto mb-[20px] max-w-[510px] text-center">
                 
-              <h2 className="text-[3.5rem] pt-4 text-center tracking-tight effect-font-hero effect-font-gradient">
+              <h2 className="text-[3.5rem] pt-4 font-bold text-center tracking-normal effect-font-gradient">
                 Above and beyond
               </h2>
-              <p className="text-white/70 text-lg text-center mt-4 tracking-tight">
+              <p className="text-white/70 text-xl font-inter text-center mt-4 tracking-tight">
               Next-level features to power your growth.
               </p>
             </div>

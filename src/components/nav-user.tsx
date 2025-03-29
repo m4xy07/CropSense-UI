@@ -68,7 +68,7 @@ export function NavUser({
             align="end"
             sideOffset={4}
           >
-            <DropdownMenuLabel className="p-0 font-normal">
+            <DropdownMenuLabel className="p-0 font-normal font-inter">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={user.avatar} alt={user.name} />
@@ -89,7 +89,7 @@ export function NavUser({
             </DropdownMenuGroup> */}
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-                  <DropdownMenuItem onClick={() => (window as any).Clerk?.openUserProfile()} className="cursor-pointer">
+                  <DropdownMenuItem onClick={() => (window as any).Clerk?.openUserProfile()} className="cursor-pointer font-inter">
                   <BadgeCheck />
                   Account
                   </DropdownMenuItem>
@@ -104,7 +104,7 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <button className="flex flex-row gap-2 items-center justify-left w-full" onClick={() => signOut({ redirectUrl: '/' })}>
+              <button className="flex flex-row gap-2 items-center justify-left w-full font-inter" onClick={() => signOut({ redirectUrl: '/' })}>
               <LogOut />
               Sign Out
               </button>

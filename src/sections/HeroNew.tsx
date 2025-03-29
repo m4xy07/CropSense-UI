@@ -87,11 +87,11 @@ export default function Example() {
 
           <h2
             id="global-database-title"
-            className="z-40 mt-6 inline-block bg-gradient-to-b from-white to-blue-100 bg-clip-text px-2 text-center text-5xl font-bold tracking-tighter text-transparent md:text-8xl"
+            className="z-40 mt-6 inline-block bg-gradient-to-b from-white to-blue-100 bg-clip-text px-2 text-center text-5xl effect-font-gradient font-bold tracking-normal text-transparent md:text-8xl"
           >
             CropSense
           </h2>
-          <p className="text-lg z-40 md:text-xl text-white/70 mt-5 text-center max-w-xl mx-auto">
+          <p className="text-lg z-40 md:text-xl text-white/70 font-inter mt-5 text-center max-w-xl mx-auto">
             An initiative towards a greener tomorrow.
         </p>
         <div className="flex z-40 justify-center mt-5">
