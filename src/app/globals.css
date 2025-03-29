@@ -91,6 +91,9 @@ body {
   -webkit-text-fill-color: transparent;
   z-index: 8;
 }
+.pricing-card-btn:hover {
+  background: radial-gradient(89.06% 89.06% at 50% 100%, #ffffff12, #fff0 48.41%), #ffffff14;
+}
 .pricing-card-btn-amount{
   background: linear-gradient(180deg, #fff 22.5%, #ffffffb3);
     -webkit-background-clip: text;
@@ -102,9 +105,80 @@ body {
     letter-spacing: -.56px;
     line-height: 56px;
 }
-.pricing-card-price{
+.pricing-card-price {
   background: radial-gradient(86.86% 86.86% at 50% 111.67%, #ffffff80, #fff0), radial-gradient(198.77% 172.22% at 55.56% 112.78%, #887dff80, #887dff00), #713dff;
+
 }
+
+.pricing-card-price:hover {
+  background: radial-gradient(86.86% 86.86% at 50% 111.67%, #ffffffdc, #fff0), radial-gradient(198.77% 172.22% at 55.56% 112.78%, #887dff80, #887dff00), #713dff;
+}
+
+.hr-fade{
+  height: 1px;
+  margin: 1px 0;
+  background: linear-gradient(270deg, #3d354e00 .2%, #30273a 45.39%, #30273a 53.54%, #3d354e00 110.06%);
+ 
+  border: 0;
+}
+.pricing-card-inner{
+  background: linear-gradient(180deg, #0b021700, #16092a), #0a0118;
+}
+.pricing-card-top-div{
+  background: radial-gradient(89.06% 89.06% at 50% 100%, #ffffff0a, #fff0 48.41%);
+}
+.pricing-card-popular-tag {
+  background: radial-gradient(86.86% 86.86% at 50% 111.67%, #ffffff80, #fff0), radial-gradient(198.77% 172.22% at 55.56% 112.78%, #887dff80, #887dff00), #713dff;
+  border-radius: 16px 16px 0 0;
+  height: 50px;
+  left: 0;
+  position: absolute;
+  top: -32px;
+  width: 338px;
+  left: -1px;
+  z-index: 1;
+}
+.pricing-card-popular-tag-text {
+  background: linear-gradient(180deg, #fff 22.5%, #ffffffb3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  left: 50%;
+  position: absolute;
+  text-transform: uppercase;
+  top: 8px;
+  transform: translate(-50%);
+  white-space: nowrap;
+  font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    line-height: 16px;
+}
+.best-value-wrapper{
+  background: radial-gradient(86.86% 86.86% at 50% 111.67%, #ffffff80, #fff0), radial-gradient(198.77% 172.22% at 55.56% 112.78%, #887dff80, #887dff00), #713dff !important;
+  ;
+}
+/* 🔹 Outer Wrapper for the Border */
+.gradient-border-div {
+  position: absolute;
+  inset: -1px; /* Expands beyond the card */
+  pointer-events: none;
+  border-radius: 1rem;
+}
+
+/* 🔹 Apply the Gradient Border Using ::before */
+.gradient-border-div::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px; /* Controls the thickness of the border */
+  background: linear-gradient(180deg, #a9a3c233, #a9a3c20c); /* Your exact gradient */
+  
+  
+}
+
 @layer base {
   :root {
         --background: 0 0% 100%;
@@ -203,6 +277,7 @@ body {
 
 .cl-socialButtonsIconButton {
   border: 3px solid #565761;
+
 }
 
 .cl-internal-wkkub3 {
@@ -210,6 +285,7 @@ body {
 }
 .cl-userButtonPopoverActionButton {
   color: white;
+
 }
 
 .cl-providerIcon__github{
