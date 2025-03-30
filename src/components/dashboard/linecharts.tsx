@@ -143,13 +143,28 @@ export function LineChartComponent({
 
           setChartData({ data: formattedData, ticks });
 
+          const formatDate = (dateString: string) => {
+            const date = new Date(dateString);
+            const day = date.getDate();
+            const month = date.toLocaleString("en-US", { month: "long" });
+            const suffix =
+              day % 10 === 1 && day !== 11
+                ? "st"
+                : day % 10 === 2 && day !== 12
+                ? "nd"
+                : day % 10 === 3 && day !== 13
+                ? "rd"
+                : "th";
+            return `${day}${suffix} ${month}`;
+          };
+
+          setDateRange(`${formatDate(formattedData[0].time)} - ${formatDate(formattedData[formattedData.length - 1].time)}`);
+
           let timeFrameAvgValue =
             filteredData.reduce((sum, entry) => sum + entry[dataFieldMap[dataType]], 0) / filteredData.length;
           if (dataType === "pressure") timeFrameAvgValue /= 100;
           const change = ((latestValue - timeFrameAvgValue) / timeFrameAvgValue) * 100;
           setValueChange(parseFloat(change.toFixed(2)));
-
-          setDateRange(`${formattedData[0].time} - ${formattedData[formattedData.length - 1].time}`);
         }
       } catch (error) {
         console.error(`Error fetching ${dataType} data:`, error);

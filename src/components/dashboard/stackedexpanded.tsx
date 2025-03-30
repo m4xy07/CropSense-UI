@@ -34,7 +34,7 @@ interface StackedChartExpandedProps {
 
 export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpandedProps) {
   const [chartData, setChartData] = useState<
-    { time: string; nitrogen: number; phosphorus: number; potassium: number }[]
+    { time: string; displayTime: string; nitrogen: number; phosphorus: number; potassium: number }[]
   >([])
   const [loading, setLoading] = useState<boolean>(true)
   const [dateRange, setDateRange] = useState<string | null>(null)
@@ -44,6 +44,7 @@ export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpande
   const [valueChange, setValueChange] = useState<{ nitrogen: number; phosphorus: number; potassium: number } | null>(
     null
   )
+  const [ticks, setTicks] = useState<string[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,15 +53,16 @@ export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpande
       setLatestValues(null)
       setValueChange(null)
       setDateRange(null)
-
+    
       try {
         const response = await fetch(API_URL)
         if (!response.ok) throw new Error("Failed to fetch data")
         const data = await response.json()
-
+    
         if (Array.isArray(data) && data.length > 0) {
           const now = new Date()
           let startDate
+    
           switch (timeFrame) {
             case "24 hours":
               startDate = new Date(now.getTime() - 24 * 60 * 60 * 1000)
@@ -72,7 +74,7 @@ export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpande
               startDate = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000)
               break
             case "1 month":
-              startDate = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate())
+              startDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1)) // ✅ Fix UTC issue
               break
             case "lifetime":
               startDate = new Date(data[0].time)
@@ -83,24 +85,72 @@ export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpande
 
           const filteredData = data.filter((entry) => {
             const entryTime = new Date(entry.time)
-            return entryTime >= startDate && entryTime <= now
+            return entryTime.getTime() >= startDate.getTime() && entryTime.getTime() <= now.getTime()
           })
+    
+          if (filteredData.length === 0) {
+            console.warn("No data found in the selected time range.")
+          }
 
-          const formattedData = filteredData.map((entry) => ({
-            time: new Date(entry.time).toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-            }),
-            nitrogen: entry.npk_uptake_nitrogen,
-            phosphorus: entry.npk_uptake_phosphorus,
-            potassium: entry.npk_uptake_potassium,
-          }))
+          const formattedData = filteredData.map((entry) => {
+            const parsedDate = new Date(entry.time) // Parse the `time` field
+            console.log("Parsed date:", parsedDate, "Original time:", entry.time) // Debugging log
+            return {
+              time: entry.time, // Keep the original ISO 8601 string
+              displayTime: parsedDate.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+              }), // Add a separate field for display
+              nitrogen: entry.npk_uptake_nitrogen,
+              phosphorus: entry.npk_uptake_phosphorus,
+              potassium: entry.npk_uptake_potassium,
+            }
+          })
 
           setChartData(formattedData)
 
-          // Set date range
-          const earliestDate = formattedData[0].time
-          const latestDate = formattedData[formattedData.length - 1].time
+          const totalPoints = formattedData.length
+          let tickCount = 0
+          switch (timeFrame) {
+            case "24 hours":
+              tickCount = 2 // 2 date points
+              break
+            case "7 days":
+              tickCount = 3 // 3 date points
+              break
+            case "14 days":
+              tickCount = 5 // 6 date points
+              break
+            case "1 month":
+              tickCount = 5 // 5 date points
+              break
+            case "lifetime":
+              tickCount = Math.min(12, totalPoints) // 1 point per month, up to 12 months
+              break
+          }
+
+          // Ensure ticks are evenly distributed
+          const calculatedTicks = Array.from({ length: tickCount }, (_, i) => {
+            const index = Math.floor((i * totalPoints) / tickCount)
+            return formattedData[index]?.displayTime
+          }).filter(Boolean)
+          setTicks(calculatedTicks)
+
+          // Set date range with formatted dates
+          const formatDate = (dateString: string) => {
+            const parsedDate = new Date(dateString) // Parse the `time` field
+            const day = parsedDate.getUTCDate() // Use getUTCDate instead of getDate
+            const month = parsedDate.toLocaleString("en-US", { month: "long", timeZone: "UTC" }) // Ensure UTC
+            const suffix =
+              day % 10 === 1 && day !== 11 ? "st" :
+              day % 10 === 2 && day !== 12 ? "nd" :
+              day % 10 === 3 && day !== 13 ? "rd" : "th"
+          
+            return `${day}${suffix} ${month}`
+          }
+
+          const earliestDate = formatDate(filteredData[0].time)
+          const latestDate = formatDate(filteredData[filteredData.length - 1].time)
           setDateRange(`${earliestDate} - ${latestDate}`)
 
           // Latest values
@@ -159,9 +209,38 @@ export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpande
           <ChartContainer config={chartConfig}>
             <AreaChart data={chartData} margin={{ left: 0, right: 0, top: 0 }}>
               <CartesianGrid vertical={false} />
-              <XAxis dataKey="time" tickLine={false} axisLine={false} tickMargin={8} />
+              <XAxis dataKey="displayTime" tickLine={false} axisLine={false} tickMargin={8} ticks={ticks} />
               <YAxis hide />
-              <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
+              <ChartTooltip
+                cursor={false}
+                content={
+                  <ChartTooltipContent
+                    className="w-[175px]"
+                    indicator="line"
+                    labelFormatter={(time, payload) => {
+                      // Use the original `time` value from the payload
+                      const originalTime = payload?.[0]?.payload?.time;
+                      const parsedDate = new Date(originalTime); // Parse the original ISO 8601 string
+                      console.log("Label formatter date:", parsedDate, "Original time:", originalTime); // Debugging log
+                      if (isNaN(parsedDate.getTime())) {
+                        console.error("Invalid date:", originalTime);
+                        return "Invalid date";
+                      }
+                      const day = parsedDate.getDate();
+                      const month = parsedDate.toLocaleString("en-US", { month: "long" });
+                      const suffix =
+                        day % 10 === 1 && day !== 11
+                          ? "st"
+                          : day % 10 === 2 && day !== 12
+                          ? "nd"
+                          : day % 10 === 3 && day !== 13
+                          ? "rd"
+                          : "th";
+                      return `${day}${suffix} ${month}, ${parsedDate.getFullYear()}`;
+                    }}
+                  />
+                }
+              />
               <Area dataKey="potassium" stroke={chartConfig.potassium.color} fillOpacity={0.1} />
               <Area dataKey="phosphorus" stroke={chartConfig.phosphorus.color} fillOpacity={0.4} />
               <Area dataKey="nitrogen" stroke={chartConfig.nitrogen.color} fillOpacity={0.4} />

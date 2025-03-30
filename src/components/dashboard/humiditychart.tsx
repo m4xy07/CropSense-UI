@@ -33,7 +33,28 @@ export function HumidityChart({
             minTickGap={32}
             ticks={ticks} // Ensure ticks are applied here
           />
-          <ChartTooltip content={<ChartTooltipContent className="w-[175px]" nameKey="humidity" />} />
+          <ChartTooltip
+            content={
+              <ChartTooltipContent
+                className="w-[175px]"
+                nameKey="humidity"
+                labelFormatter={(time) => {
+                  const date = new Date(time);
+                  const day = date.getDate();
+                  const month = date.toLocaleString("en-US", { month: "long" });
+                  const suffix =
+                    day % 10 === 1 && day !== 11
+                      ? "st"
+                      : day % 10 === 2 && day !== 12
+                      ? "nd"
+                      : day % 10 === 3 && day !== 13
+                      ? "rd"
+                      : "th";
+                  return `${day}${suffix} ${month}, ${date.getFullYear()}`;
+                }}
+              />
+            }
+          />
           <Line dataKey="value" type="monotone" stroke={`var(--color-humidity)`} strokeWidth={2} dot={false} />
         </LineChart>
       </ChartContainer>
