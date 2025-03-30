@@ -97,7 +97,63 @@ body {
   background: radial-gradient(86.86% 86.86% at 50% 111.67%, #ffffffcb, #fff0), #713dff;
 } 
 
+.pricing-plan-switcher{
+  -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    background: radial-gradient(89.06% 89.06% at 50% 100%, #ffffff0a, #fff0 48.41%), #ffffff14;
+    border: 1px solid rgba(255, 255, 255, .06);
+}
 
+.pricing-plan-switcher-active{
+  background: radial-gradient(89.06% 89.06% at 50% 100%, #ffffff0a, #fff0 48.41%), #ffffff14;
+    border: 1px solid rgba(169, 163, 194, .0549019608);
+}
+
+.pricing-plan-switcher-active span{
+  background: linear-gradient(180deg, #fff 22.5%, #ffffffb3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+@keyframes subtle-scale-1 {
+  0%, 100% {
+    transform: scale(1) rotate(45deg);
+  }
+  50% {
+    transform: scale(1.3) rotate(45deg);
+  }
+}
+
+.scale-animation-1 {
+  animation: subtle-scale-1 1.5s infinite ease-in-out;
+}
+
+@keyframes subtle-scale-2 {
+  0%, 100% {
+    transform: scale(1) rotate(12deg);
+  }
+  50% {
+    transform: scale(1.4) rotate(12deg);
+  }
+}
+
+.scale-animation-2 {
+  animation: subtle-scale-2 1.8s infinite ease-in-out;
+}
+
+@keyframes subtle-scale-3 {
+  0%, 100% {
+    transform: scale(1) rotate(60deg);
+  }
+  50% {
+    transform: scale(1.5) rotate(60deg);
+  }
+}
+
+.scale-animation-3 {
+  animation: subtle-scale-3 1.3s infinite ease-in-out;
+}
 /* .pricing-card-price {
   background: radial-gradient(86.86% 86.86% at 50% 111.67%, #ffffff80, #fff0), radial-gradient(198.77% 172.22% at 55.56% 112.78%, #887dff80, #887dff00), #713dff;
   border: 1px solid rgba(255, 255, 255, .1);

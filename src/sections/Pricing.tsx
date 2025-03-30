@@ -22,7 +22,7 @@ const PricingSec = () => {
               <h2 className="text-[3.5rem] pt-4 text-center font-bold tracking-normal effect-font-gradient">
                 Pay as you grow
               </h2>
-              <p className="text-white/70 text-xl font-inter text-center mt-4 tracking-tight">
+              <p className="text-white/70 text-xl font-inter text-center mt-[12px] tracking-tight">
               Flexible pricing that scales with you.
               </p>
             </div>

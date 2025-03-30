@@ -5,6 +5,7 @@ import CheckIcon from "@/assets/check.svg";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import StarIcon from "@/assets/star.svg";
 
 type BilledType = "monthly" | "annually" | "lifetime";
 
@@ -127,6 +128,18 @@ const OfferCard = ({
           margin: "-1px",
         }}>
           <div className="absolute -top-4 left-0 right-0 pricing-card-popular-tag  text-white text-center py-2 font-bold z-20 rounded-t-lg">
+            <div className="flex">
+              <div className="flex">
+                <StarIcon className="rotate-45 absolute top-1 left-3 scale-animation-1" />
+                <StarIcon className="rotate-12 absolute top-1 left-12 scale-animation-2" />
+                <StarIcon className="rotate-60 absolute top-4 left-8 scale-animation-3" />
+              </div>
+              <div className="flex">
+              <StarIcon className="rotate-12 absolute top-1 right-3 scale-animation-2" />
+                <StarIcon className="rotate-60 absolute top-1 right-12 scale-animation-3" />
+                <StarIcon className="rotate-45 absolute top-4 right-8 scale-animation-1" />
+              </div>
+            </div>
             <span className="pricing-card-popular-tag-text">
             Best Value
             </span>
@@ -215,6 +228,7 @@ const OfferCard = ({
   );
 };
 
+
 export function SelectOfferTab({
   handleSwitchTab,
   selectedBilledType,
@@ -225,43 +239,42 @@ export function SelectOfferTab({
   const OfferList = ["monthly", "annually", "lifetime"] as const;
 
   return (
+    <div className="bg-[#0a0118] rounded-full mb-12">
     <nav
-      className="flex flex-col sm:flex-row px-2 py-2 rounded-full shadow-[inset_0_1px_0_0_hsla(0,0%,100%,.1)]"
-      style={{
-        background: "linear-gradient(137deg, #111214 4.87%, #0c0d0f 75.88%)",
-        borderTop: "1px solid hsla(0, 0%, 100%, .06)",
-        borderRight: "1px solid hsla(0, 0%, 100%, .06)",
-        borderLeft: "1px solid hsla(0, 0%, 100%, .06)",
-      }}
+      className="relative flex flex-col sm:flex-row px-2 py-2 pricing-plan-switcher rounded-full"
+      
     >
-      {OfferList.map((button) => (
-        <button
-          className={cn(
-            "relative inline-flex w-fit transform-gpu whitespace-nowrap px-6 py-2.5 font-normal text-base capitalize tracking-tight transition-colors",
-            selectedBilledType === button
-              ? "text-neutral-700 dark:text-neutral-50"
-              : "text-neutral-800 hover:text-neutral-600 dark:text-neutral-300 dark:hover:text-neutral-300"
-          )}
-          key={button}
-          onClick={() => handleSwitchTab(button)}
-          type="button"
-        >
-          {button}
-          {selectedBilledType === button && (
-            <motion.div
-              animate={{ opacity: 1, scale: 1 }}
-              className="-z-10 absolute top-0 right-0 bottom-0 left-0 border-t border-neutral-500/50 rounded-full bg-neutral-200 dark:bg-neutral-800"
-              exit={{ opacity: 0, scale: 0.9 }}
-              initial={{ opacity: 0, scale: 0.95 }}
-              layout={true}
-              layoutId="pricing-focused-element"
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            >
-              <div className="size-full rounded-full" />
-            </motion.div>
-          )}
-        </button>
-      ))}
+      {/* Motion div (highlight) stays inside nav but moves smoothly */}
+      <div className="relative w-full flex justify-around">
+        {OfferList.map((button) => (
+          <button
+            key={button}
+            className={cn(
+              "relative z-10 inline-flex w-full sm:w-fit transform-gpu whitespace-nowrap px-6 py-2.5 font-inter font-normal text-base capitalize tracking-tight transition-colors",
+              selectedBilledType === button
+                ? "text-white"
+                : " text-[#9b96b0] hover:text-neutral-300"
+            )}
+            onClick={() => handleSwitchTab(button)}
+            type="button"
+          >
+            {button}
+          </button>
+        ))}
+
+        {/* The motion.div moves smoothly between buttons */}
+        <motion.div
+          layoutId="pricing-focused-element"
+          className="absolute top-0 bottom-0 w-[33.33%] rounded-full pricing-plan-switcher-active"
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          style={{
+            left: `${OfferList.indexOf(selectedBilledType) * 33.33}%`,
+          }}
+        />
+      </div>
     </nav>
+    </div>
   );
 }
+
+
