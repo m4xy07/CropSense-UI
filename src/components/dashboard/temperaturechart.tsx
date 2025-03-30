@@ -16,7 +16,7 @@ export function TemperatureChart({ data }: { data: { time: string; value: number
   return (
     <CardContent>
       <ChartContainer config={chartConfig} className="p-0">
-        <LineChart accessibilityLayer data={data} margin={{ left: -35, right: 12 }}>
+        <LineChart accessibilityLayer data={data} margin={{ left: 0, right: 0 }}>
           <CartesianGrid vertical={false} />
           <XAxis dataKey="time" tickFormatter={(time) => new Date(time).toLocaleDateString("en-US", { month: "short", day: "numeric" })}  tickLine={false} axisLine={false} tickMargin={8} minTickGap={32} />
           

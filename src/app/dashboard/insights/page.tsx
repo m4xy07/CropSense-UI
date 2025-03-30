@@ -107,18 +107,17 @@ export default function Page() {
             <div className="flex flex-row items-center gap-6">
               <SelectTime timeFrame={timeFrame} setTimeFrame={setTimeFrame} />
               <div className="flex flex-row items-center gap-2 w-[84px]">
-                <ClockIcon className="w-5 h-5" />
-                {loading ? <Skeleton className="h-4 w-16" /> : <div className="text-white text-sm w-[64px]">{currentTime}</div>}
+                {loading ? <Skeleton className="h-[24px] w-[80px]" /> :<> <ClockIcon className="w-5 h-5" /> <div className="text-white text-sm w-[64px]">{currentTime}</div></>}
               </div>
               <div className="flex flex-row items-center gap-2">
-                <OpacityIcon className="w-5 h-5" />
-                {loading ? <Skeleton className="h-4 w-16" /> : <div className="text-white text-sm">{rainStatus}</div>}
+                
+                {loading ? <Skeleton className="h-[24px] w-[42px]" /> :<><OpacityIcon className="w-5 h-5" /> <div className="text-white text-sm w-[18px]">{rainStatus}</div></>}
               </div>
               <div className="flex flex-row items-center gap-2">
-                {loading ? <Skeleton className="h-6 w-[80px]" /> : <div className="text-white text-sm flex flex-row gap-2"> <FaMountain className="w-5 h-5" /> {altitude !== null ? `${altitude} m` : "N/A"}</div>}
+                {loading ? <Skeleton className="h-[24px] w-[90px]" /> : <div className="text-white text-sm flex flex-row gap-2 w-[90px]"> <FaMountain className="w-5 h-5" /> {altitude !== null ? `${altitude} m` : "N/A"}</div>}
               </div>
               <div className="flex flex-row items-center gap-2">
-                {loading ? <Skeleton className="h-6 w-[125px]" /> : <>{wifiStatus.icon}<div className="text-white text-sm">{wifiStatus.text}</div></>}
+                {loading ? <Skeleton className="h-[24px] w-[125px]" /> : <>{wifiStatus.icon}<div className="text-white text-sm">{wifiStatus.text}</div></>}
               </div>
             </div>
           </div>
