@@ -2,13 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
-import { GroupChartComponent } from "@/components/dashboard/groupchart";
-import { LineChartComponent } from "@/components/dashboard/linecharts";
-import { StackedChartComponent } from "@/components/dashboard/stackedchart";
-import { BarChartComponent } from "@/components/dashboard/barchart";
-import { BlendingModeIcon, OpacityIcon, ClockIcon } from "@radix-ui/react-icons";
-import { WifiHigh } from "lucide-react";
-import { FaMountain } from "react-icons/fa";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -23,66 +16,19 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { SelectTime } from "@/components/select";
-import { StackedChartExpandedComponent } from "@/components/dashboard/stackedexpanded";
 
-const API_URL = "https://data.cropsense.tech/data";
+function Scheme({ title, description }) {
+  return (
+    <div className="p-4 bg-transparent rounded-xl shadow">
+      <h2 className="text-[28px] font-semibold font-rebond scheme-title">{title}</h2>
+      <p className="text-[#ffffffc7] mt-2 text-base">{description}</p>
+    </div>
+  );
+}
+
 
 export default function Page() {
-  const [currentTime, setCurrentTime] = useState<string>("");
-  const [altitude, setAltitude] = useState<number | null>(null);
-  const [timeFrame, setTimeFrame] = useState<string>("7 days");
-  const [chartData, setChartData] = useState<{
-    chartData: { label: string; price: number }[];
-    harvestableMonth: string;
-    bestCrop: string;
-    recommendedFertilizer: string;
-  } | null>(null);
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      setCurrentTime(now.toLocaleTimeString());
-    };
-
-    updateTime();
-    const intervalId = setInterval(updateTime, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(API_URL);
-        if (!response.ok) throw new Error("Failed to fetch data");
-
-        const data = await response.json();
-        if (Array.isArray(data) && data.length > 0) {
-          const latestRecord = data[data.length - 1];
-          const latestMonthData = latestRecord.harvestable_months[latestRecord.harvestable_months.length - 1];
-
-          setAltitude(parseFloat(latestRecord?.alt?.toFixed(2)));
-
-          setChartData({
-            chartData: [
-              { label: "Wholesale", price: parseFloat(latestMonthData.wholesale_price.toFixed(2)) },
-              { label: "Retail", price: parseFloat(latestMonthData.retail_price.toFixed(2)) },
-            ],
-            harvestableMonth: latestMonthData.month,
-            bestCrop: latestRecord.best_crop || "Unknown",
-            recommendedFertilizer: latestRecord.recommended_fertilizer || "Unknown",
-          });
-        } else {
-          console.warn("API returned an empty or invalid response.");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  
 
   return (
     <SidebarProvider className="dark font-inter">
@@ -110,22 +56,66 @@ export default function Page() {
         </header>
 
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            
-          </div>
-
-          <div className="flex flex-wrap gap-4">
+        <div className="max-w-5xl p-6 pt-0 space-y-6">
       
       
-      
-            {/* <div className="aspect-video rounded-xl bg-muted/50">
-              {chartData ? (
-                <BarChartComponent cardTitle="Crop Harvest & Pricing" data={chartData} />
-              ) : (
-                <p className="text-center text-gray-500">Loading...</p>
-              )}
-            </div> */}
-          </div>
+      <div className="space-y-4">
+        <Scheme
+          title="Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)"
+          description="Launched on February 24, 2019, PM-KISAN provides financial assistance of ₹6,000 annually in three equal installments to landholding farmers via Direct Benefit Transfer (DBT). Over ₹2.81 lakh crore has been disbursed to more than 11 crore beneficiaries."
+        />
+        
+        <Scheme
+          title="Pradhan Mantri Kisan Maandhan Yojana (PM-KMY)"
+          description="Started on September 12, 2019, PM-KMY is a pension scheme for small and marginal farmers. Participants contribute monthly until they reach 60, upon which they receive a ₹3,000 pension. The government matches the farmers' contributions. Around 23.38 lakh farmers have enrolled."
+        />
+        
+        <Scheme
+          title="Pradhan Mantri Fasal Bima Yojana (PMFBY)"
+          description="Launched in 2016, PMFBY provides affordable crop insurance against natural risks. Since its inception, 5549.40 lakh farmer applications have been insured, with ₹1,50,589.10 crore paid out in claims."
+        />
+        
+        <Scheme
+          title="Modified Interest Subvention Scheme (MISS)"
+          description="Provides short-term agricultural loans up to ₹3 lakh at 7% per annum for one year. Farmers repaying on time receive an additional 3% subvention, effectively reducing the interest rate to 4%. Covers post-harvest loans and extends benefits during calamities."
+        />
+        
+        <Scheme
+          title="Agriculture Infrastructure Fund (AIF)"
+          description="Part of the Aatmanirbhar Bharat Package, AIF supports post-harvest infrastructure and community farming assets with ₹1 lakh crore funding from FY 2020-21 to FY 2025-26. Offers 3% interest subvention and credit guarantees."
+        />
+        
+        <Scheme
+          title="Rashtriya Krishi Vikas Yojana - RAFTAAR"
+          description="Approved on November 1, 2017, with a financial allocation of ₹15,722 crore, this scheme incentivizes states to increase agricultural investment."
+        />
+        
+        <Scheme
+          title="National Beekeeping & Honey Mission (NBHM)"
+          description="Promotes beekeeping and honey production to enhance agricultural productivity and create self-sustaining employment."
+        />
+        
+        <Scheme
+          title="Formation and Promotion of 10,000 Farmer Producer Organizations (FPOs)"
+          description="Aims to organize farmers into collectives to improve bargaining power, market access, and income levels."
+        />
+        
+        <Scheme
+          title="National Mission on Edible Oils – Oil Palm (NMEO-OP)"
+          description="Seeks to increase domestic edible oil production, particularly palm oil, reducing dependency on imports."
+        />
+      </div>
+      <div className="p-4">
+        <span>
+          Learn more about these schemes and their benefits on the official websites of the Ministry of Agriculture and Farmers Welfare, Government of India:
+          <a href="https://agriwelfare.gov.in/en/Major" className="link-color hover:underline"> Ministry Major Schemes </a>
+          |
+          <a href="https://pib.gov.in/PressReleaseIframePage.aspx?PRID=2002012" className="link-color hover:underline"> Schemes for Welfare of Farmers</a>
+        </span>
+      </div>
+    </div>
+  
+          
         </div>
       </SidebarInset>
     </SidebarProvider>

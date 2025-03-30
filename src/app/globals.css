@@ -365,6 +365,10 @@ body {
   font-family: var(--font-inter), sans-serif;
 }
 
+.font-rebond {
+  font-family: "Rebond Grotesque", sans-serif;
+}
+
 .cl-userButtonPopoverActionButtonIcon {
   color: white;
 }
@@ -636,6 +640,25 @@ body {
 
 .cl-internal-1hp5nqm{
   display: none !important;
+}
+
+.scheme-title{
+  background: linear-gradient(180deg, #fff 22.5%, #ffffffb3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 12px;
+  margin-top: 20px;
+}
+
+.link-color{
+  background: radial-gradient(86.86% 86.86% at 50% 111.67%, #ffffff80, #fff0), radial-gradient(198.77% 172.22% at 55.56% 112.78%, #887dff80, #887dff00), #713dff;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    transition: all .2s ease;
 }
 
 @layer base {
