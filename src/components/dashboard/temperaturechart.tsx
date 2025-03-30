@@ -19,7 +19,7 @@ export function TemperatureChart({ data }: { data: { time: string; value: number
         <LineChart accessibilityLayer data={data} margin={{ left: -35, right: 12 }}>
           <CartesianGrid vertical={false} />
           <XAxis dataKey="time" tickFormatter={(time) => new Date(time).toLocaleDateString("en-US", { month: "short", day: "numeric" })}  tickLine={false} axisLine={false} tickMargin={8} minTickGap={32} />
-          <YAxis />
+          
           <ChartTooltip content={<ChartTooltipContent className="w-[180px]" nameKey="temperature" />} />
           <Line dataKey="value" type="monotone" stroke={`var(--color-temperature)`} strokeWidth={2} dot={false} />
         </LineChart>

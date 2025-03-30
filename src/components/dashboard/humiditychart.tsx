@@ -19,7 +19,7 @@ export function HumidityChart({ data }: { data: { time: string; value: number }[
         <LineChart accessibilityLayer data={data} margin={{ left: -35, right: 12 }}>
           <CartesianGrid vertical={false} />
           <XAxis dataKey="time" tickLine={false} axisLine={false} tickMargin={8} minTickGap={32} />
-          <YAxis />
+          
           <ChartTooltip content={<ChartTooltipContent className="w-[175px]" nameKey="humidity" />} />
           <Line dataKey="value" type="monotone" stroke={`var(--color-humidity)`} strokeWidth={2} dot={false} />
         </LineChart>

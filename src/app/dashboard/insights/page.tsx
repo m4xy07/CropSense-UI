@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 import { AppSidebar } from "@/components/app-sidebar";
 import { LineChartComponent } from "@/components/dashboard/linecharts";
 import { StackedChartExpandedComponent } from "@/components/dashboard/stackedexpanded";
@@ -28,7 +29,7 @@ export default function Page() {
   const [rainStatus, setRainStatus] = useState<string | null>(null);
   const [wifiStrength, setWifiStrength] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [timeFrame, setTimeFrame] = useState<string>("7 days");
+  const [timeFrame, setTimeFrame] = useState<string>(Cookies.get("timeFrame") || "7 days");
 
   useEffect(() => {
     const updateTime = () => {
@@ -62,6 +63,10 @@ export default function Page() {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    Cookies.set("timeFrame", timeFrame, { expires: 7 });
+  }, [timeFrame]);
 
   const getWifiStatus = () => {
     if (wifiStrength === null) {
@@ -101,33 +106,19 @@ export default function Page() {
             </div>
             <div className="flex flex-row items-center gap-6">
               <SelectTime timeFrame={timeFrame} setTimeFrame={setTimeFrame} />
-
-              <div className="flex flex-row w-[80px] items-center gap-2">
+              <div className="flex flex-row items-center gap-2 w-[84px]">
                 <ClockIcon className="w-5 h-5" />
-                {loading ? <Skeleton className="h-4 w-16" /> : <div className="text-white text-sm">{currentTime}</div>}
+                {loading ? <Skeleton className="h-4 w-16" /> : <div className="text-white text-sm w-[64px]">{currentTime}</div>}
               </div>
-
               <div className="flex flex-row items-center gap-2">
                 <OpacityIcon className="w-5 h-5" />
                 {loading ? <Skeleton className="h-4 w-16" /> : <div className="text-white text-sm">{rainStatus}</div>}
               </div>
-
               <div className="flex flex-row items-center gap-2">
-                
-                {loading ? <Skeleton className="h-6 w-[80px]" /> :  <div className="text-white text-sm flex flex-row gap-2"> <FaMountain className="w-5 h-5" /> {altitude !== null ? `${altitude} m` : "N/A"}</div>}
+                {loading ? <Skeleton className="h-6 w-[80px]" /> : <div className="text-white text-sm flex flex-row gap-2"> <FaMountain className="w-5 h-5" /> {altitude !== null ? `${altitude} m` : "N/A"}</div>}
               </div>
-
               <div className="flex flex-row items-center gap-2">
-                {loading ? (
-                  <Skeleton className="h-6 w-[125px] flex flex-row items-center gap-2">
-                    
-                  </Skeleton>
-                ) : (
-                  <>
-                    {wifiStatus.icon}
-                    <div className="text-white text-sm">{wifiStatus.text}</div>
-                  </>
-                )}
+                {loading ? <Skeleton className="h-6 w-[125px]" /> : <>{wifiStatus.icon}<div className="text-white text-sm">{wifiStatus.text}</div></>}
               </div>
             </div>
           </div>

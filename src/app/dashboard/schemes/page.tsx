@@ -105,39 +105,7 @@ export default function Page() {
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
-            <div className="flex flex-row items-center gap-6">
-              <div className="flex">
-                <SelectTime timeFrame={timeFrame} setTimeFrame={setTimeFrame} />
-              </div>
-
-              <div className="flex flex-row w-[80px] items-center gap-2">
-                <ClockIcon className="w-[20px] h-[20px]" />
-                <div className="text-[rgba(255,255,255,0.8)] w-[52px] text-sm">
-                  {currentTime}
-                </div>
-              </div>
-
-              <div className="flex flex-row items-center gap-2">
-                <OpacityIcon className="w-5 h-5" />
-                <div className="text-[rgba(255,255,255,0.8)] text-sm">
-                  Not raining
-                </div>
-              </div>
-
-              <div className="flex flex-row items-center gap-2">
-                <FaMountain className="w-5 h-5" />
-                <div className="text-[rgba(255,255,255,0.8)] text-sm">
-                  {altitude !== null ? `${altitude} m` : "Loading..."}
-                </div>
-              </div>
-
-              <div className="flex flex-row items-center gap-2">
-                <WifiHigh className="w-6 h-6 mb-2 -mr-1" />
-                <div className="text-[rgba(255,255,255,0.8)] text-sm">
-                  Connected
-                </div>
-              </div>
-            </div>
+            
           </div>
         </header>
 
