@@ -3,7 +3,7 @@
 //To get started, run "npm i cobe"
 import { useEffect, useRef } from 'react';
 import createGlobe from 'cobe';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import starsBg from "@/assets/stars.png";
 import Button from '@/components/Button';
 import Link from 'next/link';
@@ -14,20 +14,21 @@ import Link from 'next/link';
 
 export default function Example() {
 
-    const sectionRef = useRef(null);
-    const {scrollYProgress} = useScroll({
-      target: sectionRef,
-      offset: ['start end', 'end start']
-    });
-  
-    const backgroundPositionY = useTransform(scrollYProgress, [0,1], [-300, 300]); 
+  const sectionRef = useRef(null);
   const canvasRef = useRef(null);
-
+  const isInView = useInView(canvasRef, { margin: "-50% 0px -50% 0px" });
+  
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start']
+  });
+  
+  const backgroundPositionY = useTransform(scrollYProgress, [0, 1], [-300, 300]);
+  
   useEffect(() => {
+    if (!canvasRef.current || !isInView) return;
+    
     let phi = 4.7;
-
-    if (!canvasRef.current) return;
-
     const globe = createGlobe(canvasRef.current, {
       devicePixelRatio: 2,
       width: 1200 * 2,
@@ -42,22 +43,15 @@ export default function Example() {
       baseColor: [0.3, 0.3, 0.3],
       glowColor: [0.15, 0.15, 0.15],
       markerColor: [100, 100, 100],
-      markers: [
-        // { location: [37.7595, -122.4367], size: 0.03 }, // San Francisco
-        // { location: [40.7128, -74.006], size: 0.03 }, // New York City
-        // { location: [35.6895, 139.6917], size: 0.03 }, // Tokyo
-        // { location: [28.7041, 77.1025], size: 0.03 }, // Delhi
-      ],
+      markers: [],
       onRender: (state) => {
         state.phi = phi;
         phi += 0.0005;
       },
     });
-
-    return () => {
-      globe.destroy();
-    };
-  }, []);
+    
+    return () => globe.destroy();
+  }, [isInView]);
 
 
   return (
