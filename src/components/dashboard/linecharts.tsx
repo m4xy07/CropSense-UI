@@ -59,13 +59,13 @@ export function LineChartComponent({
   const [value, setValue] = useState<number | null>(null);
   const [valueChange, setValueChange] = useState<number | null>(null);
   const [dateRange, setDateRange] = useState<string | null>(null);
-  const [chartData, setChartData] = useState<{ time: string; value: number }[]>([]);
+  const [chartData, setChartData] = useState<{ data: { time: string; value: number }[]; ticks: string[] } | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      setChartData([]);
+      setChartData(null);
       setValue(null);
       setValueChange(null);
       setDateRange(null);
@@ -114,7 +114,34 @@ export function LineChartComponent({
             value: entry[dataFieldMap[dataType]],
           }));
 
-          setChartData(formattedData);
+          // Calculate ticks for the X-axis
+          const totalPoints = formattedData.length;
+          let tickCount = 0;
+          switch (timeFrame) {
+            case "24 hours":
+              tickCount = 2; // 2 date points
+              break;
+            case "7 days":
+              tickCount = 3; // 3 date points
+              break;
+            case "14 days":
+              tickCount = 6; // 6 date points
+              break;
+            case "1 month":
+              tickCount = 5; // 6 date points
+              break;
+            case "lifetime":
+              tickCount = Math.min(12, totalPoints); // 1 point per month, up to 12 months
+              break;
+          }
+
+          // Ensure ticks are evenly distributed
+          const ticks = Array.from({ length: tickCount }, (_, i) => {
+            const index = Math.floor((i * totalPoints) / tickCount);
+            return formattedData[index]?.time;
+          }).filter(Boolean);
+
+          setChartData({ data: formattedData, ticks });
 
           let timeFrameAvgValue =
             filteredData.reduce((sum, entry) => sum + entry[dataFieldMap[dataType]], 0) / filteredData.length;
@@ -146,7 +173,7 @@ export function LineChartComponent({
         <div className="font-inter">{loading ? <Skeleton className="h-6 w-20" /> : value !== null ? `${value}${unitMap[dataType]}` : "No data available"}</div>
       </CardHeader>
       <CardContent>
-        {loading ? <Skeleton className="h-[277px] w-full" /> : ChartComponent && <ChartComponent data={chartData} />}
+        {loading ? <Skeleton className="h-[277px] w-full" /> : ChartComponent && <ChartComponent data={chartData?.data} ticks={chartData?.ticks} />}
       </CardContent>
       <CardFooter>
         {loading ? (
