@@ -48,7 +48,7 @@ export default function Page() {
               <Breadcrumb>
                 <BreadcrumbList>
                   <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href="#">Dashboard</BreadcrumbLink>
+                    <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator className="hidden md:block" />
                   <BreadcrumbItem>
@@ -121,10 +121,10 @@ export default function Page() {
                 />
                 
                 </div>
-                <div className="p-4 pt-12 text-lg w-full">
+                <div className="p-4 pt-12 items-center text-center text-lg w-full">
                 <span>
                   Learn more about these schemes and their benefits on the official websites of the Ministry of Agriculture and Farmers Welfare, Government of India:<br/>
-                  <a href="https://agriwelfare.gov.in/en/Major" className="link-color pr-2 hover:underline">
+                  <a href="https://agriwelfare.gov.in/en/Major" className="link-color text-center pr-2 hover:underline">
                     Ministry Major Schemes
                   </a>
                   |
@@ -137,7 +137,7 @@ export default function Page() {
 
               
               <div className="h-fit w-full flex items-center justify-center">
-                  <TextHoverEffect text="CROPSENSE" />
+                  <TextHoverEffect text="CropSense" />
               </div>
           </div>
         </div>
