@@ -47,20 +47,20 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function TwoLineChart2Component() {
+export function TwoLineChart4Component() {
   return (
     <Card className="p-8 w-full max-w-[600px] h-full">
       <CardHeader>
         <CardTitle className="text-[20px] font-normal text-white">
-          Random Forest Regression Model for Max Price
+          Random Forest Regression Model for Fertilizer Usage
         </CardTitle>
       </CardHeader>
       <CardContent className="h-[300px]">
         <ChartContainer config={chartConfig}>
           <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData}>
-  <XAxis dataKey="fertilizer_usage" label={{ value: "Fertilizer Usage", position: "insideBottom", style: { fill: "white" } }} />
-  <YAxis label={{ value: "Density", angle: -90, position: "insideLeft", style: { fill: "white" } }} />
+  <XAxis dataKey="fertilizer_usage"  />
+  <YAxis  />
   <CartesianGrid strokeDasharray="3 3" />
   <Line type="monotone" dataKey="actual" stroke="#FF0000" name="Actual" />
   <Line type="monotone" dataKey="predicted" stroke="#0000FF" name="Predicted" />
