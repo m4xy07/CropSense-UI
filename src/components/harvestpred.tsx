@@ -50,7 +50,7 @@ export function HarvestableMonthCards() {
                                     <div className="text-left text-[22px] text-white">
                                         {item.month}
                                     </div>
-                                    <div className="flex flex-row gap-[6rem]">
+                                    <div className="flex flex-row gap-[5rem]">
                                         <div className="flex flex-col gap-2">
                                             <div className="flex flex-col border-l-2 border-blue-500 pl-4">
                                                 <div className="text-left font-normal text-zinc-50/70 text-[14px]">

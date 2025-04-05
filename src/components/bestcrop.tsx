@@ -48,7 +48,7 @@ export function MorphingDialogBasicNine() {
             </p>
             <div className="w-full h-[200px] relative">
               <Image
-              src="/Wheat.jpg"
+              src="/Tomato.jpg"
               alt="crop image"
               layout="fill"
               objectFit="cover"

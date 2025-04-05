@@ -106,8 +106,8 @@ export default function Page() {
             </div>
             <div className="flex flex-row items-center gap-6">
               <SelectTime timeFrame={timeFrame} setTimeFrame={setTimeFrame} />
-              <div className="flex flex-row items-center gap-2 w-[84px]">
-                {loading ? <Skeleton className="h-[24px] w-[80px]" /> :<> <ClockIcon className="w-5 h-5" /> <div className="text-white text-sm w-[64px]">{currentTime}</div></>}
+              <div className="flex flex-row items-center gap-2 w-[86px]">
+                {loading ? <Skeleton className="h-[24px] w-[86px]" /> :<> <ClockIcon className="w-5 h-5" /> <div className="text-white text-sm w-[64px]">{currentTime}</div></>}
               </div>
               <div className="flex flex-row items-center gap-2">
                 
