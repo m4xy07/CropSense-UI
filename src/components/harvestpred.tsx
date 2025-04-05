@@ -54,10 +54,10 @@ export function HarvestableMonthCards() {
                                         <div className="flex flex-col gap-2">
                                             <div className="flex flex-col border-l-2 border-blue-500 pl-4">
                                                 <div className="text-left font-normal text-zinc-50/70 text-[14px]">
-                                                    Prices
+                                                    Wholesale
                                                 </div>
                                                 <div className="text-left text-zinc-50/70 text-[14px]">
-                                                    Wholesale
+                                                    Price
                                                 </div>
                                             </div>
                                             <div className="text-left text-[28px] text-zinc-200">
@@ -67,10 +67,10 @@ export function HarvestableMonthCards() {
                                         <div className="flex flex-col gap-2">
                                             <div className="flex flex-col border-l-2 border-[#713dff] pl-4">
                                                 <div className="text-left font-normal text-zinc-50/70 text-[14px]">
-                                                    Prices
+                                                    Retail
                                                 </div>
                                                 <div className="text-left text-zinc-50/70 text-[14px]">
-                                                    Retail
+                                                    Price
                                                 </div>
                                             </div>
                                             <div className="text-left text-[28px] text-zinc-200">
