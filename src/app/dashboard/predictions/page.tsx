@@ -25,6 +25,11 @@ import {
 } from "@/components/ui/sidebar";
 import { SelectTime } from "@/components/select";
 import { StackedChartExpandedComponent } from "@/components/dashboard/stackedexpanded";
+import { MorphingDialogBasicNine } from "@/components/bestcrop";
+import { MorphingDialogBasicFourteen } from "@/components/harvestmonth1";
+import { MorphingDialogBasicFifteen } from "@/components/harvestmonth2";
+import { MorphingDialogBasicSixteen } from "@/components/harvestmonth3";
+import { MorphingDialogBasicTen } from "@/components/bestfert";
 
 const API_URL = "https://data.cropsense.tech/data";
 
@@ -109,13 +114,15 @@ export default function Page() {
           </div>
         </header>
 
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-4">
-            
+        <div className="flex flex-1 flex-col items-center justify-center gap-4 p-4 pt-0">
+          <div className="flex flex-row gap-4">
+            <MorphingDialogBasicTen />
+            <MorphingDialogBasicNine />
           </div>
-
-          <div className="grid auto-rows-min gap-4 md:grid-cols-4">
-            
+          <div className="flex flex-row gap-4">
+            <MorphingDialogBasicFourteen />
+            <MorphingDialogBasicFifteen />
+            <MorphingDialogBasicSixteen />
           </div>
         </div>
       </SidebarInset>
