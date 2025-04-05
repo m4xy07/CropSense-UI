@@ -661,6 +661,60 @@ body {
     transition: all .2s ease;
 }
 
+.cl-internal-1u8qly9{
+  color: inherit !important;
+}
+
+.cl-internal-11p3n5g{
+  color: unset;
+}
+
+.cl-internal-1i0v6m5{
+  color: #fff;
+}
+
+.cl-internal-1i0v6m5:hover{
+  color: rgba(255,255,255,0.62);
+}
+
+.cl-internal-13u79ez{
+  background: none !important;
+}
+
+.cl-internal-d5dzke{
+  background-color: #111010;
+  border-radius: 0.75rem;
+}
+.cl-internal-phfxlr{
+  background-color: #111010
+}
+.cl-internal-vwzuz5{
+  background-color: #111010 !important;
+  background: none !important;
+  border-top-left-radius: 0.75rem;
+  border-bottom-left-radius: 0.75rem;
+}
+.cl-internal-u71u4c{
+  background-color: #080808 !important;
+  border-top-right-radius: 0.75rem !important;
+  border-bottom-right-radius: 0.75rem !important;
+  border-radius: 0px;
+}
+
+.cl-internal-phfxlr{
+  border-radius: 0.75rem !important;
+}
+
+.cl-modalContent{
+  font-family: "Inter", sans-serif;
+}
+
+.cl-internal-a39y5c{
+  color: white;
+  border-color: #565761;
+    border-width: 1px !important;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
