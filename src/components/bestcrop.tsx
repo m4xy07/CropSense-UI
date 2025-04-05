@@ -1,4 +1,5 @@
 import { PlusIcon } from 'lucide-react';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 export function MorphingDialogBasicNine() {
@@ -35,17 +36,25 @@ export function MorphingDialogBasicNine() {
 
   return (
     <div
-      style={{
-        borderRadius: '12px',
-      }}
-      className='flex max-w-[270px] md:w-[150px] md:h-[100px] items-center justify-center flex-col overflow-hidden border border-zinc-950/10 bg-black dark:border-zinc-50/10 dark:bg-zinc-900'
+      className="flex max-w-fit p-8 items-center justify-center flex-col overflow-hidden border border-zinc-950/10 bg-[#080808] dark:border-zinc-50/10"
+      style={{ borderRadius: '12px' }}
     >
-      <div className='flex grow flex-row items-center justify-between px-3 py-2'>
-        <div>
-          <div className='text-zinc-950 text-center dark:text-zinc-50'>
-            Best Crop
+      <div className="flex grow flex-row items-center justify-between">
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-4">
+            <h2 className="text-[20px] font-normal text-white">Best Crop to Grow</h2>
+            <p className="text-base text-zinc-50/70">
+              Given the foreseeable soil and weather conditions, you should grow
+            </p>
+            <Image
+              src="/Wheat.jpg"
+              alt="crop image"
+              width={250}
+              height={200}
+              className="items-center mx-auto justify-center rounded-xl"
+            />
           </div>
-          <div className='text-zinc-700 text-center dark:text-zinc-400'>
+          <div className="text-center text-white">
             {best_crop !== null ? capitalize(best_crop) : "Loading..."}
           </div>
         </div>

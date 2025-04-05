@@ -30,6 +30,7 @@ import { MorphingDialogBasicFourteen } from "@/components/harvestmonth1";
 import { MorphingDialogBasicFifteen } from "@/components/harvestmonth2";
 import { MorphingDialogBasicSixteen } from "@/components/harvestmonth3";
 import { MorphingDialogBasicTen } from "@/components/bestfert";
+import { HarvestableMonthCards } from "@/components/harvestpred";
 
 const API_URL = "https://data.cropsense.tech/data";
 
@@ -114,15 +115,11 @@ export default function Page() {
           </div>
         </header>
 
-        <div className="flex flex-1 flex-col items-center justify-center gap-4 p-4 pt-0">
+        <div className="flex flex-1 flex-col items-start justify-start gap-4 p-4 pt-0">
           <div className="flex flex-row gap-4">
-            <MorphingDialogBasicTen />
             <MorphingDialogBasicNine />
-          </div>
-          <div className="flex flex-row gap-4">
-            <MorphingDialogBasicFourteen />
-            <MorphingDialogBasicFifteen />
-            <MorphingDialogBasicSixteen />
+            <HarvestableMonthCards />
+            {/* <MorphingDialogBasicTen /> */}
           </div>
         </div>
       </SidebarInset>
