@@ -41,19 +41,21 @@ export function MorphingDialogBasicNine() {
     >
       <div className="flex grow flex-row items-center justify-between">
         <div className="flex flex-col gap-2">
-          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4">
             <h2 className="text-[20px] font-normal text-white">Best Crop to Grow</h2>
             <p className="text-base text-zinc-50/70">
-              Given the foreseeable soil and weather conditions, you should grow
+              Given the foreseeable soil and weather conditions, you should grow 
             </p>
-            <Image
+            <div className="w-full h-[200px] relative">
+              <Image
               src="/Wheat.jpg"
               alt="crop image"
-              width={250}
-              height={200}
-              className="items-center mx-auto justify-center rounded-xl"
-            />
-          </div>
+              layout="fill"
+              objectFit="cover"
+              className="rounded-xl"
+              />
+            </div>
+            </div>
           <div className="text-center text-white">
             {best_crop !== null ? capitalize(best_crop) : "Loading..."}
           </div>

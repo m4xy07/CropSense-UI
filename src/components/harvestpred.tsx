@@ -34,7 +34,7 @@ export function HarvestableMonthCards() {
                 Potential Harvestable Months & Rates
             </h2>
             <p className=' text-base text-zinc-50/70 pt-4'>
-            Given the forseeable soil and weather conditions, you should grow 
+            You'll be able to sell wheat in the following months. The prices are based on the current market trends.
           </p>
             <div className="flex flex-wrap gap-[6rem]">
                 {harvestableMonths.slice(0, 3).map((item, index) => (
