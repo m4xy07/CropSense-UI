@@ -16,71 +16,15 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import Button from "@/components/Button";
 
-const API_URL = "https://data.cropsense.tech/data";
 
 export default function Page() {
-  const [currentTime, setCurrentTime] = useState<string>("");
-  const [altitude, setAltitude] = useState<number | null>(null);
+
   const [searchQuery, setSearchQuery] = useState("");
-  const [chartData, setChartData] = useState<{
-    chartData: { label: string; price: number }[];
-    harvestableMonth: string;
-    bestCrop: string;
-    recommendedFertilizer: string;
-  } | null>(null);
+  
 
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      setCurrentTime(now.toLocaleTimeString());
-    };
-
-    updateTime();
-    const intervalId = setInterval(updateTime, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(API_URL);
-        if (!response.ok) throw new Error("Failed to fetch data");
-
-        const data = await response.json();
-        if (Array.isArray(data) && data.length > 0) {
-          const latestRecord = data[data.length - 1];
-          const latestMonthData =
-            latestRecord.harvestable_months[latestRecord.harvestable_months.length - 1];
-
-          setAltitude(parseFloat(latestRecord?.alt?.toFixed(2)));
-
-          setChartData({
-            chartData: [
-              {
-                label: "Wholesale",
-                price: parseFloat(latestMonthData.wholesale_price.toFixed(2)),
-              },
-              {
-                label: "Retail",
-                price: parseFloat(latestMonthData.retail_price.toFixed(2)),
-              },
-            ],
-            harvestableMonth: latestMonthData.month,
-            bestCrop: latestRecord.best_crop || "Unknown",
-            recommendedFertilizer: latestRecord.recommended_fertilizer || "Unknown",
-          });
-        } else {
-          console.warn("API returned an empty or invalid response.");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  
 
   const equipmentList = [
     {
@@ -237,12 +181,12 @@ export default function Page() {
         </header>
 
         <div className="bg-[#010308] min-h-screen p-4">
-          <div className="bg-[#020408] shadow-md rounded-lg p-4 mb-4 flex items-center gap-4">
+          <div className="bg-[#020408] shadow-md rounded-lg p-0 mb-4 flex items-center gap-4">
             <div className="relative w-1/2">
               <input
                 type="text"
-                placeholder="Search equipment..."
-                className="w-full border bg-[#02040a] text-white rounded-md p-2 pl-10"
+                placeholder="Search equipment"
+                className="w-full border !border-zinc-50/10 bg-[#02040a] text-white rounded-md p-2 pl-10"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -253,7 +197,7 @@ export default function Page() {
             {filteredEquipment.map((item, index) => (
               <div
                 key={index}
-                className="bg-[#010204] shadow-md rounded-lg p-4 border border-gray-700"
+                className="bg-[#010204] shadow-md rounded-lg p-4 border border-zinc-50/10"
               >
                 <img
                   src={item.image}
@@ -262,14 +206,14 @@ export default function Page() {
                 />
                 <h3 className="text-lg font-bold mt-2 text-white">{item.name}</h3>
                 <p className="text-sm text-gray-400">{item.rate}</p>
-                <div className="mt-2 text-xs text-gray-400 space-y-1">
+                <div className="mt-2 mb-4 text-xs text-gray-400 space-y-1">
                   {item.details.map((line, i) => (
                     <p key={i}>{line}</p>
                   ))}
                 </div>
-                <button className="mt-2 w-full bg-[#2563eb] text-white py-1 rounded-md hover:bg-[#1d4ed8]">
-                  Rent Now
-                </button>
+                <Button>
+                  Rent now
+                </Button>
               </div>
             ))}
           </div>
