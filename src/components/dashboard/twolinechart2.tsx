@@ -51,13 +51,13 @@ export function TwoLineChart2Component() {
     <Card className="p-8 w-full max-w-[600px] h-full">
       <CardHeader>
         <CardTitle className="text-[20px] font-normal text-white">
-          Random Forest Regression Model for Max Price
+          Random Forest Regression for Max Price
         </CardTitle>
       </CardHeader>
       <CardContent className="h-[300px]">
         <ChartContainer config={chartConfig}>
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={chartData} margin={{ right: 20, left: 40, bottom: 50 }}>
+            <LineChart data={chartData} margin={{ top: 20, right: 20, left: 20, bottom: -10 }}>
               <CartesianGrid vertical={false} />
               <XAxis dataKey="max_price"  />
   <YAxis  />
