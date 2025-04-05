@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Button from './Button';
+import Link from 'next/link';
 
 export function MorphingDialogBasicTen() {
   const [recommendedFertilizer, setRecommendedFertilizer] = useState<string | null>(null);
@@ -51,11 +52,13 @@ export function MorphingDialogBasicTen() {
             <div className="flex flex-col items-center">
             <Image src="/NPK.png" alt="fertilizer image" width={175} height={175} className="rounded-xl" />
             <div className="text-center text-white">
-              {recommendedFertilizer !== null ? capitalize(recommendedFertilizer) : "Loading..."}
+              {/* {recommendedFertilizer !== null ? capitalize(recommendedFertilizer) : "Loading..."} */}
+              NPK 15-15-15
             </div>
             </div>
             <div className='w-fit flex items-center justify-center mx-auto'>
-              <Button>Order {recommendedFertilizer !== null ? capitalize(recommendedFertilizer) : "Loading..."}</Button>
+              {/* <Button>Order {recommendedFertilizer !== null ? capitalize(recommendedFertilizer) : "Loading..."}</Button> */}
+              <Link href="https://dir.indiamart.com/impcat/npk-fertilizer/npk-ratio-15-15-15-q15410334/"><Button>Order NPK 15-15-15</Button></Link>
             </div>
             
         </div>

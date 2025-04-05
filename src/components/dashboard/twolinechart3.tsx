@@ -22,17 +22,17 @@ import {
 } from "@/components/ui/chart"
 
 const chartData = [
-    { max_price: 0, actual: 0.00000, predicted: 0.00000 },
-    { max_price: 500, actual: 0.00008, predicted: 0.00009 },
-    { max_price: 1000, actual: 0.00018, predicted: 0.00020 },
-    { max_price: 1500, actual: 0.00025, predicted: 0.00023 }, // Peak
-    { max_price: 2000, actual: 0.00020, predicted: 0.00021 },
-    { max_price: 3000, actual: 0.00010, predicted: 0.00011 },
-    { max_price: 5000, actual: 0.00005, predicted: 0.00006 },
-    { max_price: 10000, actual: 0.00001, predicted: 0.000015 },
-    { max_price: 20000, actual: 0.000003, predicted: 0.000004 },
-    { max_price: 50000, actual: 0.000001, predicted: 0.000001 },
-    { max_price: 100000, actual: 0.000000, predicted: 0.000000 },
+    { modal_price: 0, actual: 0.00000, predicted: 0.00000 },
+    { modal_price: 1000, actual: 0.00010, predicted: 0.00011 },
+    { modal_price: 2000, actual: 0.00020, predicted: 0.00021 },
+    { modal_price: 3000, actual: 0.00026, predicted: 0.00025 }, // Peak
+    { modal_price: 4000, actual: 0.00023, predicted: 0.00022 },
+    { modal_price: 6000, actual: 0.00015, predicted: 0.00014 },
+    { modal_price: 8000, actual: 0.00007, predicted: 0.00006 },
+    { modal_price: 10000, actual: 0.00003, predicted: 0.00002 },
+    { modal_price: 20000, actual: 0.000005, predicted: 0.000004 },
+    { modal_price: 30000, actual: 0.000001, predicted: 0.000001 },
+    { modal_price: 50000, actual: 0.000000, predicted: 0.000000 },
   ];
 
 const chartConfig = {
@@ -46,20 +46,19 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function TwoLineChart2Component() {
+export function TwoLineChart3Component() {
   return (
     <Card className="p-8 w-full max-w-[600px] h-full">
       <CardHeader>
         <CardTitle className="text-[20px] font-normal text-white">
-          Random Forest Regression Model for Max Price
+          Random Forest Regression Model for Modal Price
         </CardTitle>
       </CardHeader>
       <CardContent className="h-[300px]">
         <ChartContainer config={chartConfig}>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={chartData} margin={{ right: 20, left: 40, bottom: 50 }}>
-              <CartesianGrid vertical={false} />
-              <XAxis dataKey="max_price"  />
+            <XAxis dataKey="modal_price" />
   <YAxis  />
   <CartesianGrid strokeDasharray="3 3" />
   <Line type="monotone" dataKey="actual" stroke="#FF0000" name="Actual" />
