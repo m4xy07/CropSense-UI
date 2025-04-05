@@ -32,6 +32,7 @@ import { MorphingDialogBasicSixteen } from "@/components/harvestmonth3";
 import { MorphingDialogBasicTen } from "@/components/bestfert";
 import { HarvestableMonthCards } from "@/components/harvestpred";
 import { TwoLineChartComponent } from "@/components/dashboard/twolinechart";
+import { TwoLineChart2Component } from "@/components/dashboard/twolinechart2";
 
 const API_URL = "https://data.cropsense.tech/data";
 
@@ -125,6 +126,7 @@ export default function Page() {
           <div className="flex flex-row gap-4">
           <MorphingDialogBasicTen />
           <TwoLineChartComponent  />
+          <TwoLineChart2Component />
           </div>
         </div>
       </SidebarInset>
