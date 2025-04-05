@@ -279,7 +279,7 @@ export default function Page() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  <span className="text-base font-semibold text-blue-100 group-hover:text-white">Near your location</span>
+                  <span className="text-[14px] font-semibold text-blue-100 group-hover:text-white">Near your location</span>
                   <div className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-max bg-gray-800 text-white text-sm rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                     Within 3 km
                   </div>
@@ -290,12 +290,12 @@ export default function Page() {
         </header>
 
         <div className="bg-[#010308] min-h-screen p-4">
-          <div className="bg-[#020408] shadow-md rounded-lg p-4 mb-4 flex flex-wrap items-center gap-4">
+          <div className="bg-[#020408] shadow-md rounded-lg mb-4 flex flex-wrap items-center gap-4">
             <div className="relative w-full md:w-1/2">
               <input
                 type="text"
-                placeholder="Search equipment..."
-                className="w-full border border-gray-700 bg-[#02040a] text-white rounded-md p-2 pl-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Search equipment"
+                className="w-full border !border-zinc-50/10 bg-[#02040a] text-white rounded-md p-2 pl-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -315,13 +315,13 @@ export default function Page() {
             <div className="flex w-full md:w-auto gap-4">
               <div className="relative">
                 <select
-                  className="w-full appearance-none bg-[#02040a] text-white border border-gray-700 rounded-md py-2 pl-4 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full text-[14px] appearance-none bg-[#02040a] text-white border !border-zinc-50/10 rounded-md py-2 pl-4 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={maxPrice || ""}
                   onChange={(e) =>
                     setMaxPrice(e.target.value ? parseInt(e.target.value) : null)
                   }
                 >
-                  <option value="">Max Price (Any)</option>
+                  <option value="">Max price (Any)</option>
                   <option value="1000">Under ₹1,000</option>
                   <option value="2000">Under ₹2,000</option>
                   <option value="3000">Under ₹3,000</option>
@@ -333,11 +333,11 @@ export default function Page() {
 
               <div className="relative">
                 <select
-                  className="w-full appearance-none bg-[#02040a] text-white border border-gray-700 rounded-md py-2 pl-4 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full appearance-none text-[14px] bg-[#02040a] text-white border !border-zinc-50/10 rounded-md py-2 pl-4 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={sortOrder}
                   onChange={(e) => setSortOrder(e.target.value)}
                 >
-                  <option value="default">Sort By</option>
+                  <option value="default">Sort by</option>
                   <option value="price_low">Price: Low to High</option>
                   <option value="price_high">Price: High to Low</option>
                   <option value="name_asc">Name: A-Z</option>
@@ -352,7 +352,7 @@ export default function Page() {
             {filteredEquipment.map((item, index) => (
               <div
                 key={index}
-                className="bg-[#010204] shadow-md rounded-lg p-4 border border-gray-700 hover:border-blue-500 transition-all duration-200"
+                className="bg-[#010204] shadow-md rounded-lg p-4 border border-zinc-50/10 hover:border-blue-500 transition-all duration-200"
               >
                 <img
                   src={item.image}
@@ -393,7 +393,7 @@ export default function Page() {
                   setSortOrder("default");
                 }}
               >
-                Reset Filters
+                Reset filters
               </button>
             </div>
           )}
