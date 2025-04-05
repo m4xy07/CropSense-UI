@@ -50,7 +50,7 @@ export function MorphingDialogBasicTen() {
           </div>
           
             <div className="flex flex-col items-center">
-            <Image src="/NPK.png" alt="fertilizer image" width={175} height={175} className="rounded-xl" />
+            <Image src="/NPK15.png" alt="fertilizer image" width={175} height={175} className="rounded-xl" />
             <div className="text-center text-white">
               {/* {recommendedFertilizer !== null ? capitalize(recommendedFertilizer) : "Loading..."} */}
               NPK 15-15-15
