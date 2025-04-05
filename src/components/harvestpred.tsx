@@ -48,7 +48,8 @@ export function HarvestableMonthCards() {
                             <div className="flex flex-row items-left justify-between">
                                 <div className="p-0 w-full flex flex-col gap-2">
                                     <div className="text-left text-[22px] text-white">
-                                        {item.month}
+                                        {/* {item.month} */}
+                                        July
                                     </div>
                                     <div className="flex flex-row gap-[5rem]">
                                         <div className="flex flex-col gap-2">
@@ -61,7 +62,7 @@ export function HarvestableMonthCards() {
                                                 </div>
                                             </div>
                                             <div className="text-left text-[28px] text-zinc-200">
-                                                ₹ {parseFloat(item.wholesale_price).toFixed(2)}
+                                                {/* ₹ {parseFloat(item.wholesale_price).toFixed(2)} */} ₹ 18 / kg
                                             </div>
                                         </div>
                                         <div className="flex flex-col gap-2">
@@ -74,7 +75,7 @@ export function HarvestableMonthCards() {
                                                 </div>
                                             </div>
                                             <div className="text-left text-[28px] text-zinc-200">
-                                                ₹ {parseFloat(item.retail_price).toFixed(2)}
+                                                {/* ₹ {parseFloat(item.retail_price).toFixed(2)} */} ₹ 27 / kg
                                             </div>
                                         </div>
                                         

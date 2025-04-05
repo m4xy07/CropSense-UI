@@ -59,8 +59,8 @@ export function TwoLineChart2Component() {
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={chartData} margin={{ right: 20, left: 40, bottom: 50 }}>
               <CartesianGrid vertical={false} />
-              <XAxis dataKey="max_price" label={{ value: "Max Price", position: "insideBottom", style: { fill: "white" } }} />
-  <YAxis label={{ value: "Density", angle: -90, position: "insideLeft", style: { fill: "white" } }} />
+              <XAxis dataKey="max_price"  />
+  <YAxis  />
   <CartesianGrid strokeDasharray="3 3" />
   <Line type="monotone" dataKey="actual" stroke="#FF0000" name="Actual" />
   <Line type="monotone" dataKey="predicted" stroke="#0000FF" name="Predicted" />
