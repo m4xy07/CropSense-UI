@@ -55,7 +55,7 @@ export function MorphingDialogBasicTen() {
             </div>
             </div>
             <div className='w-fit flex items-center justify-center mx-auto'>
-              <Button>Get Fertilizer</Button>
+              <Button>Order {recommendedFertilizer !== null ? capitalize(recommendedFertilizer) : "Loading..."}</Button>
             </div>
             
         </div>
