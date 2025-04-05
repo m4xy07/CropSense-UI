@@ -2,13 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
-import { GroupChartComponent } from "@/components/dashboard/groupchart";
-import { LineChartComponent } from "@/components/dashboard/linecharts";
-import { StackedChartComponent } from "@/components/dashboard/stackedchart";
-import { BarChartComponent } from "@/components/dashboard/barchart";
-import { BlendingModeIcon, OpacityIcon, ClockIcon } from "@radix-ui/react-icons";
-import { WifiHigh } from "lucide-react";
-import { FaMountain } from "react-icons/fa";
+import { Sun, IndianRupee, Users } from "lucide-react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -25,65 +19,14 @@ import {
 } from "@/components/ui/sidebar";
 import { SelectTime } from "@/components/select";
 import { StackedChartExpandedComponent } from "@/components/dashboard/stackedexpanded";
+import Image from "next/image";
+import Alertdemo from "@/components/animatedalert";
+import { NumberTicker } from "@/components/magicui/number-ticker";
+import Notif1 from "@/components/notif1";
 
 const API_URL = "https://data.cropsense.tech/data";
 
 export default function Page() {
-  const [currentTime, setCurrentTime] = useState<string>("");
-  const [altitude, setAltitude] = useState<number | null>(null);
-  const [timeFrame, setTimeFrame] = useState<string>("7 days");
-  const [chartData, setChartData] = useState<{
-    chartData: { label: string; price: number }[];
-    harvestableMonth: string;
-    bestCrop: string;
-    recommendedFertilizer: string;
-  } | null>(null);
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      setCurrentTime(now.toLocaleTimeString());
-    };
-
-    updateTime();
-    const intervalId = setInterval(updateTime, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(API_URL);
-        if (!response.ok) throw new Error("Failed to fetch data");
-
-        const data = await response.json();
-        if (Array.isArray(data) && data.length > 0) {
-          const latestRecord = data[data.length - 1];
-          const latestMonthData = latestRecord.harvestable_months[latestRecord.harvestable_months.length - 1];
-
-          setAltitude(parseFloat(latestRecord?.alt?.toFixed(2)));
-
-          setChartData({
-            chartData: [
-              { label: "Wholesale", price: parseFloat(latestMonthData.wholesale_price.toFixed(2)) },
-              { label: "Retail", price: parseFloat(latestMonthData.retail_price.toFixed(2)) },
-            ],
-            harvestableMonth: latestMonthData.month,
-            bestCrop: latestRecord.best_crop || "Unknown",
-            recommendedFertilizer: latestRecord.recommended_fertilizer || "Unknown",
-          });
-        } else {
-          console.warn("API returned an empty or invalid response.");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   return (
     <SidebarProvider className="dark font-inter">
       <AppSidebar />
@@ -105,40 +48,65 @@ export default function Page() {
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
-            
           </div>
         </header>
 
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-4">
-            <div className="aspect-video rounded-xl bg-muted/50">
-              
+          <div className="flex flex-row gap-4">
+            {/* Weather Today Card */}
+            <div className="flex flex-row justify-between w-1/4 p-8 rounded-xl bg-black border border-zinc-50/10">
+              <div className="flex flex-col gap-2">
+                <h2 className="text-[18px] font-normal">Weather Today</h2>
+                <p className="text-[28px] font-semibold">Clear & Sunny</p>
+                <p className="text-[16px] font-light text-white/80">
+                  Feels like <span className="text-yellow-300 font-normal">24 °C</span>
+                </p>
+              </div>
+              <div className="flex items-center justify-center p-2 h-fit rounded-md bg-yellow-400/70 w-fit">
+                <Sun className="w-6 h-6 text-white" />
+              </div>
             </div>
-            <div className="aspect-video rounded-xl bg-muted/50">
-              
+
+            {/* Total Predicted Revenue Card */}
+            <div className="flex flex-row justify-between w-1/4 p-8 rounded-xl bg-black border border-zinc-50/10">
+              <div className="flex flex-col gap-2">
+                <h2 className="text-[18px] font-normal">Total Predicted Revenue</h2>
+                <div className="text-[28px] font-semibold">
+                  ₹{" "}
+                  <NumberTicker
+                    value={74390}
+                    className="whitespace-pre-wrap text-[28px] font-semibold tracking-tighter"
+                  />
+                </div>
+                <p className="text-[16px] font-light text-white/80">
+                  <span className="text-green-400 font-normal">+23%</span> from last month
+                </p>
+              </div>
+              <div className="flex items-center justify-center p-2 h-fit rounded-md bg-green-400/70 w-fit">
+                <IndianRupee className="w-6 h-6 text-white" />
+              </div>
             </div>
-            <div className="aspect-video rounded-xl bg-muted/50">
-              
-            </div>
-            <div className="aspect-video rounded-xl bg-muted/50">
-              
+
+            {/* Forum Mentions Card */}
+            <div className="flex flex-row justify-between w-1/2 p-8 rounded-xl bg-black border border-zinc-50/10">
+              <div className="flex flex-col gap-2">
+                <h2 className="text-[18px] font-normal">Forum Mentions (1 mention)</h2>
+                <Alertdemo />
+              </div>
+              <div className="flex items-center justify-center p-2 h-fit rounded-md bg-violet-500 w-fit">
+                <Users className="w-6 h-6 text-white" />
+              </div>
             </div>
           </div>
 
-          <div className="grid auto-rows-min gap-4 md:grid-cols-4">
-            <div className="aspect-video rounded-xl bg-muted/50">
-              
-            </div>
-            <div className="aspect-video rounded-xl bg-muted/50">
-              
-            </div>
-            <div className="aspect-video rounded-xl bg-muted/50">
-              
-            </div>
-            <div className="aspect-video rounded-xl bg-muted/50">
-              
+          <div className="flex flex-row gap-4">
+            <div className="flex flex-col w-1/3 gap-4">
+              <div className="flex flex-row justify-between p-8 rounded-xl bg-black border border-zinc-50/10">
+                <Notif1 />
+              </div>
             </div>
           </div>
+
         </div>
       </SidebarInset>
     </SidebarProvider>

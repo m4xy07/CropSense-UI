@@ -48,7 +48,7 @@ const chartConfig = {
 
 export function TwoLineChart3Component() {
   return (
-    <Card className="p-8 w-full max-w-[580px] h-full">
+    <Card className="p-8 w-[580px] h-full">
       <CardHeader>
         <CardTitle className="text-[20px] font-normal text-white">
           Random Forest Regression for Modal Price
