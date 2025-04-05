@@ -11,6 +11,8 @@ import {
   Users,
   ClipboardPlus,
   TextSearch,
+  Tractor,
+  Library,
 } from "lucide-react";
 
 import { NavProjects } from "@/components/nav-projects";
@@ -70,6 +72,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         name: "Soil Report",
         url: "/dashboard/soil-report",
         icon: ClipboardPlus,
+      },
+      {
+        name: "Equipment",
+        url: "/dashboard/equipment",
+        icon: Tractor,
+      },
+      {
+        name: "Guides",
+        url: "/dashboard/guides",
+        icon: Library,
       },
     ].map((project) => ({
       ...project,
