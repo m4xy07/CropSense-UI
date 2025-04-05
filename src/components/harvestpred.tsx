@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import AlertComponent from './trianglealert';
 
 export function HarvestableMonthCards() {
     const [harvestableMonths, setHarvestableMonths] = useState<any[]>([]);
@@ -36,7 +37,7 @@ export function HarvestableMonthCards() {
             <p className=' text-base text-zinc-50/70 pt-4'>
             You'll be able to sell wheat in the following months. The prices are based on the current market trends.
           </p>
-            <div className="flex flex-wrap gap-[6rem]">
+            <div className="flex flex-wrap pt-4 gap-[6rem]">
                 {harvestableMonths.slice(0, 3).map((item, index) => (
                     item && (
                         <div
@@ -76,13 +77,20 @@ export function HarvestableMonthCards() {
                                                 ₹ {parseFloat(item.retail_price).toFixed(2)}
                                             </div>
                                         </div>
+                                        
                                     </div>
+                                    
                                 </div>
+                                
                             </div>
+                            
                         </div>
+                        
                     )
                 ))}
+                
             </div>
+            <AlertComponent />
         </div>
     );
 }
