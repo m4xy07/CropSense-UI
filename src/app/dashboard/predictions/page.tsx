@@ -119,7 +119,10 @@ export default function Page() {
           <div className="flex flex-row gap-4">
             <MorphingDialogBasicNine />
             <HarvestableMonthCards />
-            {/* <MorphingDialogBasicTen /> */}
+            
+          </div>
+          <div>
+          <MorphingDialogBasicTen />
           </div>
         </div>
       </SidebarInset>

@@ -1,54 +1,65 @@
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import Button from './Button';
 
-  import { useEffect, useState } from 'react';
-  
-  export function MorphingDialogBasicTen() {
-  
-    const [recommended_fertilizer, setRecFert] = useState<string | null>(null);
-    
-    useEffect(() => {
-      const fetchRecFert = async () => {
-        try {
-          const response = await fetch("https://data.cropsense.tech/");
-    
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-    
-          const data = await response.json();
-    
-          if (Array.isArray(data) && data.length > 0) {
-            const latestRecFert = data[data.length - 1]?.recommended_fertilizer;
-            setRecFert(latestRecFert);
-          } else {
-            console.warn("API returned an empty or invalid response.");
-          }
-        } catch (error) {
-          console.error("Error fetching best crop status:", error);
+export function MorphingDialogBasicTen() {
+  const [recommendedFertilizer, setRecommendedFertilizer] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchRecommendedFertilizer = async () => {
+      try {
+        const response = await fetch("https://data.cropsense.tech/");
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
-      };
-    
-      fetchRecFert();
-    }, []);
-  
-    return (
-        <div
-          style={{
-            borderRadius: '12px',
-          }}
-          className='flex max-w-[270px] md:w-[250px] md:h-[100px] items-center justify-center flex-col overflow-hidden border border-zinc-950/10 bg-black dark:border-zinc-50/10 dark:bg-zinc-900'
-        >
-          
-          <div className='flex grow flex-row items-center justify-between px-3 py-2'>
-            <div>
-              <div className='text-zinc-950 text-center dark:text-zinc-50'>
-                Recommended Fertilizer
-              </div>
-              <div className='text-zinc-700 text-center dark:text-zinc-400'>
-                {recommended_fertilizer !== null ? recommended_fertilizer : "Loading..."}
-              </div>
-            </div>
+
+        const data = await response.json();
+
+        if (Array.isArray(data) && data.length > 0) {
+          const latest = data[data.length - 1]?.recommended_fertilizer;
+          setRecommendedFertilizer(latest);
+        } else {
+          console.warn("API returned an empty or invalid response.");
+        }
+      } catch (error) {
+        console.error("Error fetching recommended fertilizer:", error);
+      }
+    };
+
+    fetchRecommendedFertilizer();
+  }, []);
+
+  const capitalize = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  return (
+    <div
+      className="flex max-w-fit p-8 items-center justify-center flex-col overflow-hidden border border-zinc-950/10 bg-[#080808] dark:border-zinc-50/10"
+      style={{ borderRadius: '12px' }}
+    >
+      <div className="flex grow flex-row items-center justify-between">
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4">
+            <h2 className="text-[20px] font-normal text-white">Recommended Fertilizer</h2>
+            <p className="text-base text-zinc-50/70">
+              Based on the crop and soil analysis, you should use
+            </p>
           </div>
+          
+            <div className="flex flex-col items-center">
+            <Image src="/NPK.png" alt="fertilizer image" width={175} height={175} className="rounded-xl" />
+            <div className="text-center text-white">
+              {recommendedFertilizer !== null ? capitalize(recommendedFertilizer) : "Loading..."}
+            </div>
+            </div>
+            <div className='w-fit flex items-center justify-center mx-auto'>
+              <Button>Get Fertilizer</Button>
+            </div>
+            
         </div>
-    );
-  }
-  
+      </div>
+    </div>
+  );
+}
