@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import html2pdf from "html2pdf.js";
+import dynamic from "next/dynamic";
 import { AppSidebar } from "@/components/app-sidebar";
 import {
   Breadcrumb,
@@ -17,6 +17,8 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const API_URL = "https://data.cropsense.tech/data";
 
@@ -31,10 +33,15 @@ export default function Page() {
         if (!response.ok) throw new Error("Failed to fetch data");
 
         const data = await response.json();
-        const latestThree = data.slice(-3).reverse().map((item) => ({
-          ...item,
-          timestamp: item.time ? new Date(item.time).toLocaleString() : "No Timestamp Available",
-        }));
+        const latestThree = data
+          .slice(-3)
+          .reverse()
+          .map((item) => ({
+            ...item,
+            timestamp: item.time
+              ? new Date(item.time).toLocaleString()
+              : "No Timestamp Available",
+          }));
 
         setSensorData(latestThree);
       } catch (error) {
@@ -47,25 +54,35 @@ export default function Page() {
     return () => clearInterval(intervalId);
   }, []);
 
-  const generatePDF = () => {
+  const generatePDF = async () => {
     const element = reportRef.current;
     if (!element) return;
 
-    const opt = {
-      margin: 0.5,
-      filename: `Soil_Report_${new Date().toISOString()}.pdf`,
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
-    };
+    try {
+      const canvas = await html2canvas(element, { scale: 2 });
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("portrait", "mm", "a4");
 
-    html2pdf().set(opt).from(element).save();
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      pdf.save(`Soil_Report_${new Date().toISOString()}.pdf`);
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    }
   };
 
-  const renderCard = (title: string, values: (string | number | null | undefined)[], timestamps: (string | undefined)[]) => (
+  const renderCard = (
+    title: string,
+    values: (string | number | null | undefined)[],
+    timestamps: (string | undefined)[]
+  ) => (
     <div className="rounded-xl bg-muted/50 p-4 shadow-md min-w-[280px] flex-1 border border-gray-600 hover:border-gray-400 transition-colors duration-200">
       <h2 className="text-xl font-bold mb-1 text-gray-200">{title}</h2>
-      <h4 className="text-muted-foreground mb-2 text-gray-400">Latest readings</h4>
+      <h4 className="text-muted-foreground mb-2 text-gray-400">
+        Latest readings
+      </h4>
       <ul className="space-y-1">
         {values.map((val, index) => (
           <li
@@ -89,7 +106,9 @@ export default function Page() {
               </svg>
               {val !== undefined && val !== null ? val : "N/A"}
             </div>
-            <span className="text-xs text-gray-400">{timestamps[index] || "Unknown Time"}</span>
+            <span className="text-xs text-gray-400">
+              {timestamps[index] || "Unknown Time"}
+            </span>
           </li>
         ))}
       </ul>
@@ -133,17 +152,61 @@ export default function Page() {
               sensorData.map((item) => item?.temperature?.toFixed(2) ?? "N/A"),
               sensorData.map((item) => item?.timestamp ?? "")
             )}
-            {renderCard("Humidity (%)", sensorData.map((item) => item?.humidity ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
-            {renderCard("AQI", sensorData.map((item) => item?.aqi ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
-            {renderCard("Heat Index", sensorData.map((item) => item?.hi ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
-            {renderCard("Altitude (m)", sensorData.map((item) => item?.alt ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
-            {renderCard("Pressure (hPa)", sensorData.map((item) => item?.pres ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
-            {renderCard("Moisture (%)", sensorData.map((item) => item?.moisture ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
-            {renderCard("Raining", sensorData.map((item) => item?.raining ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
-            {renderCard("Fertilizer", sensorData.map((item) => item?.recommended_fertilizer ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
-            {renderCard("NPK Nitrogen", sensorData.map((item) => item?.npk_uptake_nitrogen ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
-            {renderCard("NPK Phosphorus", sensorData.map((item) => item?.npk_uptake_phosphorus ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
-            {renderCard("NPK Potassium", sensorData.map((item) => item?.npk_uptake_potassium ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
+            {renderCard(
+              "Humidity (%)",
+              sensorData.map((item) => item?.humidity ?? "N/A"),
+              sensorData.map((item) => item?.timestamp ?? "")
+            )}
+            {renderCard(
+              "AQI",
+              sensorData.map((item) => item?.aqi ?? "N/A"),
+              sensorData.map((item) => item?.timestamp ?? "")
+            )}
+            {renderCard(
+              "Heat Index",
+              sensorData.map((item) => item?.hi ?? "N/A"),
+              sensorData.map((item) => item?.timestamp ?? "")
+            )}
+            {renderCard(
+              "Altitude (m)",
+              sensorData.map((item) => item?.alt ?? "N/A"),
+              sensorData.map((item) => item?.timestamp ?? "")
+            )}
+            {renderCard(
+              "Pressure (hPa)",
+              sensorData.map((item) => item?.pres ?? "N/A"),
+              sensorData.map((item) => item?.timestamp ?? "")
+            )}
+            {renderCard(
+              "Moisture (%)",
+              sensorData.map((item) => item?.moisture ?? "N/A"),
+              sensorData.map((item) => item?.timestamp ?? "")
+            )}
+            {renderCard(
+              "Raining",
+              sensorData.map((item) => item?.raining ?? "N/A"),
+              sensorData.map((item) => item?.timestamp ?? "")
+            )}
+            {renderCard(
+              "Fertilizer",
+              sensorData.map((item) => item?.recommended_fertilizer ?? "N/A"),
+              sensorData.map((item) => item?.timestamp ?? "")
+            )}
+            {renderCard(
+              "NPK Nitrogen",
+              sensorData.map((item) => item?.npk_uptake_nitrogen ?? "N/A"),
+              sensorData.map((item) => item?.timestamp ?? "")
+            )}
+            {renderCard(
+              "NPK Phosphorus",
+              sensorData.map((item) => item?.npk_uptake_phosphorus ?? "N/A"),
+              sensorData.map((item) => item?.timestamp ?? "")
+            )}
+            {renderCard(
+              "NPK Potassium",
+              sensorData.map((item) => item?.npk_uptake_potassium ?? "N/A"),
+              sensorData.map((item) => item?.timestamp ?? "")
+            )}
           </div>
         </div>
       </SidebarInset>
