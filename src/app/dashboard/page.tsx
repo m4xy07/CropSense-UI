@@ -23,6 +23,11 @@ import Image from "next/image";
 import Alertdemo from "@/components/animatedalert";
 import { NumberTicker } from "@/components/magicui/number-ticker";
 import Notif1 from "@/components/notif1";
+import Notif2 from "@/components/notif2";
+import Notif3 from "@/components/notif3";
+import Notif4 from "@/components/notif4";
+import Notif5 from "@/components/notif5";
+import FarmEventsTable from "@/components/table";
 
 const API_URL = "https://data.cropsense.tech/data";
 
@@ -101,9 +106,29 @@ export default function Page() {
 
           <div className="flex flex-row gap-4">
             <div className="flex flex-col w-1/3 gap-4">
-              <div className="flex flex-row justify-between p-8 rounded-xl bg-black border border-zinc-50/10">
+              <div className="flex flex-col gap-4 justify-between p-8 rounded-xl bg-black border border-zinc-50/10 h-full">
+              <h2 className="text-[18px] font-normal">
+                Notifications (5 new)
+              </h2>
+              <div className="flex flex-col gap-4">
                 <Notif1 />
+                <Notif2 />
+                <Notif3 />
+                <Notif4 />
+                <Notif5 />
+                
               </div>
+                
+              </div>
+            </div>
+            <div className="flex flex-col w-2/3 gap-4 p-8 rounded-xl border-zinc-50/10 border bg-black">
+            <div className="flex flex-col gap-4 ">
+              <h2 className="text-[18px] font-normal">
+                Upcoming Events
+              </h2>
+            <FarmEventsTable />
+            </div>
+            
             </div>
           </div>
 
