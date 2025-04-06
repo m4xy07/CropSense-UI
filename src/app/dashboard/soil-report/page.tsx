@@ -1,14 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import html2pdf from "html2pdf.js";
 import { AppSidebar } from "@/components/app-sidebar";
-import { GroupChartComponent } from "@/components/dashboard/groupchart";
-import { LineChartComponent } from "@/components/dashboard/linecharts";
-import { StackedChartComponent } from "@/components/dashboard/stackedchart";
-import { BarChartComponent } from "@/components/dashboard/barchart";
-import { BlendingModeIcon, OpacityIcon, ClockIcon } from "@radix-ui/react-icons";
-import { WifiHigh } from "lucide-react";
-import { FaMountain } from "react-icons/fa";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -23,33 +17,12 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { SelectTime } from "@/components/select";
-import { StackedChartExpandedComponent } from "@/components/dashboard/stackedexpanded";
 
 const API_URL = "https://data.cropsense.tech/data";
 
 export default function Page() {
-  const [currentTime, setCurrentTime] = useState<string>("");
-  const [altitude, setAltitude] = useState<number | null>(null);
-  const [timeFrame, setTimeFrame] = useState<string>("7 days");
-  const [chartData, setChartData] = useState<{
-    chartData: { label: string; price: number }[];
-    harvestableMonth: string;
-    bestCrop: string;
-    recommendedFertilizer: string;
-  } | null>(null);
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      setCurrentTime(now.toLocaleTimeString());
-    };
-
-    updateTime();
-    const intervalId = setInterval(updateTime, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
+  const [sensorData, setSensorData] = useState<any[]>([]);
+  const reportRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,31 +31,70 @@ export default function Page() {
         if (!response.ok) throw new Error("Failed to fetch data");
 
         const data = await response.json();
-        if (Array.isArray(data) && data.length > 0) {
-          const latestRecord = data[data.length - 1];
-          const latestMonthData = latestRecord.harvestable_months[latestRecord.harvestable_months.length - 1];
+        const latestThree = data.slice(-3).reverse().map((item) => ({
+          ...item,
+          timestamp: item.time ? new Date(item.time).toLocaleString() : "No Timestamp Available",
+        }));
 
-          setAltitude(parseFloat(latestRecord?.alt?.toFixed(2)));
-
-          setChartData({
-            chartData: [
-              { label: "Wholesale", price: parseFloat(latestMonthData.wholesale_price.toFixed(2)) },
-              { label: "Retail", price: parseFloat(latestMonthData.retail_price.toFixed(2)) },
-            ],
-            harvestableMonth: latestMonthData.month,
-            bestCrop: latestRecord.best_crop || "Unknown",
-            recommendedFertilizer: latestRecord.recommended_fertilizer || "Unknown",
-          });
-        } else {
-          console.warn("API returned an empty or invalid response.");
-        }
+        setSensorData(latestThree);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
+    const intervalId = setInterval(fetchData, 60000);
+    return () => clearInterval(intervalId);
   }, []);
+
+  const generatePDF = () => {
+    const element = reportRef.current;
+    if (!element) return;
+
+    const opt = {
+      margin: 0.5,
+      filename: `Soil_Report_${new Date().toISOString()}.pdf`,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
+    };
+
+    html2pdf().set(opt).from(element).save();
+  };
+
+  const renderCard = (title: string, values: (string | number | null | undefined)[], timestamps: (string | undefined)[]) => (
+    <div className="rounded-xl bg-muted/50 p-4 shadow-md min-w-[280px] flex-1 border border-gray-600 hover:border-gray-400 transition-colors duration-200">
+      <h2 className="text-xl font-bold mb-1 text-gray-200">{title}</h2>
+      <h4 className="text-muted-foreground mb-2 text-gray-400">Latest readings</h4>
+      <ul className="space-y-1">
+        {values.map((val, index) => (
+          <li
+            key={index}
+            className="text-sm flex flex-col gap-1 text-gray-300 hover:text-white transition-colors duration-200"
+          >
+            <div className="flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 text-blue-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              {val !== undefined && val !== null ? val : "N/A"}
+            </div>
+            <span className="text-xs text-gray-400">{timestamps[index] || "Unknown Time"}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 
   return (
     <SidebarProvider className="dark font-inter">
@@ -105,27 +117,33 @@ export default function Page() {
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
-            
+            <button
+              onClick={generatePDF}
+              className="ml-auto px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+            >
+              Generate PDF
+            </button>
           </div>
         </header>
 
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            
-          
-          </div>
-
-          <div className="flex flex-wrap gap-4">
-      
-      
-      
-            {/* <div className="aspect-video rounded-xl bg-muted/50">
-              {chartData ? (
-                <BarChartComponent cardTitle="Crop Harvest & Pricing" data={chartData} />
-              ) : (
-                <p className="text-center text-gray-500">Loading...</p>
-              )}
-            </div> */}
+        <div ref={reportRef} className="flex flex-1 flex-col gap-4 p-4 pt-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+            {renderCard(
+              "Temperature (°C)",
+              sensorData.map((item) => item?.temperature?.toFixed(2) ?? "N/A"),
+              sensorData.map((item) => item?.timestamp ?? "")
+            )}
+            {renderCard("Humidity (%)", sensorData.map((item) => item?.humidity ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
+            {renderCard("AQI", sensorData.map((item) => item?.aqi ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
+            {renderCard("Heat Index", sensorData.map((item) => item?.hi ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
+            {renderCard("Altitude (m)", sensorData.map((item) => item?.alt ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
+            {renderCard("Pressure (hPa)", sensorData.map((item) => item?.pres ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
+            {renderCard("Moisture (%)", sensorData.map((item) => item?.moisture ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
+            {renderCard("Raining", sensorData.map((item) => item?.raining ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
+            {renderCard("Fertilizer", sensorData.map((item) => item?.recommended_fertilizer ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
+            {renderCard("NPK Nitrogen", sensorData.map((item) => item?.npk_uptake_nitrogen ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
+            {renderCard("NPK Phosphorus", sensorData.map((item) => item?.npk_uptake_phosphorus ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
+            {renderCard("NPK Potassium", sensorData.map((item) => item?.npk_uptake_potassium ?? "N/A"), sensorData.map((item) => item?.timestamp ?? ""))}
           </div>
         </div>
       </SidebarInset>
