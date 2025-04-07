@@ -111,7 +111,7 @@ export default function Page() {
   const fetchDiseaseInfo = async (disease: string) => {
     try {
       const response = await fetch(
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyA0fRPqylCaE6e4mewFxaEuveK17SvAUA8",
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=PROCESS.ENV.GAPIKEY",
         {
           method: "POST",
           headers: {
