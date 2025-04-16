@@ -16,7 +16,7 @@ import AnimatedTextSec from "@/sections/AnimatedTextSec";
 export default function Home() {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <Example/> 
       <LogoTicker />
       <TextRevealDemo/>
