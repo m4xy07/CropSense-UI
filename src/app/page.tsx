@@ -1,4 +1,3 @@
-
 import { Header } from "@/sections/Header";
 import { Hero } from "@/sections/Hero";
 import { LogoTicker } from "@/sections/LogoTicker";
@@ -11,22 +10,19 @@ import Example from "@/sections/HeroNew";
 import { TextRevealDemo } from "@/components/TextRevealDemo";
 import AnimatedTextSec from "@/sections/AnimatedTextSec";
 
-
-
 export default function Home() {
   return (
     <>
-      {/* <Header /> */}
-      <Example/> 
+      <Header />
+      <Example />
       <LogoTicker />
-      <TextRevealDemo/>
-      <MacbookSec/>
-      <FeaturesSec/>
-      <AnimatedTextSec/>
-      <PricingSec/>
-      <CallToAction/>
+      <TextRevealDemo />
+      <MacbookSec />
+      <FeaturesSec />
+      <AnimatedTextSec />
+      <PricingSec />
+      <CallToAction />
       <Footer />
     </>
-  
   );
 }
