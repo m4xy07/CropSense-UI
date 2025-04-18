@@ -13,6 +13,7 @@ import {
   TextSearch,
   Tractor,
   Library,
+  CalendarDaysIcon
 } from "lucide-react";
 
 import { NavProjects } from "@/components/nav-projects";
@@ -82,6 +83,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         name: "Guides",
         url: "/dashboard/guides",
         icon: Library,
+      },
+      {
+        name: "Calendar",
+        url: "/dashboard/calendar",
+        icon: CalendarDaysIcon,
       },
     ].map((project) => ({
       ...project,

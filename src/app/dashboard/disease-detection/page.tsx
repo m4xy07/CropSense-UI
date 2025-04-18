@@ -2,17 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
-import { GroupChartComponent } from "@/components/dashboard/groupchart";
-import { LineChartComponent } from "@/components/dashboard/linecharts";
-import { StackedChartComponent } from "@/components/dashboard/stackedchart";
-import { BarChartComponent } from "@/components/dashboard/barchart";
-import {
-  BlendingModeIcon,
-  OpacityIcon,
-  ClockIcon,
-} from "@radix-ui/react-icons";
-import { WifiHigh } from "lucide-react";
-import { FaMountain } from "react-icons/fa";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -27,8 +16,6 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { SelectTime } from "@/components/select";
-import { StackedChartExpandedComponent } from "@/components/dashboard/stackedexpanded";
 
 const API_URL = "https://data.cropsense.tech/data";
 
