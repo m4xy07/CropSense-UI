@@ -757,6 +757,19 @@ body {
   animation: fadeIn 2s ease-in-out forwards;
 }
 
+.feature-logo{
+  width: 124px;
+    height: auto;
+    position: absolute;
+    transform: translate(-50%) translateY(-50%);
+    left: 50%;
+    top: 50%;
+    z-index: 2;
+    box-shadow: 0 0 16px 4px #0a011833;
+    border-radius: 16px;
+}
+
+
 .pricing-grid-fade{
   opacity: 0;
   animation: fadeIn 1s ease-in-out forwards;

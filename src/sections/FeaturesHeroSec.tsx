@@ -55,10 +55,13 @@ export default function FeaturesHeroSec() {
             <Image
                 src="/hero-graph.svg"
                 alt="hero-graph"
-                width={500}
+                quality={100}
+                width={412}
                 height={500}
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 hero-graph"
             />
+            <Image src="/FeaturesHeroLogo.png" alt='hero-logo' quality={100} width={124} height={500} className="absolute -mt-[16px] ml-[3px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 feature-logo hero-graph" />
+            <Image src="/hero-light.png" alt='hero-light' quality={100} width={508} height={508} className="absolute mt-[58px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 hero-graph" />
           </div>
                 
           <h2
