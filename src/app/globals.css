@@ -715,6 +715,61 @@ body {
     border-width: 1px !important;
 }
 
+.button-gradient{
+  background: radial-gradient(86.86% 86.86% at 50% 111.67%, #ffffff80, #fff0), #713dff;
+    text-align: center;
+    transition: all .2s ease;
+}
+
+.button-gradient:hover {
+  background: radial-gradient(86.86% 86.86% at 50% 111.67%, #ffffffcb, #fff0), #713dff;
+} 
+
+.button-txt{
+  background: linear-gradient(180deg, #fffffff2 22.92%, #fffc 81.25%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-feature-settings: "cv06" on, "liga" off, "calt" off;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -.14px;
+
+  position: relative;
+  -webkit-text-fill-color: transparent;
+  z-index: 8;
+}
+
+.background-backdrop {
+  background: radial-gradient(47.84% 61.25% at 50% 0%, #713dff1f, #713dff00), 
+              radial-gradient(24.45% 22.45% at 50% 0%, #8566ff0a, #8566ff00 100%, #8566ff00), 
+              radial-gradient(38.5% 24.47% at 50% 11.59%, #8566ff14, #8566ff00);
+  opacity: 0;
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+.hero-graph{
+  opacity: 0;
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+.main-hero-blue-orb{
+  opacity: 0;
+  animation: fadeIn 2s ease-in-out forwards;
+}
+
+.pricing-grid-fade{
+  opacity: 0;
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+/* Keyframes for fade-in effect */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

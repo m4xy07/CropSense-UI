@@ -271,9 +271,9 @@ export default function Page() {
             </div>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-8">
-                <div className="flex flex-row items-center gap-2 w-[88px]">
+                {/* <div className="flex flex-row items-center gap-2 w-[88px]">
                 <ClockIcon className="w-5 h-5" /> <div className="text-white text-sm w-[64px]">{currentTime}</div>
-              </div>
+              </div> */}
                 <div className="flex items-center bg-[#1e293b] px-4 py-1.5 rounded-full relative group hover:bg-[#2563eb] transition-colors duration-200">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-blue-400 group-hover:text-white mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />

@@ -9,7 +9,7 @@ import React from "react";
 
 const FeaturesSec = () => {
   return (
-    <section id="team" className="pb-12 mb-20 pt-[40rem] bg-dark ">
+    <section  className="pb-12 mb-20 pt-[40rem] bg-dark ">
       <div className="container mx-auto">
         <div className="flex h-40">
         <video 
@@ -36,7 +36,7 @@ const FeaturesSec = () => {
             </div>
           </div>
         </div>
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-8 lg:grid-cols-6 lg:grid-rows-2">
+        <div id="features" className="mt-10 grid grid-cols-1 gap-4 sm:mt-8 lg:grid-cols-6 lg:grid-rows-2">
       <BentoCard
         eyebrow="Insight"
         title="Farm-Specific Real-Time Data"

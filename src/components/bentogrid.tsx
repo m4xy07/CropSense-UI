@@ -22,6 +22,7 @@ export function BentoCard({
   fade?: ("top" | "bottom")[];
 }) {
   return (
+    
     <motion.div
       initial="idle"
       whileHover="active"
@@ -34,6 +35,8 @@ export function BentoCard({
         "data-[dark]:bg-gray-950 data-[dark]:ring-white/5",
       )}
     >
+      
+      
       <div className="relative h-80 shrink-0">
         {graphic}
         {fade.includes("top") && (

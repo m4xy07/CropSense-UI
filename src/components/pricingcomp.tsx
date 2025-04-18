@@ -164,7 +164,7 @@ const OfferCard = ({
               alt="grid"
               layout="fill"
               objectFit="contain"
-              className="w-full h-fit z-0 -mt-10 p-2"
+              className="w-full h-fit z-0 -mt-10 p-2 pricing-grid-fade"
             />
             <div className="relative z-10 font-bold text-[28px] text-white tracking-normal effect-font-gradient">
               {title}

@@ -12,11 +12,11 @@ import Link from 'next/link';
 
   
 
-export default function Example() {
+export default function HeroSec() {
 
   const sectionRef = useRef(null);
   const canvasRef = useRef(null);
-  const isInView = useInView(canvasRef, { margin: "-50% 0px -50% 0px" });
+  const isInView = useInView(canvasRef, { margin: "-10% 0px -10% 0px" });
   
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -77,7 +77,7 @@ export default function Example() {
     ></motion.section>
     <div className="absolute overflow-hidden inset-0 bg-[radial-gradient(circle_at_center,rgb(14,0,36,.5)_15%,rgb(14,0,36,.5)_30%,transparent)]" />
         <div className="absolute inset-0 mx-auto flex w-full flex-col items-center justify-center overflow-hidden bg-transparent pt-24">
-          <div className="absolute top-[17rem] size-[40rem] rounded-full bg-blue-800 blur-3xl md:top-[29rem]" />
+          <div className="absolute top-[17rem] size-[40rem] rounded-full bg-blue-800 main-hero-blue-orb blur-3xl md:top-[29rem]" />
 
           <h2
             id="global-database-title"
@@ -94,7 +94,7 @@ export default function Example() {
             </Link>
         </div>
           <canvas
-            className="absolute top-[10rem] z-20 aspect-square size-full max-w-fit sm:top-[7.1rem] md:top-[24rem]"
+            className="absolute top-[10rem] main-hero-blue-orb z-20 aspect-square size-full max-w-fit sm:top-[7.1rem] md:top-[24rem]"
             ref={canvasRef}
             style={{ width: 1200, height: 1200 }}
           />

@@ -25,10 +25,12 @@ export const Header = () => {
 
         <nav className="flex gap-8 text-sm">
     
-            <ScrollLink to="team" spy={true} smooth={true} offset={50} duration={200} className="text-white/70 hover:text-white transition" style={{cursor:'pointer'}}>Features</ScrollLink>
-            <ScrollLink to="team" spy={true} smooth={true} offset={50} duration={200} className="text-white/70 hover:text-white transition" style={{cursor:'pointer'}}>Team</ScrollLink>
-            <ScrollLink to="team" spy={true} smooth={true} offset={50} duration={200} className="text-white/70 hover:text-white transition" style={{cursor:'pointer'}}>About</ScrollLink>
-            <ScrollLink to="team" spy={true} smooth={true} offset={50} duration={200} className="text-white/70 hover:text-white transition" style={{cursor:'pointer'}}>Pricing</ScrollLink>
+          <Link href="/features" className="text-white/70 hover:text-white transition" style={{cursor:'pointer'}}>Features</Link>
+            {/* <ScrollLink to="features" spy={true} smooth={true} offset={50} duration={200} className="text-white/70 hover:text-white transition" style={{cursor:'pointer'}}>Features</ScrollLink> */}
+            {/* <ScrollLink to="team" spy={true} smooth={true} offset={50} duration={200} className="text-white/70 hover:text-white transition" style={{cursor:'pointer'}}>Team</ScrollLink> */}
+            <ScrollLink to="pricing" spy={true} smooth={true} offset={50} duration={200} className="text-white/70 hover:text-white transition" style={{cursor:'pointer'}}>Pricing</ScrollLink>
+            <ScrollLink to="#" spy={true} smooth={true} offset={50} duration={200} className="text-white/70 hover:text-white transition" style={{cursor:'pointer'}}>About</ScrollLink>
+            
 
           </nav>
           

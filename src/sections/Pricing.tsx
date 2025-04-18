@@ -1,9 +1,9 @@
-import ManyOffersVariant1, { SelectOfferTab } from "@/components/pricingcomp";
+import ManyOffersVariant1 from "@/components/pricingcomp";
 import React from "react";
 
 const PricingSec = () => {
   return (
-    <section id="team" className="pb-12 mb-20 pt-12">
+    <section id="pricing" className="pb-12 mb-20 pt-12">
       <div className="container mx-auto">
       <div className="flex h-40">
         <video 
@@ -29,7 +29,7 @@ const PricingSec = () => {
           </div>
         </div>
         <div className="mt-10">
-      <ManyOffersVariant1 />
+      <ManyOffersVariant1  />
     </div>
         
       </div>
