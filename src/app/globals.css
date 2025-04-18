@@ -1696,6 +1696,16 @@ body {
     box-shadow: inset 0 0 0 1px #bab3ff1f;
 }
 
+.rent-now-btn{
+  background: radial-gradient(89.06% 89.06% at 50% 100%, #ffffff0a, #fff0 48.41%), #ffffff0d;
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 99px;
+    min-width: 124px;
+    text-align: center;
+    transition: all .2s ease;
+    white-space: nowrap;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

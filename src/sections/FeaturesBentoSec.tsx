@@ -21,7 +21,7 @@ const FeaturesBentoSec = () => {
                 </div>
                 <div
                     id="features"
-                    className="flex flex-col mt-10 gap-4 sm:mt-8 h-[4500px] font-inter"
+                    className="flex flex-col mt-10 gap-4 sm:mt-8 h-fit font-inter"
                 >
                     {/* Real-time Farm Data */}
                     <div className="flex flex-row gap-4">

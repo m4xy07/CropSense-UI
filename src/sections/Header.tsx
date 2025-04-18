@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import { Link as ScrollLink } from "react-scroll";
 import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { ShimmerButton } from "@/components/magicui/shimmer-button";
 
 
 export const Header = () => {
@@ -40,8 +41,16 @@ export const Header = () => {
           <SignedIn>
             
             <div>
+              
+           
+              
+
               <Link href="/dashboard">
-            <Button>Dashboard</Button>
+                <ShimmerButton className="shadow-2xl">
+                <span className="whitespace-pre-wrap text-center text-sm font-normal leading-none tracking-tight text-white from-white to-[#0a0118]">
+                  Dashboard
+                </span>
+              </ShimmerButton>
               </Link>
             </div>
             <UserButton />

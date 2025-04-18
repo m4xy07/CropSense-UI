@@ -10,7 +10,7 @@ const svgToDataUri = require("mini-svg-data-uri");
 
 
 const config: Config = {
-	darkMode: 'media',
+	darkMode: ['media', 'class'],
 	content: [
 		"./src/app/**/*.{js,ts,jsx,tsx,mdx}",
 		"./src/sections/**/*.{js,ts,jsx,tsx,mdx}",
@@ -119,6 +119,25 @@ const config: Config = {
     					opacity: '1',
     					transform: 'translate(-50%, -50%) scale(1)'
     				}
+    			},
+    			'shimmer-slide': {
+    				to: {
+    					transform: 'translate(calc(100cqw - 100%), 0)'
+    				}
+    			},
+    			'spin-around': {
+    				'0%': {
+    					transform: 'translateZ(0) rotate(0)'
+    				},
+    				'15%, 35%': {
+    					transform: 'translateZ(0) rotate(90deg)'
+    				},
+    				'65%, 85%': {
+    					transform: 'translateZ(0) rotate(270deg)'
+    				},
+    				'100%': {
+    					transform: 'translateZ(0) rotate(360deg)'
+    				}
     			}
     		},
     		animation: {
@@ -130,7 +149,9 @@ const config: Config = {
     			accordionOpen: 'accordionOpen 150ms cubic-bezier(0.87, 0, 0.13, 1)',
     			accordionClose: 'accordionClose 150ms cubic-bezier(0.87, 0, 0.13, 1)',
     			dialogOverlayShow: 'dialogOverlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)',
-    			dialogContentShow: 'dialogContentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)'
+    			dialogContentShow: 'dialogContentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)',
+    			'shimmer-slide': 'shimmer-slide var(--speed) ease-in-out infinite alternate',
+    			'spin-around': 'spin-around calc(var(--speed) * 2) infinite linear'
     		},
     		borderRadius: {
     			lg: 'var(--radius)',
