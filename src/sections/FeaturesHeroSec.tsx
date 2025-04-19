@@ -70,9 +70,9 @@ export default function FeaturesHeroSec() {
           >
             Supercharge Your Yields
           </h2>
-          <p className="text-lg z-40 md:text-xl text-white/70 font-inter -mt-1 text-center max-w-xl mx-auto">
+          {/* <p className="text-lg z-40 md:text-xl text-white/70 font-inter -mt-1 text-center max-w-xl mx-auto">
             texts
-        </p>
+        </p> */}
         {/* <div className="flex z-40 justify-center mt-5">
           <Link href={'/dashboard'}>
             <Button>Get Started</Button>
@@ -80,7 +80,7 @@ export default function FeaturesHeroSec() {
         </div> */}
         <div className="z-20 -mt-32 h-[36rem] w-full overflow-hidden md:-mt-36">
             <div className="absolute bottom-0 h-3/5 w-full bg-gradient-to-b from-transparent via-gray-950/75 to-black" />
-            <div className="absolute inset-x-6 bottom-12 m-auto max-w-4xl md:top-2/3">
+            <div className="absolute inset-x-6 bottom-1 m-auto max-w-4xl md:top-2/3">
               
             </div>
           </div>
