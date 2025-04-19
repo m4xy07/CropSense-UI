@@ -7,6 +7,7 @@ import starsBg from "@/assets/stars.png";
 import Button from '@/components/Button';
 import Link from 'next/link';
 import Image from 'next/image';
+import { ShimmerButton2 } from '@/components/magicui/shimmer2';
 
 
 
@@ -70,14 +71,18 @@ export default function FeaturesHeroSec() {
           >
             Supercharge Your Yields
           </h2>
-          {/* <p className="text-lg z-40 md:text-xl text-white/70 font-inter -mt-1 text-center max-w-xl mx-auto">
-            texts
-        </p> */}
-        {/* <div className="flex z-40 justify-center mt-5">
-          <Link href={'/dashboard'}>
-            <Button>Get Started</Button>
-            </Link>
-        </div> */}
+           <p className="text-lg z-40 md:text-xl text-white/70 font-inter pt-5 text-center max-w-xl mx-auto">
+           Discover the smart tools that make farming simpler, faster, and more profitable.
+        </p> 
+         <div className="flex z-40 justify-center mt-5 pt-5">
+         <Link href="/dashboard">
+                <ShimmerButton2 className="shadow-2xl">
+                <span className="whitespace-pre-wrap font-inter text-center text-[15px] font-normal leading-none tracking-tight text-white from-white to-[#0a0118]">
+                  Get Started
+                </span>
+              </ShimmerButton2>
+              </Link>
+        </div> 
         <div className="z-20 -mt-32 h-[36rem] w-full overflow-hidden md:-mt-36">
             <div className="absolute bottom-0 h-3/5 w-full bg-gradient-to-b from-transparent via-gray-950/75 to-black" />
             <div className="absolute inset-x-6 bottom-1 m-auto max-w-4xl md:top-2/3">

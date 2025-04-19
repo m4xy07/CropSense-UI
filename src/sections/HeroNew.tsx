@@ -7,6 +7,8 @@ import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import starsBg from "@/assets/stars.png";
 import Button from '@/components/Button';
 import Link from 'next/link';
+import { ShimmerButton } from '@/components/magicui/shimmer-button';
+import { ShimmerButton2 } from '@/components/magicui/shimmer2';
 
 
 
@@ -89,9 +91,13 @@ export default function HeroSec() {
             An initiative towards a greener tomorrow.
         </p>
         <div className="flex z-40 justify-center mt-5">
-          <Link href={'/dashboard'}>
-            <Button>Get Started</Button>
-            </Link>
+        <Link href="/dashboard">
+                <ShimmerButton2 className="shadow-2xl">
+                <span className="whitespace-pre-wrap font-inter text-center text-[15px] font-normal leading-none tracking-tight text-white from-white to-[#0a0118]">
+                  Get Started
+                </span>
+              </ShimmerButton2>
+              </Link>
         </div>
           <canvas
             className="absolute top-[10rem] main-hero-blue-orb z-20 aspect-square size-full max-w-fit sm:top-[7.1rem] md:top-[24rem]"
@@ -106,26 +112,7 @@ export default function HeroSec() {
           </div>
           
         </div>
-        {/*Start Ring 1*
-        {/* Ring Wrapper (Ensures Clipping) 
-        <div className='!overflow-hidden z-10'>
-<div className="absolute inset-x-0  -bottom-1/2  flex items-end justify-center overflow-hidden pointer-events-none">
-  <motion.div 
-    animate={{ rotate: "1turn" }}
-    transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-    className="h-[300px] w-[300px] md:h-[1000px] md:w-[1000px] border opacity-10 rounded-full translate-y-1/2">
-    
-     Ring Markers 
-    <div className="absolute h-2 w-2 bg-white rounded-full top-1/2 left-0 -translate-x-1/2 -translate-y-1/2"></div>
-    <div className="absolute h-2 w-2 bg-white rounded-full top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
-    <div className="absolute h-5 w-5 border border-white rounded-full top-1/2 left-full -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
-      <div className="h-2 w-2 bg-white rounded-full"></div>
-    </div>
-  </motion.div>
-</div>
-</div>
-
-    End Ring 1*/}
+        
     </>
   );
 }

@@ -9,11 +9,12 @@ const FeaturesBentoSec = () => {
             <div className="container mx-auto">
                 <div className="-mx-4 flex flex-wrap">
                     <div className="w-full px-4">
-                        <div className="mx-auto mb-[20px] max-w-[510px] text-center">
-                            {/* <h2 className="text-[3.5rem] pt-4 font-bold text-center tracking-normal effect-font-gradient">
-                                Supercharge Your Yields.
-                            </h2> */}
-                            <p className="text-white/70 text-xl font-inter text-center mt-4 tracking-tight">
+                        <div className="mx-auto mb-[20px] max-w-[750px] text-center">
+                             <h2 className="text-[3.5rem] pt-4 font-bold text-center leading-tight tracking-normal effect-font-gradient">
+                             Smart summaries for smarter decisions
+
+                            </h2> 
+                            <p className="text-white/70 text-xl font-inter text-center pt-[20px] pb-[20px] tracking-tight">
                                 Next-level features to power your growth.
                             </p>
                         </div>

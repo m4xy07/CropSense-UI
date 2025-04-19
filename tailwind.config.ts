@@ -10,7 +10,7 @@ const svgToDataUri = require("mini-svg-data-uri");
 
 
 const config: Config = {
-	darkMode: 'class',
+	darkMode: 'media',
 	content: [
 		"./src/app/**/*.{js,ts,jsx,tsx,mdx}",
 		"./src/sections/**/*.{js,ts,jsx,tsx,mdx}",
