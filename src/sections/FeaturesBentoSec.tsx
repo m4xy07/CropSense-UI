@@ -131,7 +131,7 @@ const FeaturesBentoSec = () => {
                                     Crop & Price Prediction Engine
                                 </div>
                                 <div className="real-time-content-description">
-                                Accurate harvest-time price predictions (retail + wholesale) along with required fertilizers, powered by verified datasets and trained on your own farm's data.
+                                Accurate harvest-time price predictions (retail + wholesale) along with required fertilizers, powered by verified datasets and trained on your own farm&apos;s data.
                                 </div>
                             </div>
                         </div>
