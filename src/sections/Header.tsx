@@ -58,9 +58,13 @@ export const Header = () => {
 
           <SignedOut>
             <SignInButton>
-              <Link href="/sign-in">
-            <Button>Sign In</Button>
-            </Link>
+               <Link href="/sign-in">
+                <ShimmerButton className="shadow-2xl">
+                <span className="whitespace-pre-wrap text-center text-sm font-normal leading-none tracking-tight text-white from-white to-[#0a0118]">
+                  Sign in
+                </span>
+              </ShimmerButton>
+              </Link>
             </SignInButton>
           </SignedOut>
 
