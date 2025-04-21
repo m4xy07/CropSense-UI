@@ -29,7 +29,7 @@ export const HeroHighlight = ({
   return (
     <div
       className={cn(
-        "relative h-[60rem] flex items-center bg-white dark:bg-black justify-center w-full group [mask-image:radial-gradient(700px_circle_at_center,white,transparent)]",
+        "relative h-[60rem] flex items-center bg-black justify-center w-full group [mask-image:radial-gradient(700px_circle_at_center,white,transparent)]",
         containerClassName
       )}
       onMouseMove={handleMouseMove}
