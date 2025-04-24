@@ -16,6 +16,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import UploadComponent from "@/components/comp-545";
 
 const API_URL = "https://data.cropsense.tech/data";
 
@@ -244,6 +245,8 @@ export default function Page() {
                 onChange={handleImageUpload}
                 className="mt-4 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
               />
+
+              <UploadComponent />
 
               {loading && (
                 <p className="mt-4 text-blue-500">Processing image...</p>
