@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import {
   Breadcrumb,
@@ -16,212 +16,15 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { ClockIcon } from "lucide-react";
 import Button from "@/components/Button";
-
-const API_URL = "https://data.cropsense.tech/data";
+import { equipmentList } from "@/data/equipment/equipmentdata";
 
 export default function Page() {
-  const [currentTime, setCurrentTime] = useState<string>("");
-  const [altitude, setAltitude] = useState<number | null>(null);
+  
   const [searchQuery, setSearchQuery] = useState("");
   const [maxPrice, setMaxPrice] = useState<number | null>(null);
   const [sortOrder, setSortOrder] = useState<string>("default");
-  const [chartData, setChartData] = useState<{
-    chartData: { label: string; price: number }[];
-    harvestableMonth: string;
-    bestCrop: string;
-    recommendedFertilizer: string;
-  } | null>(null);
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      setCurrentTime(now.toLocaleTimeString());
-    };
-
-    updateTime();
-    const intervalId = setInterval(updateTime, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(API_URL);
-        if (!response.ok) throw new Error("Failed to fetch data");
-
-        const data = await response.json();
-        if (Array.isArray(data) && data.length > 0) {
-          const latestRecord = data[data.length - 1];
-          const latestMonthData =
-            latestRecord.harvestable_months[latestRecord.harvestable_months.length - 1];
-
-          setAltitude(parseFloat(latestRecord?.alt?.toFixed(2)));
-
-          setChartData({
-            chartData: [
-              {
-                label: "Wholesale",
-                price: parseFloat(latestMonthData.wholesale_price.toFixed(2)),
-              },
-              {
-                label: "Retail",
-                price: parseFloat(latestMonthData.retail_price.toFixed(2)),
-              },
-            ],
-            harvestableMonth: latestMonthData.month,
-            bestCrop: latestRecord.best_crop || "Unknown",
-            recommendedFertilizer: latestRecord.recommended_fertilizer || "Unknown",
-          });
-        } else {
-          console.warn("API returned an empty or invalid response.");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const equipmentList = [
-    {
-      name: "Tractor",
-      image: "/tract.jpg",
-      rate: "₹3,500/day",
-      details: [
-        "Model: Mahindra 575 DI XP Plus",
-        "Engine: 45 HP, 4-cylinder",
-        "Transmission: 8F + 2R",
-        "Fuel Capacity: 60 L",
-      ],
-    },
-    {
-      name: "Tractor",
-      image: "/blue-and-white-mild-steel-35hp-swaraj-735-fe-tractor-for-agricultural-usage-47-liter-fuel-tank-capacity--819.jpg",
-      rate: "₹2,800/day",
-      details: [
-        "Model: Swaraj 735 FE",
-        "Engine: 40 HP, 3-cylinder",
-        "Transmission: 8F + 2R",
-        "Fuel Capacity: 48 L",
-      ],
-    },
-    {
-      name: "Tractor",
-      image: "/b3d23e0ccad7bbbac6f01fe9aa8bb332.jpg",
-      rate: "₹4,200/day",
-      details: [
-        "Model: John Deere 5050D",
-        "Engine: 50 HP, 3-cylinder",
-        "Transmission: 8F + 4R",
-        "Fuel Capacity: 60 L",
-      ],
-    },
-    {
-      name: "Cultivator",
-      image: "/culti.jpg",
-      rate: "₹1,500/day",
-      details: [
-        "Type: 9-Tyne Spring Loaded",
-        "Width: 7 ft",
-        "Depth: Up to 12 in",
-        "Required HP: 35-45",
-      ],
-    },
-    {
-      name: "Cultivator",
-      image: "/11-tyne-rigid-cultivator-932.jpg",
-      rate: "₹1,800/day",
-      details: [
-        "Type: 11-Tyne Rigid",
-        "Width: 8 ft",
-        "Depth: 14 in",
-        "Required HP: 45-55",
-      ],
-    },
-    {
-      name: "Plough",
-      image: "/sddefault.jpg",
-      rate: "₹1,000/day",
-      details: [
-        "Type: MB Reversible",
-        "No. of Bottoms: 2",
-        "Width: 16 in/bottom",
-        "Required HP: 35-40",
-      ],
-    },
-    {
-      name: "Harvester",
-      image: "/harves.jpg",
-      rate: "₹5,000/day",
-      details: [
-        "Model: John Deere S740",
-        "Engine: 248 HP",
-        "Grain Tank: 10,600 L",
-        "Header Width: 6.1 m",
-      ],
-    },
-    {
-      name: "Seeder",
-      image: "/seeder.jpg",
-      rate: "₹1,200/day",
-      details: [
-        "Type: Zero Till Seeder",
-        "Working Width: 5 ft",
-        "Rows: 9",
-        "Required HP: 35+",
-      ],
-    },
-    {
-      name: "Sprayer",
-      image: "/61EJ3SYjKlL.jpg",
-      rate: "₹800/day",
-      details: [
-        "Capacity: 16 L",
-        "Type: Knapsack",
-        "Pump: Manual",
-        "Use: Pesticide & Fertilizer",
-      ],
-    },
-    {
-      name: "Rotavator",
-      image: "/Shriram_Associate_Shaktiman_6_Feet_Rotavator_2_874x.jpg",
-      rate: "₹2,000/day",
-      details: [
-        "Working Width: 6 ft",
-        "Blades: 42",
-        "HP Required: 40-55",
-        "Used For: Tillage",
-      ],
-    },
-    {
-      name: "Baler",
-      image: "/baler.jpg",
-      rate: "₹3,000/day",
-      details: [
-        "Type: Round Baler",
-        "Bale Size: 4x4 ft",
-        "Capacity: 30-50 bales/hr",
-        "Required HP: 45+",
-      ],
-    },
-    {
-      name: "Oxes",
-      image: "/oxes.jpg",
-      rate: "₹500/hour",
-      details: [
-        "Weight: 600–900 kg",
-        "Height: ~150 cm",
-        "Pull Capacity: High",
-        "Use: Cart & Plough"
-      ],
-    }
-    
-  ];
-
+  
   const filteredEquipment = equipmentList
     .filter((item) => {
       const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -271,9 +74,7 @@ export default function Page() {
             </div>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-8">
-                {/* <div className="flex flex-row items-center gap-2 w-[88px]">
-                <ClockIcon className="w-5 h-5" /> <div className="text-white text-sm w-[64px]">{currentTime}</div>
-              </div> */}
+                
                 <div className="flex items-center bg-[#1e293b] px-4 py-1.5 rounded-full relative group hover:bg-[#2563eb] transition-colors duration-200">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-blue-400 group-hover:text-white mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -365,7 +166,7 @@ export default function Page() {
                   {item.details.map((line, i) => (
                     <p key={i} className="flex items-start">
                       <svg className="h-3 w-3 text-blue-500 mr-1.5 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a8 8 0 1111.314 0z" clipRule="evenodd" />
                       </svg>
                       {line}
                     </p>

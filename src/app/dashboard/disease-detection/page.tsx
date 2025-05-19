@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -134,7 +135,7 @@ export default function Page() {
       const causeMatch = content.match(
         /Cause[\s\S]*?(?:\n|\r)([\s\S]*?)(?:\n\n|$)/
       );
-      const cureMatch = content.match(
+      const cureMatch2 = content.match(
         /Cure[\s\S]*?(?:\n|\r)([\s\S]*?)(?:\n\n|$)/
       );
 
@@ -143,7 +144,7 @@ export default function Page() {
           ? preventionMatch[1].trim()
           : "No information available",
         cause: causeMatch ? causeMatch[1].trim() : "No information available",
-        cure: cureMatch ? cureMatch[1].trim() : "No information available",
+        cure: cureMatch2 ? cureMatch2[1].trim() : "No information available",
       };
     } catch (error) {
       console.error("Error fetching disease information:", error);
@@ -177,33 +178,25 @@ export default function Page() {
     }
   }, [diseaseName]);
 
-  const handleImageUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      setUploadedImage(file);
-
-      const formData = new FormData();
-      formData.append("image", file);
-
-      setLoading(true);
-      try {
-        const response = await fetch("http://128.199.255.54:5000/getdiseases", {
-          method: "POST",
-          body: formData,
-        });
-
-        if (!response.ok) throw new Error("Failed to fetch disease data");
-
-        const data = await response.json();
-        setResultImage(`http://128.199.255.54:5000${data.image_url}`);
-        setDiseaseName(data.disease_name);
-      } catch (error) {
-        console.error("Error uploading image:", error);
-      } finally {
-        setLoading(false);
-      }
+  // Handler for drag-and-drop uploader
+  const handleImageUpload = async (file: File) => {
+    setUploadedImage(file);
+    const formData = new FormData();
+    formData.append("image", file);
+    setLoading(true);
+    try {
+      const response = await fetch("http://128.199.255.54:5000/getdiseases", {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) throw new Error("Failed to fetch disease data");
+      const data = await response.json();
+      setResultImage(`http://128.199.255.54:5000${data.image_url}`);
+      setDiseaseName(data.disease_name);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -231,22 +224,15 @@ export default function Page() {
           </div>
         </header>
 
-        <div className="flex flex-1 flex-col items-center gap-4 p-4 pt-0">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+        <div className="flex flex-1 flex-col items-center gap-4 p-4 pt-0 justify-center ">
             <div className="col-span-3 text-center">
               <h2 className="text-xl font-semibold">Disease Detection</h2>
-              <p className="text-gray-500">
+              <p className="text-[#ffffffc7] mb-4">
                 Upload an image to detect crop diseases.
               </p>
 
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="mt-4 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-              />
-
-              <UploadComponent />
+              {/* Use the new UploadComponent and pass the handler */}
+              <UploadComponent onFileUpload={handleImageUpload} loading={loading} />
 
               {loading && (
                 <p className="mt-4 text-blue-500">Processing image...</p>
@@ -284,17 +270,6 @@ export default function Page() {
                 </div>
               )}
             </div>
-          </div>
-
-          <div className="flex flex-wrap gap-4">
-            {/* <div className="aspect-video rounded-xl bg-muted/50">
-              {chartData ? (
-                <BarChartComponent cardTitle="Crop Harvest & Pricing" data={chartData} />
-              ) : (
-                <p className="text-center text-gray-500">Loading...</p>
-              )}
-            </div> */}
-          </div>
         </div>
       </SidebarInset>
     </SidebarProvider>

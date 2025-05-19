@@ -1,11 +1,12 @@
 "use client"
 
+import { useEffect } from "react"
 import { AlertCircleIcon, ImageIcon, UploadIcon, XIcon } from "lucide-react"
 
 import { useFileUpload } from "@/hooks/use-file-upload"
 import { Button } from "@/components/ui/button"
 
-export default function UploadComponent() {
+export default function UploadComponent({ onFileUpload, loading }: { onFileUpload: (file: File) => void, loading: boolean }) {
   const maxSizeMB = 2
   const maxSize = maxSizeMB * 1024 * 1024 // 2MB default
 
@@ -27,6 +28,15 @@ export default function UploadComponent() {
   const previewUrl = files[0]?.preview || null
   const fileName = files[0]?.file.name || null
 
+  // When a file is added, trigger the upload handler
+  useEffect(() => {
+    if (files[0]?.file && files[0].file instanceof File) {
+      onFileUpload(files[0].file);
+    }
+    // Only run when files changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [files]);
+
   return (
     <div className="flex flex-col gap-2">
       <div className="relative">
@@ -43,6 +53,7 @@ export default function UploadComponent() {
             {...getInputProps()}
             className="sr-only"
             aria-label="Upload image file"
+            disabled={loading}
           />
           {previewUrl ? (
             <div className="absolute inset-0 flex items-center justify-center p-4">
@@ -68,6 +79,7 @@ export default function UploadComponent() {
                 variant="outline"
                 className="mt-4"
                 onClick={openFileDialog}
+                disabled={loading}
               >
                 <UploadIcon
                   className="-ms-1 size-4 opacity-60"
@@ -86,6 +98,7 @@ export default function UploadComponent() {
               className="focus-visible:border-ring focus-visible:ring-ring/50 z-50 flex size-8 cursor-pointer items-center justify-center rounded-full bg-black/60 text-white transition-[color,box-shadow] outline-none hover:bg-black/80 focus-visible:ring-[3px]"
               onClick={() => removeFile(files[0]?.id)}
               aria-label="Remove image"
+              disabled={loading}
             >
               <XIcon className="size-4" aria-hidden="true" />
             </button>
@@ -103,19 +116,7 @@ export default function UploadComponent() {
         </div>
       )}
 
-      <p
-        aria-live="polite"
-        role="region"
-        className="text-muted-foreground mt-2 text-center text-xs"
-      >
-        Single image uploader w/ max size (drop area + button) ∙{" "}
-        <a
-          href="https://github.com/origin-space/originui/tree/main/docs/use-file-upload.md"
-          className="hover:text-foreground underline"
-        >
-          API
-        </a>
-      </p>
+      
     </div>
   )
 }

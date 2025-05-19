@@ -1838,6 +1838,21 @@ body {
     white-space: nowrap;
 }
 
+
+/**LANDING PAGE FEATURES GRID CSS **/
+
+.feature-title{
+    background: linear-gradient(180deg, #fff 22.5%, #ffffffb3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    width: 100%;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 36px;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
