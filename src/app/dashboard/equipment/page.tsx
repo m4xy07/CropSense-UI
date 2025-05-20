@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/sidebar";
 import Button from "@/components/Button";
 import { equipmentList } from "@/data/equipment/equipmentdata";
+import CheckIcon from "@/assets/check.svg";
 
 export default function Page() {
   
@@ -50,10 +51,10 @@ export default function Page() {
     });
 
   return (
-    <SidebarProvider className="dark font-inter">
+    <SidebarProvider className="dark main-dashboard-theme theme-color font-inter">
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 bg-[#000102] text-white">
+        <header className="flex h-16 shrink-0 items-center gap-2  text-white theme-color main-topbar-theme">
           <div className="flex justify-between w-full pr-4">
             <div className="flex items-center gap-2 px-4">
               <SidebarTrigger className="-ml-1" />
@@ -90,13 +91,13 @@ export default function Page() {
           </div>
         </header>
 
-        <div className="bg-[#010308] min-h-screen p-4">
-          <div className="bg-[#020408] shadow-md rounded-lg mb-4 flex flex-wrap items-center gap-4">
+        <div className="main-dashboard-second-part-theme theme-color min-h-screen p-4">
+          <div className="bg-transparent rounded-lg mb-4 flex flex-wrap items-center gap-4">
             <div className="relative w-full md:w-1/2">
               <input
                 type="text"
                 placeholder="Search equipment"
-                className="w-full border !border-zinc-50/10 bg-[#02040a] text-white rounded-md p-2 pl-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border !border-zinc-50/10 bg-[rgba(255,255,255,.025)] text-white rounded-md p-2 pl-4 "
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -116,7 +117,7 @@ export default function Page() {
             <div className="flex w-full md:w-auto gap-4">
               <div className="relative">
                 <select
-                  className="w-full text-[14px] appearance-none bg-[#02040a] text-white border !border-zinc-50/10 rounded-md py-2 pl-4 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full text-[14px] appearance-none bg-[#0a0118] text-white border !border-zinc-50/10 rounded-md py-2 pl-4 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={maxPrice || ""}
                   onChange={(e) =>
                     setMaxPrice(e.target.value ? parseInt(e.target.value) : null)
@@ -134,7 +135,7 @@ export default function Page() {
 
               <div className="relative">
                 <select
-                  className="w-full appearance-none text-[14px] bg-[#02040a] text-white border !border-zinc-50/10 rounded-md py-2 pl-4 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full appearance-none text-[14px] bg-[#0a0118] text-white border !border-zinc-50/10 rounded-md py-2 pl-4 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={sortOrder}
                   onChange={(e) => setSortOrder(e.target.value)}
                 >
@@ -153,28 +154,30 @@ export default function Page() {
             {filteredEquipment.map((item, index) => (
               <div
                 key={index}
-                className="bg-[#010204] shadow-md rounded-lg p-4 border border-zinc-50/10 hover:border-blue-500 transition-all duration-200"
+                className="bg-[#010204] equipment-card-inner shadow-md rounded-lg p-4 border border-zinc-50/10 "
               >
                 <img
                   src={item.image}
                   alt={item.name}
                   className="w-full h-36 object-cover rounded-md"
                 />
-                <h3 className="text-lg font-bold mt-2 text-white">{item.name}</h3>
-                <p className="text-sm text-blue-400 font-semibold">{item.rate}</p>
-                <div className="mt-2 text-xs text-gray-400 space-y-1.5 pb-4">
+                <h3 className=" mt-4 -mb-2 text-white font-semibold text-[26px] tracking-normal effect-font-gradient">{item.name}</h3>
+                <p className="text-xl pricing-card-btn-amount mb-2">{item.rate}</p>
+                <Button>
+                  Rent now
+                </Button>
+                <div className="p-6 pb-0 pricing-card-top-div relative" />
+                
+                <hr className="hr-fade" />
+                <div className="mt-4 text-[#d2d0dd] text-sm font-inter tracking-[-.14px] space-y-2 pb-4">
                   {item.details.map((line, i) => (
-                    <p key={i} className="flex items-start">
-                      <svg className="h-3 w-3 text-blue-500 mr-1.5 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a8 8 0 1111.314 0z" clipRule="evenodd" />
-                      </svg>
+                    <p key={i} className="flex items-start gap-2">
+                      <CheckIcon />
                       {line}
                     </p>
                   ))}
                 </div>
-                <Button>
-                  Rent now
-                </Button>
+                
               </div>
             ))}
           </div>

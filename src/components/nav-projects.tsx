@@ -28,8 +28,8 @@ export function NavProjects({
             <SidebarMenuButton asChild>
               <Link
                 href={item.url}
-                className={`flex items-center gap-2 px-4 py-2 rounded-md transition ${
-                  item.active ? "bg-[rgba(39,39,42,1)] text-primary" : "hover:bg-[rgba(39,39,42,1)]"
+                className={`flex items-center gap-2 px-4 py-2 transition-all duration-200 ease-in-out rounded-md  ${
+                  item.active ? "bg-[rgba(255,255,255,.05)] text-primary" : "hover:bg-[rgba(255,255,255,0.05)]"
                 }`}
               >
                 <item.icon />

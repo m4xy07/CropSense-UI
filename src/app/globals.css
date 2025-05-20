@@ -1380,7 +1380,8 @@ body {
 
 .card-animation-big-popup-footer-item {
   align-items: center;
-  display: flex;
+  display: flex
+;
 }
 
 .detection-div:hover .card-animation-mobile .card-animation-big-popup {
@@ -1852,6 +1853,54 @@ body {
     font-weight: 600;
     line-height: 36px;
 }
+
+
+/**END PAGE FEATURES GRID CSS **/
+
+.equipment-card-inner{
+  background: linear-gradient(180deg, #0b021700, #16092a), #0a0118;
+}
+
+.dashboard-header{
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+/**DASHBOARD THEME CSS **/
+
+.theme-color{
+    --bgexec-1: linear-gradient(135deg, #0c0124 0%, #021529 100%);
+    --bgexec-2: rgba(255, 255, 255, .025);
+    --bgexec-3: rgba(255, 255, 255, .025);
+    --fillexec-1: rgba(255, 255, 255, .025);
+    --fillexec-2: rgba(255, 255, 255, .05);
+    --fillexec-3: rgba(255, 255, 255, .075);
+}
+
+.main-dashboard-theme{
+  background: var(--bgexec-1) !important;
+}
+
+.main-sidebar-theme{
+  background: var(--fillexec-2) !important;
+  backdrop-filter: blur(60px);
+  box-shadow: inset -1px 0 0 var(--fillexec-2);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: sticky;
+  top: 0;
+}
+
+.main-topbar-theme{
+  background-color: var(--bgexec-2);
+  box-shadow: inset 0 -1px 0 var(--fillexec-2);
+}
+
+.main-dashboard-second-part-theme{
+  background: var(--bgexec-2) !important;
+}
+
+
 
 @layer base {
   * {

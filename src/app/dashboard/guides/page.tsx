@@ -37,7 +37,7 @@ function Scheme({ title, description, link, image }: { title: string; descriptio
 
 export default function Page() {
   return (
-    <SidebarProvider className="dark font-inter">
+    <SidebarProvider className="dark  font-inter">
       <AppSidebar />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2">
