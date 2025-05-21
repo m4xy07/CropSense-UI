@@ -22,9 +22,25 @@ import CheckIcon from "@/assets/check.svg";
 import PriceSelect from "@/components/comp-203";
 import SortSelect, { SortOrder } from "@/components/SortSelect";
 import { MapPin } from 'lucide-react';
+import { NavUser } from "@/components/nav-user";
+import { useUser } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
 
 export default function Page() {
-  
+
+
+  const { user } = useUser();
+  const pathname = usePathname();
+
+  const data = {
+    user: {
+      name: user?.fullName || "Guest",
+      email: user?.primaryEmailAddress?.emailAddress || "guest@example.com",
+      avatar: user?.imageUrl || "/avatars/default.jpg",
+    },
+    
+  };
+
   const [searchQuery, setSearchQuery] = useState("");
   const [maxPrice, setMaxPrice] = useState<number | null>(null);
   const [sortOrder, setSortOrder] = useState<SortOrder>("default");
@@ -76,17 +92,20 @@ export default function Page() {
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
+            <div className="flex flex-row gap-2">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-8">
                 
-                <div className="flex items-center bg-transparent p-[6px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps">
+                <div className="flex items-center w-[120px] bg-transparent p-[6px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps">
                   <MapPin className="h-5 w-5 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff]"/>
-                  <span className="text-[14px] font-normal text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] px-[6px]">Within 3 km</span>
+                  <span className="text-[14px] font-normal text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] pl-[6px]">Within 3 km</span>
                   {/* <div className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-max bg-gray-800 text-white text-sm rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                     Within 3 kms
                   </div> */}
                 </div>
               </div>
+            </div>
+            <NavUser user={data.user} />
             </div>
           </div>
         </header>
