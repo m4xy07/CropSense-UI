@@ -80,8 +80,8 @@ export default function Page() {
               <div className="flex items-center gap-8">
                 
                 <div className="flex items-center bg-transparent p-[6px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps">
-                  <MapPin className="h-5 w-5 text-[rgba(255,255,255,.6)]"/>
-                  <span className="text-[14px] font-normal text-[rgba(255,255,255,.65)] ease-in-out duration-200 group-hover:text-white px-[6px]">Within 3 kms</span>
+                  <MapPin className="h-5 w-5 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff]"/>
+                  <span className="text-[14px] font-normal text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] px-[6px]">Within 3 km</span>
                   {/* <div className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-max bg-gray-800 text-white text-sm rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                     Within 3 kms
                   </div> */}
