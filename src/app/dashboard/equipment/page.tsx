@@ -19,12 +19,15 @@ import {
 import Button from "@/components/Button";
 import { equipmentList } from "@/data/equipment/equipmentdata";
 import CheckIcon from "@/assets/check.svg";
+import PriceSelect from "@/components/comp-203";
+import SortSelect, { SortOrder } from "@/components/SortSelect";
+import { MapPin } from 'lucide-react';
 
 export default function Page() {
   
   const [searchQuery, setSearchQuery] = useState("");
   const [maxPrice, setMaxPrice] = useState<number | null>(null);
-  const [sortOrder, setSortOrder] = useState<string>("default");
+  const [sortOrder, setSortOrder] = useState<SortOrder>("default");
   
   const filteredEquipment = equipmentList
     .filter((item) => {
@@ -76,15 +79,12 @@ export default function Page() {
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-8">
                 
-                <div className="flex items-center bg-[#1e293b] px-4 py-1.5 rounded-full relative group hover:bg-[#2563eb] transition-colors duration-200">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-blue-400 group-hover:text-white mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  <span className="text-[14px] font-semibold text-blue-100 group-hover:text-white">Near your location</span>
-                  <div className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-max bg-gray-800 text-white text-sm rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    Within 3 km
-                  </div>
+                <div className="flex items-center bg-transparent p-[6px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps">
+                  <MapPin className="h-5 w-5 text-[rgba(255,255,255,.6)]"/>
+                  <span className="text-[14px] font-normal text-[rgba(255,255,255,.65)] ease-in-out duration-200 group-hover:text-white px-[6px]">Within 3 kms</span>
+                  {/* <div className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-max bg-gray-800 text-white text-sm rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    Within 3 kms
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -97,7 +97,7 @@ export default function Page() {
               <input
                 type="text"
                 placeholder="Search equipment"
-                className="w-full border !border-zinc-50/10 bg-[rgba(255,255,255,.025)] text-white rounded-md p-2 pl-4 "
+                className="w-full border !border-zinc-50/10 bg-[rgba(255,255,255,.025)] text-white rounded-md !py-2 !px-4 !h-9 "
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -116,36 +116,17 @@ export default function Page() {
 
             <div className="flex w-full md:w-auto gap-4">
               <div className="relative">
-                <select
-                  className="w-full text-[14px] appearance-none bg-[#0a0118] text-white border !border-zinc-50/10 rounded-md py-2 pl-4 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={maxPrice || ""}
-                  onChange={(e) =>
-                    setMaxPrice(e.target.value ? parseInt(e.target.value) : null)
-                  }
-                >
-                  <option value="">Max price (Any)</option>
-                  <option value="1000">Under ₹1,000</option>
-                  <option value="2000">Under ₹2,000</option>
-                  <option value="3000">Under ₹3,000</option>
-                  <option value="4000">Under ₹4,000</option>
-                  <option value="5000">Under ₹5,000</option>
-                  <option value="10000">Under ₹10,000</option>
-                </select>
+                <PriceSelect
+                  value={maxPrice === null ? "any" : String(maxPrice)}
+                  onChange={(val) => setMaxPrice(val === "any" ? null : parseInt(val))}
+                />
               </div>
 
               <div className="relative">
-                <select
-                  className="w-full appearance-none text-[14px] bg-[#0a0118] text-white border !border-zinc-50/10 rounded-md py-2 pl-4 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                <SortSelect
                   value={sortOrder}
-                  onChange={(e) => setSortOrder(e.target.value)}
-                >
-                  <option value="default">Sort by</option>
-                  <option value="price_low">Price: Low to High</option>
-                  <option value="price_high">Price: High to Low</option>
-                  <option value="name_asc">Name: A-Z</option>
-                  <option value="name_desc">Name: Z-A</option>
-                </select>
-                
+                  onChange={(val) => setSortOrder(val)}
+                />
               </div>
             </div>
           </div>
