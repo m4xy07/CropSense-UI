@@ -25,7 +25,7 @@ export default function SortSelect({ value, onChange }: SortSelectProps) {
           <SelectValue placeholder="Sort by" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="default">Sort by</SelectItem>
+          <SelectItem value="default">Default Sorting</SelectItem>
           <SelectItem value="price_low">Price: Low to High</SelectItem>
           <SelectItem value="price_high">Price: High to Low</SelectItem>
           <SelectItem value="name_asc">Name: A-Z</SelectItem>

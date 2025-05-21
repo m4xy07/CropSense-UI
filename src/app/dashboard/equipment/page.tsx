@@ -116,7 +116,7 @@ export default function Page() {
               <input
                 type="text"
                 placeholder="Search equipment"
-                className="w-full border !border-zinc-50/10 bg-[rgba(255,255,255,.025)] text-white rounded-md !py-2 !px-4 !h-9 "
+                className="w-full equipment-input theme-color bg-[rgba(255,255,255,.025)] transition-all  text-white rounded-md !py-2 !px-4 !h-9 "
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />

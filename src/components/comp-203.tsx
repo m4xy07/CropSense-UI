@@ -19,7 +19,7 @@ export default function PriceSelect({ value, onChange }: { value: string; onChan
           <SelectValue placeholder="Price" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="any">All</SelectItem>
+          <SelectItem value="any">No Price Limit</SelectItem>
           <SelectItem value="1000">Below ₹1,000</SelectItem>
           <SelectItem value="2000">Below ₹2,000</SelectItem>
           <SelectItem value="3000">Below ₹3,000</SelectItem>

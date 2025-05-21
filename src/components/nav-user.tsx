@@ -49,7 +49,7 @@ export function NavUser({
           <DropdownMenuTrigger asChild >
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="data-[state=open]:bg-[rgba(255,255,255,0.05)] data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-6 w-6 rounded-full">
                 <AvatarImage src={user.avatar} alt={user.name} />
@@ -75,7 +75,7 @@ export function NavUser({
                   <AvatarFallback className="rounded-full">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{user.name}</span>
+                  <span className="truncate font-medium">{user.name}</span>
                   <span className="truncate text-xs">{user.email}</span>
                 </div>
               </div>
