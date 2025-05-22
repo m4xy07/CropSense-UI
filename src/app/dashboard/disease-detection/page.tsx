@@ -184,9 +184,9 @@ export default function Page() {
         <div className="flex flex-1 flex-col items-center gap-4 p-4 pt-0 justify-center ">
             <div className="col-span-3 text-center">
               {/* <h2 className="text-xl font-semibold">Disease Detection</h2> */}
-              <p className="text-[#ffffffc7] mb-4">
+              {/* <p className="text-[#ffffffc7] mb-4">
                 Upload an image to detect crop diseases.
-              </p>
+              </p> */}
 
               {/* Use the new UploadComponent and pass the handler */}
               <UploadComponent onFileUpload={handleImageUpload} loading={loading} />

@@ -3,6 +3,7 @@ import { useUser } from "@clerk/nextjs";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import Image from "next/image";
+import { SendHorizontal } from 'lucide-react';
 
 interface Message {
   text: string;
@@ -129,7 +130,7 @@ export default function ChatBox() {
   };
 
   return (
-    <div className="w-full h-full flex flex-col bg-transparent rounded-xl shadow-md">
+    <div className="w-full h-full flex flex-col bg-transparent rounded-xl">
       {/* Chat Display */}
       <div className="flex-1 overflow-y-auto p-2 bg-transparent rounded-lg shadow-inner mb-2">
         {messages.map((msg, index) => {
@@ -191,11 +192,12 @@ export default function ChatBox() {
             placeholder="Send a message"
             value={input}
             onChange={handleInputChange}
-            className="flex-1 resize-none overflow-hidden equipment-input theme-color bg-[rgba(255,255,255,.025)] transition-all  text-white rounded-md !py-2 !px-4 !h-9"
+            className="flex-1 resize-none overflow-hidden"
             rows={1}
             maxLength={maxChars}
           />
-          <Button variant="outline" type="submit">
+          <Button variant="outline" className="relative py-2 px-4 rent-now-btn !rounded-md !min-w-fit text-neutral-50 tracking-tight border border-neutral-400/20 font-normal font-inter text-sm equipment-btn transition-all" type="submit">
+            <SendHorizontal className="-ms-1 size-4 opacity-60" />
             Send
           </Button>
         </div>

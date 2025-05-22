@@ -1947,7 +1947,7 @@ body {
   padding: 6px;
   position: relative;
   width: 100%;
-  border-color: none !important;
+  border-color: transparent !important;
   border: none !important;
 }
 
@@ -1962,6 +1962,7 @@ body {
   border-color: transparent !important;
   border: none !important;
   outline: none !important;
+  outline-offset: unset !important;
 }
 
 .dashboard-menu-button:hover{

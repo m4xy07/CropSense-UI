@@ -38,7 +38,7 @@ export default function UploadComponent({ onFileUpload, loading }: { onFileUploa
   }, [files]);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 w-[700px] ">
       <div className="relative">
         {/* Drop area */}
         <div
@@ -47,7 +47,7 @@ export default function UploadComponent({ onFileUpload, loading }: { onFileUploa
           onDragOver={handleDragOver}
           onDrop={handleDrop}
           data-dragging={isDragging || undefined}
-          className=" data-[dragging=true]:bg-accent/50 has-[input:focus]:border-ring has-[input:focus]:ring-ring/50 relative flex min-h-52 flex-col items-center justify-center overflow-hidden rounded-xl border border-dashed border-[rgba(255,255,255,.25)] p-4 transition-colors has-[input:focus]:ring-[3px]"
+          className=" data-[dragging=true]:bg-accent/50 has-[input:focus]:border-ring has-[input:focus]:ring-ring/50 relative flex min-h-52 flex-col items-center justify-center overflow-hidden rounded-xl border border-dashed border-[rgba(255,255,255,.25)] p-4 transition-colors has-[input:focus]:ring-[3px] h-[500px]"
         >
           <input
             {...getInputProps()}
@@ -66,13 +66,13 @@ export default function UploadComponent({ onFileUpload, loading }: { onFileUploa
           ) : (
             <div className="flex flex-col items-center justify-center px-4 py-3 text-center">
               <div
-                className="mb-2 flex size-11 shrink-0 items-center justify-center rounded-full image-upload"
+                className="mb-2 flex size-14 shrink-0 items-center justify-center rounded-full image-upload"
                 aria-hidden="true"
               >
-                <ImageIcon className="size-4 opacity-60" />
+                <ImageIcon className="size-6 opacity-60" />
               </div>
-              <p className="mb-1.5 text-sm font-medium">Drop your image here</p>
-              <p className="text-muted-foreground text-xs">
+              <p className="my-1.5 text-base font-medium">Upload an image to detect crop diseases.</p>
+              <p className="text-muted-foreground text-sm">
                 SVG, PNG, JPG or GIF (max. {maxSizeMB}MB)
               </p>
               
@@ -93,7 +93,7 @@ export default function UploadComponent({ onFileUpload, loading }: { onFileUploa
         </div>
 
         {previewUrl && (
-          <div className="absolute top-4 right-4">
+          <div className="absolute top-12 right-3">
             <button
               type="button"
               className="focus-visible:border-ring focus-visible:ring-ring/50 z-50 flex size-8 cursor-pointer items-center justify-center rounded-full transition-all ease-in-out duration-200 image-upload text-white outline-none hover:bg-black/80 focus-visible:ring-[3px]"

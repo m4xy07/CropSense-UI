@@ -93,7 +93,7 @@ export const TextHoverEffect = ({
         textAnchor="middle"
         dominantBaseline="middle"
         strokeWidth="0.3"
-        className="fill-transparent stroke-neutral-200 font-rebond text-5xl font-bold dark:stroke-neutral-800"
+        className="fill-transparent stroke-[rgba(255,255,255,.15)] font-rebond text-5xl font-bold "
         style={{ opacity: hovered ? 0.7 : 0 }}
       >
         {text}
@@ -104,7 +104,7 @@ export const TextHoverEffect = ({
         textAnchor="middle"
         dominantBaseline="middle"
         strokeWidth="0.3"
-        className="fill-transparent stroke-neutral-200 font-rebond text-5xl font-bold dark:stroke-neutral-800"
+        className="fill-transparent stroke-[rgba(255,255,255,.15)] font-rebond text-5xl font-bold "
         initial={{ strokeDashoffset: 1000, strokeDasharray: 1000 }}
         animate={{
           strokeDashoffset: 0,

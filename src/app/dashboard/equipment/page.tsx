@@ -73,7 +73,7 @@ export default function Page() {
     <SidebarProvider className="dark main-dashboard-theme theme-color font-inter">
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2  text-white theme-color main-topbar-theme">
+        <header className="flex h-16 shrink-0 items-center gap-2 text-white theme-color main-topbar-theme">
           <div className="flex justify-between w-full pr-4">
             <div className="flex items-center gap-2 px-4">
               <SidebarTrigger className="-ml-1" />

@@ -19,7 +19,7 @@ function Textarea({
       <textarea
         data-slot="textarea"
         className={cn(
-          "border-input placeholder:text-muted-foreground/70  aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive flex min-h-full w-full rounded-md bg-transparent px-3 py-2 text-sm shadow-xs transition-[color,box-shadow] outline-none disabled:cursor-not-allowed disabled:opacity-50",
+          "flex min-h-full w-full text-sm shadow-xs disabled:cursor-not-allowed disabled:opacity-50  equipment-input theme-color bg-[rgba(255,255,255,.025)] transition-all  text-white !py-2 !px-4",
           className
         )}
         {...props}
