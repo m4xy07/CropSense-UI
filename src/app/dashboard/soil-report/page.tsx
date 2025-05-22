@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import dynamic from "next/dynamic";
+import CheckIcon from "@/assets/check.svg";
 import { AppSidebar } from "@/components/app-sidebar";
 import {
   Breadcrumb,
@@ -19,12 +20,29 @@ import {
 } from "@/components/ui/sidebar";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { FileText } from 'lucide-react';
+import { NavUser } from "@/components/nav-user";
+import { useUser } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
+
 
 const API_URL = "https://data.cropsense.tech/data";
 
 export default function Page() {
   const [sensorData, setSensorData] = useState<any[]>([]);
   const reportRef = useRef<HTMLDivElement>(null);
+
+  const { user } = useUser();
+  const pathname = usePathname();
+
+  const data = {
+    user: {
+      name: user?.fullName || "Guest",
+      email: user?.primaryEmailAddress?.emailAddress || "guest@example.com",
+      avatar: user?.imageUrl || "/avatars/default.jpg",
+    },
+    
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,35 +96,22 @@ export default function Page() {
     values: (string | number | null | undefined)[],
     timestamps: (string | undefined)[]
   ) => (
-    <div className="rounded-xl bg-muted/50 p-4 shadow-md min-w-[280px] flex-1 border border-gray-600 hover:border-gray-400 transition-colors duration-200">
-      <h2 className="text-xl font-bold mb-1 text-gray-200">{title}</h2>
-      <h4 className="text-muted-foreground mb-2 text-gray-400">
+    <div className="rounded-lg main-dashboard-theme theme-color p-4 shadow-md min-w-[280px] flex-1 border border-zinc-50/10 hover:border-zinc-50/15 ease-in-out transition-all duration-200">
+      <h2 className="text-white font-semibold text-[26px] tracking-normal effect-font-gradient">{title}</h2>
+      <h4 className="text-muted-foreground mb-2 text-gray-200">
         Latest readings
       </h4>
       <ul className="space-y-1">
         {values.map((val, index) => (
           <li
             key={index}
-            className="text-sm flex flex-col gap-1 text-gray-300 hover:text-white transition-colors duration-200"
+            className="text-[20px] flex flex-col gap-1 text-gray-100 hover:text-white transition-colors duration-200"
           >
             <div className="flex items-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4 text-blue-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
+              <CheckIcon />
               {val !== undefined && val !== null ? val : "N/A"}
             </div>
-            <span className="text-xs text-gray-400">
+            <span className="text-[18px] text-gray-300">
               {timestamps[index] || "Unknown Time"}
             </span>
           </li>
@@ -116,10 +121,10 @@ export default function Page() {
   );
 
   return (
-    <SidebarProvider className="dark font-inter">
+    <SidebarProvider className="dark main-dashboard-theme theme-color font-inter">
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2">
+        <header className="flex h-16 shrink-0 items-center gap-2 text-white theme-color main-topbar-theme">
           <div className="flex justify-between w-full pr-4">
             <div className="flex items-center gap-2 px-4">
               <SidebarTrigger className="-ml-1" />
@@ -127,26 +132,32 @@ export default function Page() {
               <Breadcrumb>
                 <BreadcrumbList>
                   <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
+                    <BreadcrumbLink href="/dashboard" className="text-white">Dashboard</BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator className="hidden md:block" />
                   <BreadcrumbItem>
-                    <BreadcrumbPage>Soil Report</BreadcrumbPage>
+                    <BreadcrumbPage className="text-white">Soil Report</BreadcrumbPage>
                   </BreadcrumbItem>
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
-            <button
-              onClick={generatePDF}
-              className="ml-auto px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors"
-            >
-              Generate PDF
-            </button>
+
+            <div className="flex flex-row gap-2">
+              <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-8">
+                    <div onClick={generatePDF} className="flex cursor-pointer items-center w-[135px] bg-transparent p-[6px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps">
+                      <FileText className="h-5 w-5 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff]" />
+                      <span className="text-[14px] font-normal text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] pl-[6px]">Generate PDF</span>
+                    </div>
+                  </div>
+                </div>
+              <NavUser user={data.user} />
+              </div>
           </div>
         </header>
 
-        <div ref={reportRef} className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div ref={reportRef} className="flex flex-1 flex-col gap-4 p-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {renderCard(
               "Temperature (°C)",
               sensorData.map((item) => item?.temperature?.toFixed(2) ?? "N/A"),
@@ -154,37 +165,37 @@ export default function Page() {
             )}
             {renderCard(
               "Humidity (%)",
-              sensorData.map((item) => item?.humidity ?? "N/A"),
+              sensorData.map((item) => item?.humidity?.toFixed(2) ?? "N/A"),
               sensorData.map((item) => item?.timestamp ?? "")
             )}
             {renderCard(
               "AQI",
-              sensorData.map((item) => item?.aqi ?? "N/A"),
+              sensorData.map((item) => item?.aqi?.toFixed(2) ?? "N/A"),
               sensorData.map((item) => item?.timestamp ?? "")
             )}
             {renderCard(
               "Heat Index",
-              sensorData.map((item) => item?.hi ?? "N/A"),
+              sensorData.map((item) => item?.hi?.toFixed(2) ?? "N/A"),
               sensorData.map((item) => item?.timestamp ?? "")
             )}
             {renderCard(
               "Altitude (m)",
-              sensorData.map((item) => item?.alt ?? "N/A"),
+              sensorData.map((item) => item?.alt?.toFixed(2) ?? "N/A"),
               sensorData.map((item) => item?.timestamp ?? "")
             )}
             {renderCard(
               "Pressure (hPa)",
-              sensorData.map((item) => item?.pres ?? "N/A"),
+              sensorData.map((item) => item?.pres?.toFixed(2) ?? "N/A"),
               sensorData.map((item) => item?.timestamp ?? "")
             )}
             {renderCard(
               "Moisture (%)",
-              sensorData.map((item) => item?.moisture ?? "N/A"),
+              sensorData.map((item) => item?.moisture?.toFixed(2) ?? "N/A"),
               sensorData.map((item) => item?.timestamp ?? "")
             )}
             {renderCard(
-              "Raining",
-              sensorData.map((item) => item?.raining ?? "N/A"),
+              "Rain",
+              sensorData.map((item) => item?.raining?.toFixed(2) ?? "N/A"),
               sensorData.map((item) => item?.timestamp ?? "")
             )}
             {renderCard(
@@ -194,17 +205,17 @@ export default function Page() {
             )}
             {renderCard(
               "NPK Nitrogen",
-              sensorData.map((item) => item?.npk_uptake_nitrogen ?? "N/A"),
+              sensorData.map((item) => item?.npk_uptake_nitrogen?.toFixed(2) ?? "N/A"),
               sensorData.map((item) => item?.timestamp ?? "")
             )}
             {renderCard(
               "NPK Phosphorus",
-              sensorData.map((item) => item?.npk_uptake_phosphorus ?? "N/A"),
+              sensorData.map((item) => item?.npk_uptake_phosphorus?.toFixed(2) ?? "N/A"),
               sensorData.map((item) => item?.timestamp ?? "")
             )}
             {renderCard(
               "NPK Potassium",
-              sensorData.map((item) => item?.npk_uptake_potassium ?? "N/A"),
+              sensorData.map((item) => item?.npk_uptake_potassium?.toFixed(2) ?? "N/A"),
               sensorData.map((item) => item?.timestamp ?? "")
             )}
           </div>

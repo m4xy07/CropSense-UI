@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import { AlertCircleIcon, ImageIcon, UploadIcon, XIcon } from "lucide-react"
 
 import { useFileUpload } from "@/hooks/use-file-upload"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 export default function UploadComponent({ onFileUpload, loading }: { onFileUpload: (file: File) => void, loading: boolean }) {
   const maxSizeMB = 2
@@ -47,7 +47,7 @@ export default function UploadComponent({ onFileUpload, loading }: { onFileUploa
           onDragOver={handleDragOver}
           onDrop={handleDrop}
           data-dragging={isDragging || undefined}
-          className="border-input data-[dragging=true]:bg-accent/50 has-[input:focus]:border-ring has-[input:focus]:ring-ring/50 relative flex min-h-52 flex-col items-center justify-center overflow-hidden rounded-xl border border-dashed p-4 transition-colors has-[input:focus]:ring-[3px]"
+          className=" data-[dragging=true]:bg-accent/50 has-[input:focus]:border-ring has-[input:focus]:ring-ring/50 relative flex min-h-52 flex-col items-center justify-center overflow-hidden rounded-xl border border-dashed border-[rgba(255,255,255,.25)] p-4 transition-colors has-[input:focus]:ring-[3px]"
         >
           <input
             {...getInputProps()}
@@ -66,7 +66,7 @@ export default function UploadComponent({ onFileUpload, loading }: { onFileUploa
           ) : (
             <div className="flex flex-col items-center justify-center px-4 py-3 text-center">
               <div
-                className="bg-background mb-2 flex size-11 shrink-0 items-center justify-center rounded-full border"
+                className="mb-2 flex size-11 shrink-0 items-center justify-center rounded-full image-upload"
                 aria-hidden="true"
               >
                 <ImageIcon className="size-4 opacity-60" />
@@ -75,9 +75,10 @@ export default function UploadComponent({ onFileUpload, loading }: { onFileUploa
               <p className="text-muted-foreground text-xs">
                 SVG, PNG, JPG or GIF (max. {maxSizeMB}MB)
               </p>
+              
               <Button
                 variant="outline"
-                className="mt-4"
+                className="mt-4 relative py-2 px-3 rent-now-btn rounded-full w-fit text-neutral-50 tracking-tight border border-neutral-400/20 font-normal font-inter text-sm equipment-btn transition-all"
                 onClick={openFileDialog}
                 disabled={loading}
               >
@@ -95,7 +96,7 @@ export default function UploadComponent({ onFileUpload, loading }: { onFileUploa
           <div className="absolute top-4 right-4">
             <button
               type="button"
-              className="focus-visible:border-ring focus-visible:ring-ring/50 z-50 flex size-8 cursor-pointer items-center justify-center rounded-full bg-black/60 text-white transition-[color,box-shadow] outline-none hover:bg-black/80 focus-visible:ring-[3px]"
+              className="focus-visible:border-ring focus-visible:ring-ring/50 z-50 flex size-8 cursor-pointer items-center justify-center rounded-full transition-all ease-in-out duration-200 image-upload text-white outline-none hover:bg-black/80 focus-visible:ring-[3px]"
               onClick={() => removeFile(files[0]?.id)}
               aria-label="Remove image"
               disabled={loading}

@@ -151,8 +151,8 @@ export default function ChatBox() {
                 />
               </div>
               <div
-                className={`p-3 py-2 rounded-md max-w-xs break-words text-white ${
-                  isCurrentUser ? "bg-[#2563eb]" : "bg-[#27272a]"
+                className={`p-3 py-2 rounded-md max-w-xs shadow-md break-words theme-color dashboard-equipment-select text-white ${
+                  isCurrentUser ? "bg-[#2563eb]" : "main-dashboard-theme"
                 }`}
               >
                 <div
@@ -191,7 +191,7 @@ export default function ChatBox() {
             placeholder="Send a message"
             value={input}
             onChange={handleInputChange}
-            className="flex-1 resize-none overflow-hidden pr-10"
+            className="flex-1 resize-none overflow-hidden equipment-input theme-color bg-[rgba(255,255,255,.025)] transition-all  text-white rounded-md !py-2 !px-4 !h-9"
             rows={1}
             maxLength={maxChars}
           />

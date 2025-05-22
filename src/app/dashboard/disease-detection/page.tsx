@@ -18,19 +18,14 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import UploadComponent from "@/components/comp-545";
+import { NavUser } from "@/components/nav-user";
+import { useUser } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
+import { TextShimmer } from "@/components/shining-text";
 
-const API_URL = "https://data.cropsense.tech/data";
 
 export default function Page() {
-  const [currentTime, setCurrentTime] = useState<string>("");
-  const [altitude, setAltitude] = useState<number | null>(null);
-  const [timeFrame, setTimeFrame] = useState<string>("7 days");
-  const [chartData, setChartData] = useState<{
-    chartData: { label: string; price: number }[];
-    harvestableMonth: string;
-    bestCrop: string;
-    recommendedFertilizer: string;
-  } | null>(null);
+  
 
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [resultImage, setResultImage] = useState<string | null>(null);
@@ -42,60 +37,7 @@ export default function Page() {
     cure: string;
   } | null>(null);
 
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      setCurrentTime(now.toLocaleTimeString());
-    };
-
-    updateTime();
-    const intervalId = setInterval(updateTime, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(API_URL);
-        if (!response.ok) throw new Error("Failed to fetch data");
-
-        const data = await response.json();
-        if (Array.isArray(data) && data.length > 0) {
-          const latestRecord = data[data.length - 1];
-          const latestMonthData =
-            latestRecord.harvestable_months[
-              latestRecord.harvestable_months.length - 1
-            ];
-
-          setAltitude(parseFloat(latestRecord?.alt?.toFixed(2)));
-
-          setChartData({
-            chartData: [
-              {
-                label: "Wholesale",
-                price: parseFloat(latestMonthData.wholesale_price.toFixed(2)),
-              },
-              {
-                label: "Retail",
-                price: parseFloat(latestMonthData.retail_price.toFixed(2)),
-              },
-            ],
-            harvestableMonth: latestMonthData.month,
-            bestCrop: latestRecord.best_crop || "Unknown",
-            recommendedFertilizer:
-              latestRecord.recommended_fertilizer || "Unknown",
-          });
-        } else {
-          console.warn("API returned an empty or invalid response.");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  
 
   const fetchDiseaseInfo = async (disease: string) => {
     try {
@@ -200,11 +142,23 @@ export default function Page() {
     }
   };
 
+  const { user } = useUser();
+  const pathname = usePathname();
+
+  const data = {
+    user: {
+      name: user?.fullName || "Guest",
+      email: user?.primaryEmailAddress?.emailAddress || "guest@example.com",
+      avatar: user?.imageUrl || "/avatars/default.jpg",
+    },
+    
+  };
+
   return (
-    <SidebarProvider className="dark font-inter">
+    <SidebarProvider className="dark main-dashboard-theme theme-color font-inter">
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2">
+        <header className="flex h-16 shrink-0 items-center gap-2 text-white theme-color main-topbar-theme">
           <div className="flex justify-between w-full pr-4">
             <div className="flex items-center gap-2 px-4">
               <SidebarTrigger className="-ml-1" />
@@ -212,21 +166,24 @@ export default function Page() {
               <Breadcrumb>
                 <BreadcrumbList>
                   <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
+                    <BreadcrumbLink href="/dashboard" className="text-white">Dashboard</BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator className="hidden md:block" />
                   <BreadcrumbItem>
-                    <BreadcrumbPage>Disease Detections</BreadcrumbPage>
+                    <BreadcrumbPage className="text-white">Disease Detections</BreadcrumbPage>
                   </BreadcrumbItem>
                 </BreadcrumbList>
               </Breadcrumb>
+            </div>
+            <div className="flex flex-row gap-2">
+                <NavUser user={data.user} />
             </div>
           </div>
         </header>
 
         <div className="flex flex-1 flex-col items-center gap-4 p-4 pt-0 justify-center ">
             <div className="col-span-3 text-center">
-              <h2 className="text-xl font-semibold">Disease Detection</h2>
+              {/* <h2 className="text-xl font-semibold">Disease Detection</h2> */}
               <p className="text-[#ffffffc7] mb-4">
                 Upload an image to detect crop diseases.
               </p>
@@ -235,7 +192,10 @@ export default function Page() {
               <UploadComponent onFileUpload={handleImageUpload} loading={loading} />
 
               {loading && (
-                <p className="mt-4 text-blue-500">Processing image...</p>
+                <TextShimmer className='font-inter mt-4 text-[16px]' duration={1}>
+                  Processing image...
+                </TextShimmer>
+                // <p className="mt-4 text-blue-500">Processing image...</p>
               )}
 
               {resultImage && (
