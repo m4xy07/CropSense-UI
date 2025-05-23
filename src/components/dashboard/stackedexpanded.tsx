@@ -197,7 +197,7 @@ export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpande
   }, [timeFrame])
 
   return (
-    <Card>
+    <Card className="equipment-card-inner border-zinc-50/10">
       <CardHeader>
         <div className="flex flex-col gap-2 font-inter">
           <CardTitle className="font-inter">Soil Nutrient Uptake</CardTitle>

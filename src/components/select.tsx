@@ -8,12 +8,12 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/selectsource"
+} from "@/components/ui/select"
 
 export function SelectTime({ timeFrame, setTimeFrame }: { timeFrame: string, setTimeFrame: (value: string) => void }) {
   return (
     <Select value={timeFrame} onValueChange={setTimeFrame}>
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className="w-[120px]">
         <SelectValue placeholder="Select a time frame" />
       </SelectTrigger>
       <SelectContent>

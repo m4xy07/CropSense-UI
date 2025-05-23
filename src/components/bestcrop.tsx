@@ -36,7 +36,7 @@ export function MorphingDialogBasicNine() {
 
   return (
     <div
-      className="flex max-w-fit p-8 items-center justify-center flex-col overflow-hidden border border-zinc-950/10 bg-[#080808] dark:border-zinc-50/10"
+      className="flex max-w-fit p-8 items-center justify-center flex-col overflow-hidden border border-zinc-950/10 equipment-card-inner dark:border-zinc-50/10"
       style={{ borderRadius: '12px' }}
     >
       <div className="flex grow flex-row items-center justify-between">
@@ -56,7 +56,7 @@ export function MorphingDialogBasicNine() {
               />
             </div>
             </div>
-          <div className="text-center text-white">
+          <div className="text-center text-[22px] mt-2 text-white">
             {/* {best_crop !== null ? capitalize(best_crop) : "Loading..."} */}
             Tomato
           </div>

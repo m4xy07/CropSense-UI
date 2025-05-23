@@ -49,7 +49,7 @@ const chartConfig = {
 
 export function TwoLineChart4Component() {
   return (
-    <Card className="p-8 w-[580px] h-full">
+    <Card className="p-8 w-[580px] h-full equipment-card-inner border-zinc-50/10">
       <CardHeader>
         <CardTitle className="text-[20px] font-normal text-white">
           Random Forest Regression for Fertilizer Usage
@@ -59,12 +59,13 @@ export function TwoLineChart4Component() {
         <ChartContainer config={chartConfig}>
           <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData} margin={{ top: 20, right: 20, left: 20, bottom: -10 }}>
-  <XAxis dataKey="fertilizer_usage"  />
-  <YAxis  />
-  <CartesianGrid strokeDasharray="3 3" />
-  <Line type="monotone" dataKey="actual" stroke="#FF0000" name="Actual" />
-  <Line type="monotone" dataKey="predicted" stroke="#0000FF" name="Predicted" />
-</LineChart>
+          <CartesianGrid vertical={false} />
+          <XAxis dataKey="fertilizer_usage" tickLine={false} axisLine={false} />
+          <YAxis tickLine={false} axisLine={false} />
+          <CartesianGrid strokeDasharray="3 3" />
+          <Line type="monotone" dataKey="actual" stroke="#FF0000" name="Actual" />
+          <Line type="monotone" dataKey="predicted" stroke="#0000FF" name="Predicted" />
+        </LineChart>
           </ResponsiveContainer>
         </ChartContainer>
       </CardContent>

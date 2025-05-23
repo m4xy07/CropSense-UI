@@ -20,6 +20,7 @@ import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { SelectTime } from "@/components/select";
 import { Skeleton } from "@/components/ui/skeleton";
+import { TbMountain } from "react-icons/tb";
 
 const API_URL = "https://data.cropsense.tech/data";
 
@@ -50,7 +51,11 @@ export default function Page() {
         if (Array.isArray(data) && data.length > 0) {
           const latestRecord = data[data.length - 1];
           setAltitude(parseFloat(latestRecord?.alt?.toFixed(2)) || null);
-          setRainStatus(latestRecord?.raining || "Unknown");
+          setRainStatus(
+            latestRecord?.raining
+              ? String(latestRecord.raining).charAt(0).toUpperCase() + String(latestRecord.raining).slice(1)
+              : "Unknown"
+          );
           setWifiStrength(latestRecord?.wifiStrength || null);
         } else {
           console.warn("API returned an empty or invalid response.");
@@ -70,24 +75,24 @@ export default function Page() {
 
   const getWifiStatus = () => {
     if (wifiStrength === null) {
-      return { text: "Disconnected", icon: <WifiOff className="w-6 h-6 -mt-[8px]" /> };
+      return { text: "Disconnected", icon: <WifiOff className="w-5 h-5  text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] mr-[6px]" /> };
     }
     if (wifiStrength > -70) {
-      return { text: "High Strength", icon: <WifiHigh className="w-6 h-6 -mt-[8px]" /> };
+      return { text: "High Strength", icon: <WifiHigh className="w-5 h-5  text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] mr-[6px]" /> };
     }
     if (wifiStrength > -81) {
-      return { text: "Low Strength", icon: <WifiLow className="w-6 h-6 -mt-[8px]" /> };
+      return { text: "Low Strength", icon: <WifiLow className="w-5 h-5  text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] mr-[6px]" /> };
     }
-    return { text: "Unstable", icon: <WifiZero className="w-6 h-6 -mt-[8px]" /> };
+    return { text: "Unstable", icon: <WifiZero className="w-5 h-5  text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] mr-[6px]" /> };
   };
 
   const wifiStatus = getWifiStatus();
 
   return (
-    <SidebarProvider className="dark font-inter">
+    <SidebarProvider className="dark main-dashboard-theme theme-color font-inter">
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2">
+        <header className="flex h-16 shrink-0 items-center gap-2 text-white theme-color main-topbar-theme">
           <div className="flex justify-between w-full pr-4">
             <div className="flex items-center gap-2 px-4">
               <SidebarTrigger className="-ml-1" />
@@ -99,31 +104,47 @@ export default function Page() {
                   </BreadcrumbItem>
                   <BreadcrumbSeparator className="hidden md:block" />
                   <BreadcrumbItem>
-                    <BreadcrumbPage>Data Insights</BreadcrumbPage>
+                    <BreadcrumbPage className="text-white">Data Insights</BreadcrumbPage>
                   </BreadcrumbItem>
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
             <div className="flex flex-row items-center gap-6">
               <SelectTime timeFrame={timeFrame} setTimeFrame={setTimeFrame} />
-              <div className="flex flex-row items-center gap-2 w-[86px]">
-                {loading ? <Skeleton className="h-[24px] w-[86px]" /> :<> <ClockIcon className="w-5 h-5" /> <div className="text-white text-sm w-[64px]">{currentTime}</div></>}
+              {loading ? <Skeleton className="h-[32px] w-[98px]  " /> :<>
+              <div className="flex items-center w-[98px] bg-transparent p-[6px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps">
+                 <ClockIcon className="w-5 h-5 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] mr-[6px]" /> <div className="text-white text-sm w-[64px] text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff]">{currentTime}</div>
               </div>
-              <div className="flex flex-row items-center gap-2">
-                
-                {loading ? <Skeleton className="h-[24px] w-[42px]" /> :<><OpacityIcon className="w-5 h-5" /> <div className="text-white text-sm w-[18px]">{rainStatus}</div></>}
+              </>}
+
+              {loading ? <Skeleton className="h-[32px] w-[66px]" /> :<>
+              <div className="flex items-center w-[66px] bg-transparent p-[6px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps">
+                 <OpacityIcon className="w-5 h-5 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] mr-[6px]" /> <div className="text-white text-sm w-[18px] text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff]">{rainStatus !== null ? `${rainStatus} m` : "N/A"}</div>
               </div>
-              <div className="flex flex-row items-center gap-2">
-                {loading ? <Skeleton className="h-[24px] w-[90px]" /> : <div className="text-white text-sm flex flex-row gap-2 w-[90px]"> <FaMountain className="w-5 h-5" /> {altitude !== null ? `${altitude} m` : "N/A"}</div>}
+             
+              </>}
+
+
+
+              {loading ? <Skeleton className="h-[32px] w-[68px]" /> :<>
+              <div className="flex items-center w-fit bg-transparent p-[6px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps">
+                 <TbMountain className="w-5 h-5 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] mr-[6px]" /> <div className="text-white text-sm w-fit text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff]">{altitude !== null ? `${altitude} m` : "N/A"}</div>
               </div>
-              <div className="flex flex-row items-center gap-2">
-                {loading ? <Skeleton className="h-[24px] w-[125px]" /> : <>{wifiStatus.icon}<div className="text-white text-sm">{wifiStatus.text}</div></>}
+              </>}
+
+              
+              {loading ? <Skeleton className="h-[32px] w-[125px]" /> : <>
+              <div className="flex items-center w-fit bg-transparent p-[6px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps">
+               {wifiStatus.icon}
+               <div className="text-white text-sm w-fit text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff]">{wifiStatus.text}</div>
               </div>
+              </>}
+
             </div>
           </div>
         </header>
 
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+        <div className="flex flex-1 flex-col gap-4 p-4">
           <div className="grid auto-rows-min gap-4 md:grid-cols-3">
             <LineChartComponent cardTitle="Temperature" dataType="temperature" timeFrame={timeFrame} />
             <LineChartComponent cardTitle="Humidity" dataType="humidity" timeFrame={timeFrame} />

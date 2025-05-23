@@ -132,7 +132,7 @@ export default function Page() {
               <Breadcrumb>
                 <BreadcrumbList>
                   <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href="/dashboard" className="text-white">Dashboard</BreadcrumbLink>
+                    <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator className="hidden md:block" />
                   <BreadcrumbItem>
@@ -144,15 +144,15 @@ export default function Page() {
 
             <div className="flex flex-row gap-2">
               <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-8">
-                    <div onClick={generatePDF} className="flex cursor-pointer items-center w-[135px] bg-transparent p-[6px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps">
-                      <FileText className="h-5 w-5 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff]" />
-                      <span className="text-[14px] font-normal text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] pl-[6px]">Generate PDF</span>
-                    </div>
+                <div className="flex items-center gap-8">
+                  <div onClick={generatePDF} className="flex cursor-pointer items-center w-[135px] bg-transparent p-[6px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps">
+                  <FileText className="h-5 w-5 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff]" />
+                  <span className="text-[14px] font-normal text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] pl-[6px]">Generate PDF</span>
                   </div>
                 </div>
-              <NavUser user={data.user} />
               </div>
+              <NavUser user={data.user} />
+            </div>
           </div>
         </header>
 

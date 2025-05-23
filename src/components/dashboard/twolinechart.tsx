@@ -47,7 +47,7 @@ const chartConfig = {
 
 export function TwoLineChartComponent() {
   return (
-    <Card className="p-8 w-full max-w-[600px] h-full">
+    <Card className="p-8 w-full max-w-[600px] h-full equipment-card-inner border-zinc-50/10">
       <CardHeader>
         <CardTitle className="text-[20px] font-normal text-white">
           Crop Disease Prediction Comparison

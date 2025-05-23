@@ -30,7 +30,7 @@ export function HarvestableMonthCards() {
     }, []);
 
     return (
-        <div className="w-full max-w-fit p-8 bg-[#080808] rounded-xl shadow-md border border-zinc-50/10">
+        <div className="w-full max-w-fit p-8 equipment-card-inner rounded-xl shadow-md border border-zinc-50/10">
             <h2 className="text-[20px] font-normal text-white">
                 Potential Harvestable Months & Rates
             </h2>

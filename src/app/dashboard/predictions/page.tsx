@@ -35,10 +35,25 @@ import { TwoLineChartComponent } from "@/components/dashboard/twolinechart";
 import { TwoLineChart2Component } from "@/components/dashboard/twolinechart2";
 import { TwoLineChart3Component } from "@/components/dashboard/twolinechart3";
 import { TwoLineChart4Component } from "@/components/dashboard/twolinechart4";
+import { NavUser } from "@/components/nav-user";
+import { useUser } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
 
 const API_URL = "https://data.cropsense.tech/data";
 
 export default function Page() {
+  const { user } = useUser();
+  const pathname = usePathname();
+
+  const data = {
+    user: {
+      name: user?.fullName || "Guest",
+      email: user?.primaryEmailAddress?.emailAddress || "guest@example.com",
+      avatar: user?.imageUrl || "/avatars/default.jpg",
+    },
+    
+  };
+
   const [currentTime, setCurrentTime] = useState<string>("");
   const [altitude, setAltitude] = useState<number | null>(null);
   const [timeFrame, setTimeFrame] = useState<string>("7 days");
@@ -115,11 +130,13 @@ export default function Page() {
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
-            
+            <div className="flex flex-row gap-2">
+              <NavUser user={data.user} />
+            </div>
           </div>
         </header>
 
-        <div className="flex flex-1 flex-col items-start justify-start gap-4 p-4 pt-0">
+        <div className="flex flex-1 flex-col items-start justify-start gap-4 p-4">
           <div className="flex flex-row gap-4">
             <MorphingDialogBasicNine />
             <HarvestableMonthCards />

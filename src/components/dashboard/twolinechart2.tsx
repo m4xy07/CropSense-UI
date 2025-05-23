@@ -48,7 +48,7 @@ const chartConfig = {
 
 export function TwoLineChart2Component() {
   return (
-    <Card className="p-8 w-full max-w-[600px] h-full">
+    <Card className="p-8 w-full max-w-[600px] h-full equipment-card-inner border-zinc-50/10">
       <CardHeader>
         <CardTitle className="text-[20px] font-normal text-white">
           Random Forest Regression for Max Price
@@ -59,11 +59,11 @@ export function TwoLineChart2Component() {
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={chartData} margin={{ top: 20, right: 20, left: 20, bottom: -10 }}>
               <CartesianGrid vertical={false} />
-              <XAxis dataKey="max_price"  />
-  <YAxis  />
-  <CartesianGrid strokeDasharray="3 3" />
-  <Line type="monotone" dataKey="actual" stroke="#FF0000" name="Actual" />
-  <Line type="monotone" dataKey="predicted" stroke="#0000FF" name="Predicted" />
+              <XAxis dataKey="max_price" tickLine={false} axisLine={false}  />
+              <YAxis  tickLine={false} axisLine={false}/>
+              <CartesianGrid strokeDasharray="3 3" />
+              <Line type="monotone" dataKey="actual" stroke="#FF0000" name="Actual" />
+              <Line type="monotone" dataKey="predicted" stroke="#0000FF" name="Predicted" />
             </LineChart>
           </ResponsiveContainer>
         </ChartContainer>
