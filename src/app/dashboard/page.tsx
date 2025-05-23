@@ -28,15 +28,31 @@ import Notif3 from "@/components/notif3";
 import Notif4 from "@/components/notif4";
 import Notif5 from "@/components/notif5";
 import FarmEventsTable from "@/components/table";
+import { NavUser } from "@/components/nav-user";
+import { useUser } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
 
 const API_URL = "https://data.cropsense.tech/data";
 
 export default function Page() {
+
+  const { user } = useUser();
+  const pathname = usePathname();
+
+  const data = {
+    user: {
+      name: user?.fullName || "Guest",
+      email: user?.primaryEmailAddress?.emailAddress || "guest@example.com",
+      avatar: user?.imageUrl || "/avatars/default.jpg",
+    },
+    
+  };
+  
   return (
-    <SidebarProvider className="dark font-inter">
+    <SidebarProvider className="dark main-dashboard-theme theme-color font-inter">
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2">
+        <header className="flex h-16 shrink-0 items-center gap-2 text-white theme-color main-topbar-theme">
           <div className="flex justify-between w-full pr-4">
             <div className="flex items-center gap-2 px-4">
               <SidebarTrigger className="-ml-1" />
@@ -48,18 +64,21 @@ export default function Page() {
                   </BreadcrumbItem>
                   <BreadcrumbSeparator className="hidden md:block" />
                   <BreadcrumbItem>
-                    <BreadcrumbPage>Overview</BreadcrumbPage>
+                    <BreadcrumbPage className="text-white">Overview</BreadcrumbPage>
                   </BreadcrumbItem>
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
+            <div className="flex flex-row gap-2">
+                <NavUser user={data.user} />
+            </div>
           </div>
         </header>
 
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+        <div className="flex flex-1 flex-col gap-4 p-4">
           <div className="flex flex-row gap-4">
             {/* Weather Today Card */}
-            <div className="flex flex-row justify-between w-1/4 p-8 rounded-xl bg-black border border-zinc-50/10">
+            <div className="flex flex-row justify-between w-1/4 p-8 rounded-xl equipment-card-inner border border-zinc-50/10">
               <div className="flex flex-col gap-2">
                 <h2 className="text-[18px] font-normal">Weather Today</h2>
                 <p className="text-[28px] font-semibold">Clear & Sunny</p>
@@ -73,7 +92,7 @@ export default function Page() {
             </div>
 
             {/* Total Predicted Revenue Card */}
-            <div className="flex flex-row justify-between w-1/4 p-8 rounded-xl bg-black border border-zinc-50/10">
+            <div className="flex flex-row justify-between w-1/4 p-8 rounded-xl equipment-card-inner border border-zinc-50/10">
               <div className="flex flex-col gap-2">
                 <h2 className="text-[18px] font-normal">Total Predicted Revenue</h2>
                 <div className="text-[28px] font-semibold">
@@ -93,7 +112,7 @@ export default function Page() {
             </div>
 
             {/* Forum Mentions Card */}
-            <div className="flex flex-row justify-between w-1/2 p-8 rounded-xl bg-black border border-zinc-50/10">
+            <div className="flex flex-row justify-between w-1/2 p-8 rounded-xl equipment-card-inner border border-zinc-50/10">
               <div className="flex flex-col gap-2">
                 <h2 className="text-[18px] font-normal">Forum Mentions (1 mention)</h2>
                 <Alertdemo />
@@ -106,7 +125,7 @@ export default function Page() {
 
           <div className="flex flex-row gap-4">
             <div className="flex flex-col w-1/3 gap-4">
-              <div className="flex flex-col gap-4 justify-between p-8 rounded-xl bg-black border border-zinc-50/10 h-full">
+              <div className="flex flex-col gap-4 justify-between p-8 rounded-xl equipment-card-inner border border-zinc-50/10 h-full">
               <div className="flex flex-row justify-between">
               <h2 className="text-[18px] font-normal">
                 Notifications (5 new)
@@ -126,7 +145,7 @@ export default function Page() {
                 
               </div>
             </div>
-            <div className="flex flex-col w-2/3 gap-4 p-8 rounded-xl border-zinc-50/10 border bg-black">
+            <div className="flex flex-col w-2/3 gap-4 p-8 rounded-xl border-zinc-50/10 border equipment-card-inner">
             <div className="flex flex-col gap-4 ">
             <div className="flex flex-row justify-between">
               <h2 className="text-[18px] font-normal">

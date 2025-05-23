@@ -2,7 +2,7 @@ import { ArrowRightIcon, TriangleAlert } from "lucide-react"
 
 export default function AlertComponent() {
   return (
-    <div className="rounded-md border mt-6 px-4 py-3">
+    <div className="rounded-md border mt-6 px-4 py-3 border-zinc-50/10">
       <div className="flex gap-3">
         <TriangleAlert
           className="hrink-0 mt-0.5 text-amber-500"

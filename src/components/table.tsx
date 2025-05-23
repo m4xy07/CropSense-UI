@@ -92,7 +92,7 @@ export default function FarmEventsTable() {
   const id = useId()
   return (
     <div>
-      <div className="bg-background overflow-hidden rounded-md border">
+      <div className="bg-[rgba(255,255,255,.025)] overflow-hidden rounded-md border border-zinc-50/10">
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-transparent">

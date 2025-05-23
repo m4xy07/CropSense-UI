@@ -125,7 +125,7 @@ export default function Page() {
                   </BreadcrumbItem>
                   <BreadcrumbSeparator className="hidden md:block" />
                   <BreadcrumbItem>
-                    <BreadcrumbPage>Predictions</BreadcrumbPage>
+                    <BreadcrumbPage className="text-white">Predictions</BreadcrumbPage>
                   </BreadcrumbItem>
                 </BreadcrumbList>
               </Breadcrumb>

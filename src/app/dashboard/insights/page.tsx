@@ -21,10 +21,26 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/s
 import { SelectTime } from "@/components/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TbMountain } from "react-icons/tb";
+import { useUser } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
+import { NavUser } from "@/components/nav-user";
 
 const API_URL = "https://data.cropsense.tech/data";
 
 export default function Page() {
+
+  const { user } = useUser();
+  const pathname = usePathname();
+
+  const data = {
+    user: {
+      name: user?.fullName || "Guest",
+      email: user?.primaryEmailAddress?.emailAddress || "guest@example.com",
+      avatar: user?.imageUrl || "/avatars/default.jpg",
+    },
+    
+  };
+
   const [currentTime, setCurrentTime] = useState<string>("");
   const [altitude, setAltitude] = useState<number | null>(null);
   const [rainStatus, setRainStatus] = useState<string | null>(null);
@@ -140,6 +156,9 @@ export default function Page() {
               </div>
               </>}
 
+              <div className="flex flex-row gap-2">
+              <NavUser user={data.user} />
+              </div>
             </div>
           </div>
         </header>
