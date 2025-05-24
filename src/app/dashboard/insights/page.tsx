@@ -50,7 +50,14 @@ export default function Page() {
 
   useEffect(() => {
     const updateTime = () => {
-      setCurrentTime(new Date().toLocaleTimeString());
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes();
+      const ampm = hours >= 12 ? "PM" : "AM";
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+      const minutesStr = minutes < 10 ? "0" + minutes : minutes;
+      setCurrentTime(`${hours}:${minutesStr} ${ampm}`);
     };
     updateTime();
     const intervalId = setInterval(updateTime, 1000);
@@ -128,8 +135,8 @@ export default function Page() {
             <div className="flex flex-row items-center gap-6">
               <SelectTime timeFrame={timeFrame} setTimeFrame={setTimeFrame} />
               {loading ? <Skeleton className="h-[32px] w-[98px]  " /> :<>
-              <div className="flex items-center w-[98px] bg-transparent p-[6px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps">
-                 <ClockIcon className="w-5 h-5 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] mr-[6px]" /> <div className="text-white text-sm w-[64px] text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff]">{currentTime}</div>
+              <div className="flex items-center w-[100px] bg-transparent p-[6px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps">
+                 <ClockIcon className="w-5 h-5 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] mr-[6px]" /> <div className="text-white text-sm w-[70px] text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff]">{currentTime}</div>
               </div>
               </>}
 
