@@ -137,7 +137,7 @@ export default function Page() {
         </header>
 
         <div className="flex flex-1 flex-col items-start justify-start gap-4 p-4">
-          <div className="flex flex-row gap-4">
+          <div className="flex flex-row gap-4 w-full">
             <MorphingDialogBasicNine />
             <HarvestableMonthCards />
             

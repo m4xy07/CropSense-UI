@@ -53,10 +53,10 @@ export function TwoLineChartComponent() {
           Crop Disease Prediction Comparison
         </CardTitle>
       </CardHeader>
-      <CardContent className="h-[300px]">
-        <ChartContainer config={chartConfig}>
+      <CardContent className="h-[320px]">
+        <ChartContainer config={chartConfig} className="h-[320px] w-[480px]">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={chartData} margin={{ right: 20, left: 40, bottom: 50 }}>
+            <LineChart data={chartData} margin={{ top: 20, left: 20, bottom: 20, right: -20 }}>
               <CartesianGrid vertical={false} />
               <XAxis
                 dataKey="Epochs"
@@ -67,7 +67,7 @@ export function TwoLineChartComponent() {
                 label={{
                   value: "Epochs",
                   position: "insideBottom",
-                  offset: -30,
+                  offset: -15,
                   style: { fill: "white" },
                 }}
               />
@@ -77,12 +77,14 @@ export function TwoLineChartComponent() {
                 axisLine={false}
                 tickMargin={8}
                 tickFormatter={(value) => value.toFixed(2)}
+                
                 label={{
                   value: "Accuracy",
                   angle: -90,
                   position: "insideLeft",
-                  offset: -30,
+                  offset: -15,
                   style: { fill: "white" },
+                  
                 }}
               />
               <ChartTooltip

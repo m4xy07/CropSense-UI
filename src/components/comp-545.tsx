@@ -73,7 +73,7 @@ export default function UploadComponent({ onFileUpload, loading }: { onFileUploa
               </div>
               <p className="my-1.5 text-base font-medium">Upload an image to detect crop diseases.</p>
               <p className="text-muted-foreground text-sm">
-                SVG, PNG, JPG or GIF (max. {maxSizeMB}MB)
+                PNG or JPG (max. {maxSizeMB}MB)
               </p>
               
               <Button

@@ -84,11 +84,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         url: "/dashboard/guides",
         icon: Library,
       },
-      {
-        name: "Calendar",
-        url: "/dashboard/calendar",
-        icon: CalendarDaysIcon,
-      },
+      // {
+      //   name: "Calendar",
+      //   url: "/dashboard/calendar",
+      //   icon: CalendarDaysIcon,
+      // },
     ].map((project) => ({
       ...project,
       active: pathname === project.url || (project.url !== "/dashboard" && pathname.startsWith(project.url + "/")),

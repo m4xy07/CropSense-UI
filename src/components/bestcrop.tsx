@@ -36,7 +36,7 @@ export function MorphingDialogBasicNine() {
 
   return (
     <div
-      className="flex max-w-fit p-8 items-center justify-center flex-col overflow-hidden border border-zinc-950/10 equipment-card-inner dark:border-zinc-50/10"
+      className="flex max-w-max p-8 items-center justify-center flex-col overflow-hidden border border-zinc-950/10 equipment-card-inner dark:border-zinc-50/10"
       style={{ borderRadius: '12px' }}
     >
       <div className="flex grow flex-row items-center justify-between">

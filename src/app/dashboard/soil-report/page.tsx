@@ -96,7 +96,7 @@ export default function Page() {
     values: (string | number | null | undefined)[],
     timestamps: (string | undefined)[]
   ) => (
-    <div className="rounded-lg main-dashboard-theme theme-color p-4 shadow-md min-w-[280px] flex-1 border border-zinc-50/10 hover:border-zinc-50/15 ease-in-out transition-all duration-200">
+    <div className="rounded-lg equipment-card-inner theme-color p-4 shadow-md min-w-[280px] flex-1 border border-zinc-50/10 hover:border-zinc-50/15 ease-in-out transition-all duration-200">
       <h2 className="text-white font-semibold text-[26px] tracking-normal effect-font-gradient">{title}</h2>
       <h4 className="text-muted-foreground mb-2 text-gray-200">
         Latest readings
