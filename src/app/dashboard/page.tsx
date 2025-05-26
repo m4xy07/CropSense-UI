@@ -103,7 +103,7 @@ export default function Page() {
                   <p className="!text-[22px] text-white/70">°C</p>
                 </div>
                 <p className="text-[16px] font-light text-white/80 ">
-                  <span className="font-normal text-[14px]">H: 29°C&nbsp;&nbsp;&nbsp;&nbsp;L: 20°C</span>
+                  <span className="font-normal text-[14px]"><span className="text-yellow-300">H: 29°C</span>&nbsp;&nbsp;&nbsp;&nbsp;<span className="text-blue-300">L: 20°C</span></span>
                 </p>
                 <p className="text-[15px] font-normal mt-2 text-white">
                   Maintain this temperature for optimal crop growth.
@@ -206,7 +206,7 @@ export default function Page() {
                     />
                     &nbsp;
                   </span>
-                  <p className="font-normal text-[14px]">Within optimal level</p>
+                  <p className="font-normal text-[14px] text-green-600">Within optimal level!</p>
                 </div>
                 <p className="text-[15px] font-normal mt-2 text-white">
                   Your crops are thriving, and are showing excellent health.
