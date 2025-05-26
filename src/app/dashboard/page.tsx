@@ -32,6 +32,11 @@ import { NavUser } from "@/components/nav-user";
 import { useUser } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 import { ThermometerSun, Sprout, Droplets, Droplet, Leaf } from 'lucide-react';
+import {
+  RiArrowDownLine,
+  RiArrowUpLine,
+  RiCheckboxCircleFill,
+} from '@remixicon/react';
 
 
 const API_URL = "https://data.cropsense.tech/data";
@@ -84,9 +89,9 @@ export default function Page() {
         </header>
 
         <div className="flex flex-1 flex-col gap-4 p-4">
-          <div className="flex flex-row gap-4">
+          <div className="flex flex-row gap-[1.2rem]">
             {/* Temperature Today Card */}
-            <div className="flex flex-row justify-between w-[300px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+            <div className="flex flex-row justify-between w-[308px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" aria-hidden="true" className="absolute right-4 top-4 opacity-0 group-hover:opacity-100 transition-opacity text-emerald-500 duration-200 ease-in-out">
                 <path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"></path>
               </svg>
@@ -97,7 +102,7 @@ export default function Page() {
                   <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">24</p>
                   <p className="!text-[22px] text-white/70">°C</p>
                 </div>
-                <p className="text-[16px] font-light text-white/80 -mt-2">
+                <p className="text-[16px] font-light text-white/80 ">
                   <span className="font-normal text-[14px]">H: 29°C&nbsp;&nbsp;&nbsp;&nbsp;L: 20°C</span>
                 </p>
                 <p className="text-[15px] font-normal mt-2 text-white">
@@ -107,7 +112,7 @@ export default function Page() {
             </div>
 
             {/* Temperature Today Card */}
-            <div className="flex flex-row justify-between w-[300px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+            <div className="flex flex-row justify-between w-[308px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" aria-hidden="true" className="absolute right-4 top-4 opacity-0 group-hover:opacity-100 transition-opacity text-emerald-500 duration-200 ease-in-out">
                 <path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"></path>
               </svg>
@@ -118,17 +123,21 @@ export default function Page() {
                   <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">65</p>
                   <p className="!text-[22px] text-white/70">%</p>
                 </div>
-                <p className="text-[16px] font-light text-white/80 -mt-2">
-                  <span className="font-normal text-[14px]">16% less than ideal value</span>
-                </p>
+                <div className="flex flex-row text-[16px] font-light text-white/80 ">
+                  <span className="inline-flex items-center gap-x-1 text-[14px] font-semibold text-red-500">
+                    <RiArrowDownLine className="size-4 -mr-1" aria-hidden={true} />
+                    8%&nbsp;
+                  </span>
+                  <p className="font-normal text-[14px]">below optimal level</p>
+                </div>
                 <p className="text-[15px] font-normal mt-2 text-white">
-                  Maintain this temperature for optimal crop growth.
+                  Provide more water to maintain optimal soil moisture levels.
                 </p>
               </div>
             </div>
 
             {/* Temperature Today Card */}
-            <div className="flex flex-row justify-between w-[300px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+            <div className="flex flex-row justify-between w-[308px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" aria-hidden="true" className="absolute right-4 top-4 opacity-0 group-hover:opacity-100 transition-opacity text-emerald-500 duration-200 ease-in-out">
                 <path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"></path>
               </svg>
@@ -139,9 +148,13 @@ export default function Page() {
                   <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">7.6</p>
                   
                 </div>
-                <p className="text-[16px] font-light text-white/80 -mt-2">
-                  <span className="font-normal text-[14px]">0.3 less than ideal value</span>
-                </p>
+                <div className="flex flex-row text-[16px] font-light text-white/80 ">
+                  <span className="inline-flex items-center gap-x-1 text-[14px] font-semibold text-orange-300">
+                    <RiArrowDownLine className="size-4 -mr-1" aria-hidden={true} />
+                    0.3&nbsp;
+                  </span>
+                  <p className="font-normal text-[14px]">below optimal level</p>
+                </div>
                 <p className="text-[15px] font-normal mt-2 text-white">
                   Add acidic compost to balance pH levels.
                 </p>
@@ -149,7 +162,7 @@ export default function Page() {
             </div>
 
             {/* Temperature Today Card */}
-            <div className="flex flex-row justify-between w-[300px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+            <div className="flex flex-row justify-between w-[308px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" aria-hidden="true" className="absolute right-4 top-4 opacity-0 group-hover:opacity-100 transition-opacity text-emerald-500 duration-200 ease-in-out">
                 <path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"></path>
               </svg>
@@ -157,12 +170,16 @@ export default function Page() {
                 <Droplet className="size-6"/>
                 <h2 className="text-[18px] font-light text-white">Humidity</h2>
                 <div className="flex flex-row gap-1 items-start pt-2">
-                  <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">82%</p>
-                  
+                  <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">82</p>
+                  <p className="!text-[22px] text-white/70">%</p>
                 </div>
-                <p className="text-[16px] font-light text-white/80 -mt-2">
-                  <span className="font-normal text-[14px]">0.3 less than ideal value</span>
-                </p>
+                <div className="flex flex-row text-[16px] font-light text-white/80 ">
+                  <span className="inline-flex items-center gap-x-1 text-[14px] font-semibold text-red-500">
+                    <RiArrowUpLine className="size-4 -mr-1" aria-hidden={true} />
+                    12%&nbsp;
+                  </span>
+                  <p className="font-normal text-[14px]">above optimal level</p>
+                </div>
                 <p className="text-[15px] font-normal mt-2 text-white">
                   Ensure ventilation is sufficient to prevent mold growth.
                 </p>
@@ -170,7 +187,7 @@ export default function Page() {
             </div>
 
             {/* Temperature Today Card */}
-            <div className="flex flex-row justify-between w-[300px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+            <div className="flex flex-row justify-between w-[308px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" aria-hidden="true" className="absolute right-4 top-4 opacity-0 group-hover:opacity-100 transition-opacity text-emerald-500 duration-200 ease-in-out">
                 <path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"></path>
               </svg>
@@ -178,14 +195,21 @@ export default function Page() {
                 <Leaf className="size-6"/>
                 <h2 className="text-[18px] font-light text-white">Plant Health</h2>
                 <div className="flex flex-row gap-1 items-start pt-2">
-                  <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">82%</p>
-                  
+                  <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">93</p>
+                  <p className="!text-[22px] text-white/70">%</p>
                 </div>
-                <p className="text-[16px] font-light text-white/80 -mt-2">
-                  <span className="font-normal text-[14px]">0.3 less than ideal value</span>
-                </p>
+                <div className="flex flex-row text-[16px] font-light text-white/80 ">
+                  <span className="inline-flex items-center text-[14px] font-semibold text-red-500">
+                    <RiCheckboxCircleFill
+                      className="-ml-0.5 size-4 shrink-0 text-green-600"
+                      aria-hidden={true}
+                    />
+                    &nbsp;
+                  </span>
+                  <p className="font-normal text-[14px]">Within optimal level</p>
+                </div>
                 <p className="text-[15px] font-normal mt-2 text-white">
-                  Ensure ventilation is sufficient to prevent mold growth.
+                  Your crops are thriving, and are showing excellent health.
                 </p>
               </div>
             </div>
