@@ -31,6 +31,8 @@ import FarmEventsTable from "@/components/table";
 import { NavUser } from "@/components/nav-user";
 import { useUser } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
+import { ThermometerSun, Sprout, Droplets, Droplet, Leaf } from 'lucide-react';
+
 
 const API_URL = "https://data.cropsense.tech/data";
 
@@ -83,41 +85,112 @@ export default function Page() {
 
         <div className="flex flex-1 flex-col gap-4 p-4">
           <div className="flex flex-row gap-4">
-            {/* Weather Today Card */}
-            <div className="flex flex-row justify-between w-1/4 p-8 rounded-xl equipment-card-inner border border-zinc-50/10">
-              <div className="flex flex-col gap-2">
-                <h2 className="text-[18px] font-normal">Weather Today</h2>
-                <p className="text-[28px] font-semibold">Clear & Sunny</p>
-                <p className="text-[16px] font-light text-white/80">
-                  Feels like <span className="text-yellow-300 font-normal">24 °C</span>
-                </p>
-              </div>
-              <div className="flex items-center justify-center p-2 h-fit rounded-md bg-yellow-400/70 w-fit">
-                <Sun className="w-6 h-6 text-white" />
-              </div>
-            </div>
-
-            {/* Total Predicted Revenue Card */}
-            <div className="flex flex-row justify-between w-1/4 p-8 rounded-xl equipment-card-inner border border-zinc-50/10">
-              <div className="flex flex-col gap-2">
-                <h2 className="text-[18px] font-normal">Total Predicted Revenue</h2>
-                <div className="text-[28px] font-semibold">
-                  ₹{" "}
-                  <NumberTicker
-                    value={74390}
-                    className="whitespace-pre-wrap text-[28px] font-semibold tracking-tighter"
-                  />
+            {/* Temperature Today Card */}
+            <div className="flex flex-row justify-between w-[300px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" aria-hidden="true" className="absolute right-4 top-4 opacity-0 group-hover:opacity-100 transition-opacity text-emerald-500 duration-200 ease-in-out">
+                <path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"></path>
+              </svg>
+              <div className="flex flex-col gap-2 ">
+                <ThermometerSun className="size-6"/>
+                <h2 className="text-[18px] font-light text-white">Temperature</h2>
+                <div className="flex flex-row gap-1 items-start pt-2">
+                  <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">24</p>
+                  <p className="!text-[22px] text-white/70">°C</p>
                 </div>
-                <p className="text-[16px] font-light text-white/80">
-                  <span className="text-green-400 font-normal">+23%</span> from last month
+                <p className="text-[16px] font-light text-white/80 -mt-2">
+                  <span className="font-normal text-[14px]">H: 29°C&nbsp;&nbsp;&nbsp;&nbsp;L: 20°C</span>
                 </p>
-              </div>
-              <div className="flex items-center justify-center p-2 h-fit rounded-md bg-green-400/70 w-fit">
-                <IndianRupee className="w-6 h-6 text-white" />
+                <p className="text-[15px] font-normal mt-2 text-white">
+                  Maintain this temperature for optimal crop growth.
+                </p>
               </div>
             </div>
 
-            {/* Forum Mentions Card */}
+            {/* Temperature Today Card */}
+            <div className="flex flex-row justify-between w-[300px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" aria-hidden="true" className="absolute right-4 top-4 opacity-0 group-hover:opacity-100 transition-opacity text-emerald-500 duration-200 ease-in-out">
+                <path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"></path>
+              </svg>
+              <div className="flex flex-col gap-2 ">
+                <Sprout className="size-6"/>
+                <h2 className="text-[18px] font-light text-white">Soil Moisture</h2>
+                <div className="flex flex-row gap-1 items-start pt-2">
+                  <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">65</p>
+                  <p className="!text-[22px] text-white/70">%</p>
+                </div>
+                <p className="text-[16px] font-light text-white/80 -mt-2">
+                  <span className="font-normal text-[14px]">16% less than ideal value</span>
+                </p>
+                <p className="text-[15px] font-normal mt-2 text-white">
+                  Maintain this temperature for optimal crop growth.
+                </p>
+              </div>
+            </div>
+
+            {/* Temperature Today Card */}
+            <div className="flex flex-row justify-between w-[300px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" aria-hidden="true" className="absolute right-4 top-4 opacity-0 group-hover:opacity-100 transition-opacity text-emerald-500 duration-200 ease-in-out">
+                <path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"></path>
+              </svg>
+              <div className="flex flex-col gap-2 ">
+                <Droplets className="size-6"/>
+                <h2 className="text-[18px] font-light text-white">pH Level</h2>
+                <div className="flex flex-row gap-1 items-start pt-2">
+                  <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">7.6</p>
+                  
+                </div>
+                <p className="text-[16px] font-light text-white/80 -mt-2">
+                  <span className="font-normal text-[14px]">0.3 less than ideal value</span>
+                </p>
+                <p className="text-[15px] font-normal mt-2 text-white">
+                  Add acidic compost to balance pH levels.
+                </p>
+              </div>
+            </div>
+
+            {/* Temperature Today Card */}
+            <div className="flex flex-row justify-between w-[300px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" aria-hidden="true" className="absolute right-4 top-4 opacity-0 group-hover:opacity-100 transition-opacity text-emerald-500 duration-200 ease-in-out">
+                <path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"></path>
+              </svg>
+              <div className="flex flex-col gap-2 ">
+                <Droplet className="size-6"/>
+                <h2 className="text-[18px] font-light text-white">Humidity</h2>
+                <div className="flex flex-row gap-1 items-start pt-2">
+                  <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">82%</p>
+                  
+                </div>
+                <p className="text-[16px] font-light text-white/80 -mt-2">
+                  <span className="font-normal text-[14px]">0.3 less than ideal value</span>
+                </p>
+                <p className="text-[15px] font-normal mt-2 text-white">
+                  Ensure ventilation is sufficient to prevent mold growth.
+                </p>
+              </div>
+            </div>
+
+            {/* Temperature Today Card */}
+            <div className="flex flex-row justify-between w-[300px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" aria-hidden="true" className="absolute right-4 top-4 opacity-0 group-hover:opacity-100 transition-opacity text-emerald-500 duration-200 ease-in-out">
+                <path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"></path>
+              </svg>
+              <div className="flex flex-col gap-2 ">
+                <Leaf className="size-6"/>
+                <h2 className="text-[18px] font-light text-white">Plant Health</h2>
+                <div className="flex flex-row gap-1 items-start pt-2">
+                  <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">82%</p>
+                  
+                </div>
+                <p className="text-[16px] font-light text-white/80 -mt-2">
+                  <span className="font-normal text-[14px]">0.3 less than ideal value</span>
+                </p>
+                <p className="text-[15px] font-normal mt-2 text-white">
+                  Ensure ventilation is sufficient to prevent mold growth.
+                </p>
+              </div>
+            </div>
+
+            {/* Forum Mentions Card
             <div className="flex flex-row justify-between w-1/2 p-8 rounded-xl equipment-card-inner border border-zinc-50/10">
               <div className="flex flex-col gap-2">
                 <h2 className="text-[18px] font-normal">Forum Mentions (1 mention)</h2>
@@ -126,21 +199,22 @@ export default function Page() {
               <div className="flex items-center justify-center p-2 h-fit rounded-md bg-violet-500 w-fit">
                 <Users className="w-6 h-6 text-white" />
               </div>
-            </div>
+            </div> */}
+
           </div>
 
           <div className="flex flex-row gap-4">
             <div className="flex flex-col w-1/3 gap-4">
-              <div className="flex flex-col gap-4 justify-between p-8 rounded-xl equipment-card-inner border border-zinc-50/10 h-full">
-              <div className="flex flex-row justify-between">
-              <h2 className="text-[18px] font-normal">
-                Notifications (5 new)
-              </h2>
-              <div className="flex items-center justify-center p-2 h-fit rounded-md bg-red-500 w-fit">
-                <Bell className="w-6 h-6 text-white" />
+              <div className="flex flex-col gap-4 justify-between rounded-xl equipment-card-inner border border-zinc-50/10 h-fit">
+              <div className="flex flex-row justify-between px-5 py-4 border-b border-b-zinc-50/10 rounded-t-xl">
+                <h2 className="text-[18px] font-normal ">
+                  Recent Activity
+                </h2>
+                {/* <div className="flex items-center justify-center p-2 h-fit rounded-md bg-red-500 w-fit">
+                  <Bell className="w-6 h-6 text-white" />
+                </div> */}
               </div>
-              </div>
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col p-5 pt-0 gap-4">
                 <Notif1 />
                 <Notif2 />
                 <Notif3 />
@@ -157,9 +231,9 @@ export default function Page() {
               <h2 className="text-[18px] font-normal">
                 Upcoming Events (9 scheduled)
               </h2>
-              <div className="flex items-center justify-center p-2 h-fit rounded-md bg-blue-600 w-fit">
+              {/* <div className="flex items-center justify-center p-2 h-fit rounded-md bg-blue-600 w-fit">
                 <CalendarCheck2 className="w-6 h-6 text-white" />
-              </div>
+              </div> */}
               </div>
             <FarmEventsTable />
             </div>
