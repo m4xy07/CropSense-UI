@@ -1996,7 +1996,165 @@ body {
 }
 
 
+.technical-tracking {
+    background-image: linear-gradient(129.44deg,#a9a3c247 .84%,#a9a3c20e 20.97%),#0a0118;
+    border-radius: 12px;
+    height: 376px;
+    width: 308px;
+}
 
+.magical-borders-content>* .technical-tracking-borders-inner {
+    background-color: #0a0118;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    top: 1px;
+    right: 1px;
+    bottom: 1px;
+    left: 1px;
+    position: absolute;
+    z-index: 2;
+}
+
+.technical-tracking-inner {
+    background: linear-gradient(180deg, #0b021700 22.69%, #16092a80);
+    border-radius: inherit !important;
+    overflow: hidden;
+}
+
+.technical-tracking-title {
+    font-feature-settings: "cv01" on, "cv02" on, "cv03" on, "cv09" on, "cv06" on, "cv04" on, "cv10" on, "calt" off, "liga" off;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -.02em;
+    line-height: 28px;
+    padding: 24px 32px;
+    position: relative;
+    z-index: 99;
+}
+
+.technical-tracking-background{
+  mix-blend-mode: color-dodge;
+  z-index: 8;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.technical-tracking-lines {
+    mix-blend-mode: screen;
+    z-index: 11;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.technical-tracking-light {
+    mix-blend-mode: overlay;
+    z-index: 12;
+        height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.technical-tracking-title span {
+    background: linear-gradient(180deg, #fff, #ffffffb3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    display: block;
+}
+
+.technical-tracking-title-big {
+    font-size: 32px;
+    line-height: 40px;
+}
+
+.lazy-background-image-maskImage {
+    --background-image: url(/technical-tracking-circles-mask.png);
+    -webkit-mask-image: var(--background-image);
+    mask-image: var(--background-image);
+}
+
+.technical-tracking-circles-wrapper{
+  height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+        -webkit-mask-size: cover;
+    mask-size: cover;
+    mix-blend-mode: overlay;
+    z-index: 10;
+}
+
+.technical-tracking-circles {
+    -webkit-mask-image: conic-gradient(from 144.35deg at 50.09% 47.15%, rgba(255, 255, 255, 0) -108.02deg, rgba(255, 255, 255, 0) 115.31deg, #fff 169.48deg, rgba(255, 255, 255, 0) 251.98deg, rgba(255, 255, 255, 0) 475.31deg);
+    mask-image: conic-gradient(from 144.35deg at 50.09% 47.15%, #fff0 -108.02deg, #fff0 115.31deg, #fff 169.48deg, #fff0 251.98deg, #fff0 475.31deg);
+    -webkit-mask-size: cover;
+    mask-size: cover;
+}
+
+.technical-tracking-background-ellipse, .technical-tracking-circles {
+    border-radius: 50%;
+    height: 419.66px;
+    left: 36px;
+    position: absolute;
+    top: 124.32px;
+    width: 419.66px;
+    z-index: 9;
+}
+
+.technical-tracking-circles div{
+  animation: trackingCircleAnimation 6s ease infinite;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.technical-tracking-background-ellipse-1 {
+    -webkit-backdrop-filter: blur(9.5px);
+    backdrop-filter: blur(9.5px);
+    background: radial-gradient(48.25% 48.25% at 50% 7.43%, #ffffff0a, #fff0), linear-gradient(180deg, #ffffff0a, #fff0 57.23%), #0a01180a;
+}
+
+.technical-tracking-background-ellipse-2 {
+    background: radial-gradient(52% 50% at 55% 49.96%, #000 69%, #040404, #101010, #242424, #414141, #656565 89%, #929292 92%, #c6c6c6, #e4e4e4);
+    background-blend-mode: color-dodge;
+    mix-blend-mode: color-dodge;
+}
+
+.technical-tracking-background-ellipse, .technical-tracking-circles {
+    border-radius: 50%;
+    height: 419.66px;
+    left: 36px;
+    position: absolute;
+    top: 124.32px;
+    width: 419.66px;
+    z-index: 9;
+}
+
+@keyframes trackingCircleAnimation {
+  0% {
+    transform: scale(1);
+}
+
+15% {
+    transform: scale(.9);
+}
+30%, 100% {
+    transform: scale(1);
+}
+}
 
 @layer base {
   * {
