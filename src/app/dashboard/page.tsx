@@ -38,6 +38,8 @@ import {
   RiCheckboxCircleFill,
 } from '@remixicon/react';
 import StatusTracker from "@/components/dashboard/statuscheck";
+import SensorStatusComponent from "@/components/comp-485";
+import { NPKDonutComponent } from "@/components/dashboard/npkdonut";
 
 
 const API_URL = "https://data.cropsense.tech/data";
@@ -89,8 +91,8 @@ export default function Page() {
           </div>
         </header>
 
-        <div className="flex flex-1 flex-col gap-4 p-4">
-          <div className="flex flex-row gap-[1.2rem]">
+        <div className="flex flex-1 flex-col gap-[1.25rem] p-4">
+          <div className="flex flex-row gap-[1.25rem]">
             {/* Temperature Today Card */}
             <div className="flex flex-row justify-between w-[308px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
               <svg
@@ -260,8 +262,8 @@ export default function Page() {
 
           </div>
 
-            <div className="flex flex-row gap-[1.2rem]">
-              <div className="flex flex-row gap-[1.2rem] magical-borders-content">
+            <div className="flex flex-row gap-[1.25rem]">
+              <div className="flex flex-row gap-[1.25rem] magical-borders-content">
                 {/* Recent Activity Card */}
                 <div className="flex flex-col gap-4 justify-between rounded-xl equipment-card-inner w-[636px] border border-zinc-50/10 h-fit">
                   <div className="flex flex-row justify-between px-5 py-4 border-b border-b-zinc-50/10 rounded-t-xl">
@@ -376,8 +378,8 @@ export default function Page() {
                   <div className="technical-tracking-inner technical-tracking-borders-inner">
                     <div className="technical-tracking-title">
                       <span>Tracking</span>
-                      <span className="technical-tracking-title-big">256 Countries</span>
-                      <span>in Single Project</span>
+                      <span className="technical-tracking-title-big">256 Metrics</span>
+                      <span>in a Single Project</span>
                     </div>
                     <img src="/technical-tracking-background.png" className="technical-tracking-background" />
                     <img src="/technical-tracking-lines.png" className="technical-tracking-lines" />
@@ -441,8 +443,10 @@ export default function Page() {
                   </div>
                 </div>
               </div>
-              
-              
+              <SensorStatusComponent/>
+          </div>
+          <div className="flex flex-row gap-[1.2rem]">
+            <NPKDonutComponent />
           </div>
         </div>
       </SidebarInset>

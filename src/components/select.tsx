@@ -13,7 +13,7 @@ import {
 export function SelectTime({ timeFrame, setTimeFrame }: { timeFrame: string, setTimeFrame: (value: string) => void }) {
   return (
     <Select value={timeFrame} onValueChange={setTimeFrame}>
-      <SelectTrigger className="w-[120px]">
+      <SelectTrigger className="w-[110px]">
         <SelectValue placeholder="Select a time frame" />
       </SelectTrigger>
       <SelectContent>
