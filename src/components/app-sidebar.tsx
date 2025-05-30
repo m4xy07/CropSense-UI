@@ -13,7 +13,7 @@ import {
   TextSearch,
   Tractor,
   Library,
-  CalendarDaysIcon
+  CalendarDaysIcon,
 } from "lucide-react";
 
 import { NavProjects } from "@/components/nav-projects";
@@ -84,11 +84,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         url: "/dashboard/guides",
         icon: Library,
       },
-      // {
-      //   name: "Calendar",
-      //   url: "/dashboard/calendar",
-      //   icon: CalendarDaysIcon,
-      // },
+       {
+         name: "Workers",
+         url: "/dashboard/workers",
+         icon: Users,
+       },
     ].map((project) => ({
       ...project,
       active: pathname === project.url || (project.url !== "/dashboard" && pathname.startsWith(project.url + "/")),

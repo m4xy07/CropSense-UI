@@ -69,11 +69,11 @@ export function NPKDonutComponent() {
 }
 
   return (
-    <Card className="flex flex-col border border-zinc-50/10 rounded-xl equipment-card-inner">
+    <Card className="flex flex-col border border-zinc-50/10 rounded-xl equipment-card-inner w-[800px] items-start">
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
+          className="mx-auto aspect-square max-h-[250px] w-[300px]"
         >
           <PieChart>
             <ChartTooltip
@@ -89,16 +89,12 @@ export function NPKDonutComponent() {
             />
             <ChartLegend
               content={<ChartLegendContent nameKey="label" />}
-              className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/3 [&>*]:justify-center font-inter"
+              className="-translate-y-2 flex-wrap gap-8 [&>*]:justify-center font-inter"
             />
           </PieChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 font-medium leading-none font-inter">
-          NPK uptake visualized from latest data <TrendingUp className="h-4 w-4" />
-        </div>
-      </CardFooter>
+      
     </Card>
   )
 }

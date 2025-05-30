@@ -342,7 +342,7 @@ export default function SensorStatusComponent() {
                 /> */}
                 <span className="text-[14px] font-normal text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] pl-[6px]">Status</span>
                 {selectedStatuses.length > 0 && (
-                  <span className="bg-background text-muted-foreground/70 -me-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
+                  <span className="bg-[#ffffff0a] text-white -me-1 inline-flex h-4 w-4 max-h-full items-center rounded-xl border px-[5px] font-[inherit] text-[0.625rem] font-medium">
                     {selectedStatuses.length}
                   </span>
                 )}
