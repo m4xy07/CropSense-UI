@@ -40,6 +40,7 @@ import {
 import StatusTracker from "@/components/dashboard/statuscheck";
 import SensorStatusComponent from "@/components/comp-485";
 import { NPKDonutComponent } from "@/components/dashboard/npkdonut";
+import { UpcomingEventsComponent } from "@/components/dashboard/upcomingevents";
 
 
 const API_URL = "https://data.cropsense.tech/data";
@@ -445,8 +446,9 @@ export default function Page() {
               </div>
               <SensorStatusComponent/>
           </div>
-          <div className="flex flex-row gap-[1.2rem]">
+          <div className="flex flex-row gap-[1.25rem]">
             <NPKDonutComponent />
+            <UpcomingEventsComponent />
           </div>
         </div>
       </SidebarInset>

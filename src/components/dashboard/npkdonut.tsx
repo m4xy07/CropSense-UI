@@ -72,7 +72,7 @@ export function NPKDonutComponent() {
 }
 
   return (
-    <Card className="flex flex-col border border-zinc-50/10 rounded-xl equipment-card-inner w-fit items-start p-0">
+    <Card className="flex flex-col border border-zinc-50/10 rounded-xl equipment-card-inner w-full items-start p-0">
       <div className="flex w-full border-b border-zinc-50/10 px-5 py-4">
         <h2 className="text-[18px] font-normal mt-1">NPK Tracker</h2>
       </div>
@@ -105,7 +105,7 @@ export function NPKDonutComponent() {
           <NPKTableComponent />
           <div className="flex flex-row items-center justify-center gap-2 py-2 px-4 border border-zinc-50/10 alert-dashboard-theme rounded-lg">
             <div className="h-[10px] w-[10px] rounded-full bg-[#d10412] alert-animation" />
-            <span className="text-[13px]">Nutrient deficiency detected! Take action now to avoid issues.</span>
+            <span className="text-[13px]">Deficiency detected! Take action now to avoid issues.</span>
           </div>
           <Link href="https://dir.indiamart.com/impcat/npk-fertilizer/npk-ratio-15-15-15-q15410334/"><Button>Order NPK 10-10-10</Button></Link>
         </div>
