@@ -293,7 +293,7 @@ export default function SensorStatusComponent() {
       <div className="flex gap-3">
         <div className="flex flex-row items-center justify-between gap-3 w-full border-b border-zinc-50/10 px-5 py-4">
           {/* Filter by name or email */}
-          <h2 className="text-[18px] font-normal mt-1">Sensor Tracker</h2>
+          <h2 className="text-[18px] font-normal mt-1">Sensor Status</h2>
           {/* <div className="relative">
             <Input
               id={`${id}-input`}

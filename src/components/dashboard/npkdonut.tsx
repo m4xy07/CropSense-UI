@@ -18,6 +18,7 @@ import {
   ChartLegend,
   ChartLegendContent,
 } from "@/components/ui/chart"
+import NPKTableComponent from "./linedtable"
 
 interface NPKData {
   npk_uptake_nitrogen: number
@@ -39,17 +40,17 @@ export function NPKDonutComponent() {
         {
             label: "Nitrogen",
             value: parseFloat(latest.npk_uptake_nitrogen.toFixed(2)),
-            fill: "#00E5FF", // Cyan
+            fill: "#d7721a", // Cyan
         },
         {
             label: "Phosphorus",
             value: parseFloat(latest.npk_uptake_phosphorus.toFixed(2)),
-            fill: "#FFA726", // Orange
+            fill: "#d52c9e", // Orange
         },
         {
             label: "Potassium",
             value: parseFloat(latest.npk_uptake_potassium.toFixed(2)),
-            fill: "#D500F9", // Purple
+            fill: "#974ae5", // Purple
         },
         ]
         setChartData(transformedData)
@@ -63,38 +64,45 @@ export function NPKDonutComponent() {
 
   const chartConfig: ChartConfig = {
   value: { label: "Uptake" },
-  Nitrogen: { label: "Nitrogen", color: "#00E5FF" },
-  Phosphorus: { label: "Phosphorus", color: "#FFA726" },
-  Potassium: { label: "Potassium", color: "#D500F9" },
+  Nitrogen: { label: "Nitrogen", color: "#d7721a" },
+  Phosphorus: { label: "Phosphorus", color: "#d52c9e" },
+  Potassium: { label: "Potassium", color: "#974ae5" },
 }
 
   return (
-    <Card className="flex flex-col border border-zinc-50/10 rounded-xl equipment-card-inner w-[800px] items-start">
-      <CardContent className="flex-1 pb-0">
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px] w-[300px]"
-        >
-          <PieChart>
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Pie
-              data={chartData}
-              dataKey="value"
-              nameKey="label"
-              innerRadius={60}
-              outerRadius={80}
-            />
-            <ChartLegend
-              content={<ChartLegendContent nameKey="label" />}
-              className="-translate-y-2 flex-wrap gap-8 [&>*]:justify-center font-inter"
-            />
-          </PieChart>
-        </ChartContainer>
-      </CardContent>
-      
+    <Card className="flex flex-col border border-zinc-50/10 rounded-xl equipment-card-inner w-fit items-start p-0">
+      <div className="flex w-full border-b border-zinc-50/10 px-5 py-4">
+        <h2 className="text-[18px] font-normal mt-1">NPK Tracker</h2>
+      </div>
+      <div className="px-5 py-4 gap-16 flex flex-row">
+        <CardContent className="flex-1 pb-0">
+          <ChartContainer
+            config={chartConfig}
+            className="mx-auto aspect-square max-h-[250px] w-[300px] -mt-4"
+          >
+            <PieChart>
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent hideLabel />}
+              />
+              <Pie
+                data={chartData}
+                dataKey="value"
+                nameKey="label"
+                innerRadius={60}
+                outerRadius={80}
+              />
+              <ChartLegend
+                content={<ChartLegendContent nameKey="label" />}
+                className="-translate-y-2 flex-wrap gap-6 [&>*]:justify-center font-inter"
+              />
+            </PieChart>
+          </ChartContainer>
+        </CardContent>
+        <div className="items-center flex flex-col justify-center">
+          <NPKTableComponent />
+        </div>
+      </div>
     </Card>
   )
 }
