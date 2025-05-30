@@ -1,6 +1,7 @@
 import { RiArrowDownLine } from "@remixicon/react";
 import { useEffect, useState } from "react";
 
+
 type NPKData = {
   nitrogen: number;
   phosphorus: number;

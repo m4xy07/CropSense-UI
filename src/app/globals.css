@@ -1878,6 +1878,10 @@ body {
     --txtexec-3: rgba(255, 255, 255, .45);
 }
 
+.alert-dashboard-theme{
+  background: linear-gradient(135deg, #0c0124 0%, #d104121f 100%);
+}
+
 .main-dashboard-theme{
   background: var(--bgexec-1) !important;
 }
@@ -1984,6 +1988,21 @@ body {
   0% {
     transform: scale(.95);
     box-shadow: 0 0 #f4af2980;
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px #f4af2900;
+  }
+  100% {
+    transform: scale(.95);
+    box-shadow: 0 0 #f4af2900;
+  }
+}
+
+@keyframes pulse-yellow {
+  0% {
+    transform: scale(.95);
+    box-shadow: 0 0 #d9000085;
   }
   70% {
     transform: scale(1);
