@@ -87,7 +87,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             alt="Logo"
             width={150}
             height={50}
-            className="mx-auto"
+            className="mx-auto "
           />
         </Link>
       </SidebarHeader>
