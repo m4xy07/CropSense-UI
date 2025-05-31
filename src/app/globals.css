@@ -1839,6 +1839,19 @@ body {
     white-space: nowrap;
 }
 
+.next-btn{
+  background: radial-gradient(86.86% 86.86% at 50% 111.67%, #ffffff80, #fff0), #713dff;
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 99px;
+    min-width: 124px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.next-btn:hover {
+    background: radial-gradient(86.86% 86.86% at 50% 111.67%, #ffffffbb, #fff0), #713dff !important;
+}
+
 
 /**LANDING PAGE FEATURES GRID CSS **/
 
