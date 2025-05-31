@@ -105,13 +105,13 @@ export default function Page() {
         {values.map((val, index) => (
           <li
             key={index}
-            className="text-[20px] flex flex-col gap-1 text-gray-100 hover:text-white transition-colors duration-200"
+            className="text-[18px] flex flex-col gap-1 text-gray-100 hover:text-white transition-colors duration-200"
           >
             <div className="flex items-center gap-2">
               <CheckIcon />
               {val !== undefined && val !== null ? val : "N/A"}
             </div>
-            <span className="text-[18px] text-gray-300">
+            <span className="text-[14px] text-gray-300">
               {timestamps[index] || "Unknown Time"}
             </span>
           </li>
@@ -195,7 +195,17 @@ export default function Page() {
             )}
             {renderCard(
               "Rain",
-              sensorData.map((item) => item?.raining?.toFixed(2) ?? "N/A"),
+              sensorData.map((item) => {
+                if (typeof item?.raining === "number") {
+                  return item.raining.toFixed(2);
+                } else if (typeof item?.raining === "boolean") {
+                  return item.raining ? "Yes" : "No";
+                } else if (typeof item?.raining === "string") {
+                  return item.raining;
+                } else {
+                  return "N/A";
+                }
+              }),
               sensorData.map((item) => item?.timestamp ?? "")
             )}
             {renderCard(
