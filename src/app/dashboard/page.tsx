@@ -50,6 +50,7 @@ export default function Page() {
 
   const { user } = useUser();
   const pathname = usePathname();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const data = {
     user: {
@@ -67,7 +68,7 @@ export default function Page() {
         <header className="flex h-16 shrink-0 items-center gap-2 text-white theme-color main-topbar-theme">
           <div className="flex justify-between w-full pr-4">
             <div className="flex items-center gap-2 px-4">
-              <SidebarTrigger className="-ml-1" />
+              <SidebarTrigger className="-ml-1" onClick={() => setSidebarOpen((v) => !v)} />
               <Separator orientation="vertical" className="mr-2 h-4" />
               <Breadcrumb>
                 <BreadcrumbList>
@@ -94,10 +95,10 @@ export default function Page() {
           </div>
         </header>
 
-        <div className="flex flex-1 flex-col gap-[1.25rem] p-4">
-          <div className="flex flex-row gap-[1.25rem]">
+        <div className="flex flex-1 flex-col gap-[1.25rem] p-4 w-full">
+          <div className="flex flex-row gap-[1.25rem] w-full">
             {/* Temperature Today Card */}
-            <div className="flex flex-row justify-between w-[308px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+            <div className="flex flex-row justify-between w-1/5 px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
               <svg
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
@@ -129,7 +130,7 @@ export default function Page() {
             </div>
 
             {/* Temperature Today Card */}
-            <div className="flex flex-row justify-between w-[308px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+            <div className="flex flex-row justify-between w-1/5 px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
               <svg
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
@@ -162,7 +163,7 @@ export default function Page() {
             </div>
 
             {/* Temperature Today Card */}
-            <div className="flex flex-row justify-between w-[308px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+            <div className="flex flex-row justify-between w-1/5 px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
               <svg
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
@@ -195,7 +196,7 @@ export default function Page() {
             </div>
 
             {/* Temperature Today Card */}
-            <div className="flex flex-row justify-between w-[308px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+            <div className="flex flex-row justify-between w-1/5 px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
               <svg
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
@@ -228,7 +229,7 @@ export default function Page() {
             </div>
 
             {/* Temperature Today Card */}
-            <div className="flex flex-row justify-between w-[308px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+            <div className="flex flex-row justify-between w-1/5 px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
               <svg
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
@@ -265,10 +266,10 @@ export default function Page() {
 
           </div>
 
-            <div className="flex flex-row gap-[1.25rem]">
-              <div className="flex flex-row gap-[1.25rem] magical-borders-content">
+            <div className="flex flex-row gap-[1.25rem] magical-borders-content w-full">
+              
                 {/* Recent Activity Card */}
-                <div className="flex flex-col gap-4 justify-between rounded-xl equipment-card-inner w-[636px] border border-zinc-50/10 h-fit">
+                <div className="flex flex-col gap-4 justify-between rounded-xl equipment-card-inner w-2/5 border border-zinc-50/10 h-fit">
                   <div className="flex flex-row justify-between px-5 py-4 border-b border-b-zinc-50/10 rounded-t-xl">
                     <h2 className="text-[18px] font-normal mt-1">Recent Activity</h2>
                     <div className="flex items-center cursor-pointer w-fit bg-transparent py-[6px] px-[10px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps">
@@ -377,7 +378,10 @@ export default function Page() {
                   </div>
                 </div>
                 {/* Technical Tracking Card */}
-                <div className="technical-tracking relative overflow-hidden border-zinc-50/10 rounded-xl border">
+                <div
+                  className="technical-tracking relative overflow-hidden border-zinc-50/10 rounded-xl border transition-all duration-200 ease-in-out"
+                  style={sidebarOpen ? { width: "364px" } : {}}
+                >
                   <div className="technical-tracking-inner technical-tracking-borders-inner">
                     <div className="technical-tracking-title">
                       <span>Tracking</span>
@@ -445,10 +449,10 @@ export default function Page() {
                     <div className="technical-tracking-background-ellipse technical-tracking-background-ellipse-2" />
                   </div>
                 </div>
-              </div>
+              
               <SensorStatusComponent/>
           </div>
-          <div className="flex flex-row gap-[1.25rem]">
+          <div className="flex flex-row gap-[1.25rem] w-full">
             <NPKDonutComponent />
             <UpcomingEventsComponent />
           </div>

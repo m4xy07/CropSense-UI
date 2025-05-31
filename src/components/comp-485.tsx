@@ -287,7 +287,7 @@ export default function SensorStatusComponent() {
   }
 
   return (
-    <div className=" border border-zinc-50/10 rounded-xl equipment-card-inner w-[636px]">
+    <div className=" border border-zinc-50/10 rounded-xl equipment-card-inner w-2/5">
     <div className="space-y-[0.65rem]">
       {/* Filters */}
       <div className="flex gap-3">

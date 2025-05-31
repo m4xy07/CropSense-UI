@@ -72,11 +72,11 @@ export function NPKDonutComponent() {
 }
 
   return (
-    <Card className="flex flex-col border border-zinc-50/10 rounded-xl equipment-card-inner w-full items-start p-0">
+    <Card className="flex flex-col border border-zinc-50/10 rounded-xl equipment-card-inner w-1/2 items-start p-0">
       <div className="flex w-full border-b border-zinc-50/10 px-5 py-4">
         <h2 className="text-[18px] font-normal mt-1">NPK Tracker</h2>
       </div>
-      <div className="px-5 py-4 gap-12 flex flex-row">
+      <div className="px-5 py-4 justify-between gap-12 flex flex-row w-full">
         <CardContent className="flex-1 pb-0">
           <ChartContainer
             config={chartConfig}
