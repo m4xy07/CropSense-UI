@@ -358,7 +358,7 @@ const SidebarHeader = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="header"
-      className={cn("flex flex-col gap-2 p-2", className)}
+      className={cn("flex flex-col gap-2 p-0 h-[4rem] justify-center", className)}
       {...props}
     />
   )
@@ -404,7 +404,7 @@ const SidebarContent = React.forwardRef<
       ref={ref}
       data-sidebar="content"
       className={cn(
-        "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
+        "flex min-h-0 flex-1 flex-col gap-2 px-4 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
         className
       )}
       {...props}
@@ -415,18 +415,22 @@ SidebarContent.displayName = "SidebarContent"
 
 const SidebarGroup = React.forwardRef<
   HTMLDivElement,
-  React.ComponentProps<"div">
->(({ className, ...props }, ref) => {
+  React.ComponentProps<"div"> & { isLast?: boolean }
+>(({ className, isLast, ...props }, ref) => {
   return (
     <div
       ref={ref}
       data-sidebar="group"
-      className={cn("relative flex w-full min-w-0 flex-col p-2", className)}
+      className={cn(
+        "relative flex w-full min-w-0 flex-col pb-3",
+        !isLast && "border-b border-zinc-50/10",
+        className
+      )}
       {...props}
     />
-  )
-})
-SidebarGroup.displayName = "SidebarGroup"
+  );
+});
+SidebarGroup.displayName = "SidebarGroup";
 
 const SidebarGroupLabel = React.forwardRef<
   HTMLDivElement,
@@ -521,7 +525,7 @@ const sidebarMenuButtonVariants = cva(
           "bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-[rgba(255,255,255,0.05)] hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]",
       },
       size: {
-        default: "h-[40px] text-sm",
+        default: "h-fit !py-2 tracking-normal text-sm",
         sm: "h-7 text-xs",
         lg: "h-[32px] text-sm group-data-[collapsible=icon]:!p-0",
       },

@@ -33,67 +33,50 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
 
   const data = {
-    user: {
-      name: user?.fullName || "Guest",
-      email: user?.primaryEmailAddress?.emailAddress || "guest@example.com",
-      avatar: user?.imageUrl || "/avatars/default.jpg",
+  user: {
+    name: user?.fullName || "Guest",
+    email: user?.primaryEmailAddress?.emailAddress || "guest@example.com",
+    avatar: user?.imageUrl || "/avatars/default.jpg",
+  },
+  sections: [
+    {
+      heading: "Farm Dashboard",
+      items: [
+        { name: "Overview", url: "/dashboard", icon: PanelsTopLeft },
+        { name: "Data Insights", url: "/dashboard/insights", icon: TextSearch },
+        { name: "Predictions", url: "/dashboard/predictions", icon: TrendingUpDown },
+      ],
     },
-    projects: [
-      {
-        name: "Overview",
-        url: "/dashboard",
-        icon: PanelsTopLeft,
-      },
-      {
-        name: "Predictions",
-        url: "/dashboard/predictions",
-        icon: TrendingUpDown,
-      },
-      {
-        name: "Data Insights",
-        url: "/dashboard/insights",
-        icon: TextSearch,
-      },
-      {
-        name: "Government Schemes",
-        url: "/dashboard/schemes",
-        icon: Landmark,
-      },
-      {
-        name: "Disease Detection",
-        url: "/dashboard/disease-detection",
-        icon: ShieldCheck,
-      },
-      {
-        name: "Forums",
-        url: "/dashboard/forums",
-        icon: Users,
-      },
-      {
-        name: "Soil Report",
-        url: "/dashboard/soil-report",
-        icon: ClipboardPlus,
-      },
-      {
-        name: "Equipment",
-        url: "/dashboard/equipment",
-        icon: Tractor,
-      },
-      {
-        name: "Guides",
-        url: "/dashboard/guides",
-        icon: Library,
-      },
-       {
-         name: "Workers",
-         url: "/dashboard/workers",
-         icon: Users,
-       },
-    ].map((project) => ({
-      ...project,
-      active: pathname === project.url || (project.url !== "/dashboard" && pathname.startsWith(project.url + "/")),
+    {
+      heading: "Farm Health",
+      items: [
+        { name: "Soil Report", url: "/dashboard/soil-report", icon: ClipboardPlus },
+        { name: "Disease Detection", url: "/dashboard/disease-detection", icon: ShieldCheck },
+      ],
+    },
+    {
+      heading: "Tools and Operations",
+      items: [
+        { name: "Equipment", url: "/dashboard/equipment", icon: Tractor },
+        { name: "Workers", url: "/dashboard/workers", icon: Users },
+      ],
+    },
+    {
+      heading: "Knowledge and Support",
+      items: [
+        { name: "Guides", url: "/dashboard/guides", icon: Library },
+        { name: "Forums", url: "/dashboard/forums", icon: Users },
+        { name: "Government Schemes", url: "/dashboard/schemes", icon: Landmark },
+      ],
+    },
+  ].map(section => ({
+    ...section,
+    items: section.items.map(item => ({
+      ...item,
+      active: pathname === item.url || (item.url !== "/dashboard" && pathname.startsWith(item.url + "/")),
     })),
-  };
+  })),
+};
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -104,12 +87,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             alt="Logo"
             width={150}
             height={50}
-            className="mx-auto py-4"
+            className="mx-auto"
           />
         </Link>
       </SidebarHeader>
       <SidebarContent>
-        <NavProjects projects={data.projects} />
+        <NavProjects sections={data.sections} />
       </SidebarContent>
       <SidebarFooter>
         {/* <NavUser user={data.user} /> */}
