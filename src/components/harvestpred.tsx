@@ -35,7 +35,7 @@ export function HarvestableMonthCards() {
                 Potential Harvestable Months & Rates
             </h2>
             <p className=' text-base text-zinc-50/70 pt-4'>
-            You&apos;ll be able to sell wheat in the following months. The prices are based on the current market trends.
+            You&apos;ll be able to sell tomato in the following months. The prices are based on the current market trends.
           </p>
             <div className="flex flex-wrap pt-4 gap-[6rem]">
                 {harvestableMonths.slice(0, 3).map((item, index) => (
@@ -49,7 +49,7 @@ export function HarvestableMonthCards() {
                                 <div className="p-0 w-full flex flex-col gap-2">
                                     <div className="text-left text-[22px] text-white">
                                         {/* {item.month} */}
-                                        July
+                                        October
                                     </div>
                                     <div className="flex flex-row gap-[5rem]">
                                         <div className="flex flex-col gap-2">
@@ -62,7 +62,7 @@ export function HarvestableMonthCards() {
                                                 </div>
                                             </div>
                                             <div className="text-left text-[28px] text-zinc-200">
-                                                {/* ₹ {parseFloat(item.wholesale_price).toFixed(2)} */} ₹ 18 / kg
+                                                {/* ₹ {parseFloat(item.wholesale_price).toFixed(2)} */} ₹ 51 / kg
                                             </div>
                                         </div>
                                         <div className="flex flex-col gap-2">
@@ -75,7 +75,7 @@ export function HarvestableMonthCards() {
                                                 </div>
                                             </div>
                                             <div className="text-left text-[28px] text-zinc-200">
-                                                {/* ₹ {parseFloat(item.retail_price).toFixed(2)} */} ₹ 27 / kg
+                                                {/* ₹ {parseFloat(item.retail_price).toFixed(2)} */} ₹ 67 / kg
                                             </div>
                                         </div>
                                         
