@@ -385,8 +385,8 @@ export default function Page() {
                   <div className="technical-tracking-inner technical-tracking-borders-inner">
                     <div className="technical-tracking-title">
                       <span>Tracking</span>
-                      <span className="technical-tracking-title-big">256 Metrics</span>
-                      <span>in a Single Project</span>
+                      <span className="technical-tracking-title-big">12 sensors</span>
+                      <span>actively</span>
                     </div>
                     <img src="/technical-tracking-background.png" className="technical-tracking-background" />
                     <img src="/technical-tracking-lines.png" className="technical-tracking-lines" />
