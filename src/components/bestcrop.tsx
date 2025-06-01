@@ -58,7 +58,7 @@ export function MorphingDialogBasicNine() {
             </div>
           <div className="text-center text-[22px] mt-2 text-white">
             {/* {best_crop !== null ? capitalize(best_crop) : "Loading..."} */}
-            Tomato
+            Tomato Namdhari 1068
           </div>
         </div>
       </div>
