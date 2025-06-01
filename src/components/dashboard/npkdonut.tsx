@@ -107,7 +107,7 @@ export function NPKDonutComponent() {
             <div className="h-[10px] w-[10px] rounded-full bg-[#d10412] alert-animation" />
             <span className="text-[13px]">Deficiency detected! Take action now to avoid issues.</span>
           </div>
-          <Link href="https://dir.indiamart.com/impcat/npk-fertilizer/npk-ratio-15-15-15-q15410334/"><Button>Order NPK 10-10-10</Button></Link>
+          <Link href="https://dir.indiamart.com/impcat/npk-fertilizer/npk-ratio-15-15-15-q15410334/"><Button>Order NPK 15-15-15</Button></Link>
         </div>
       </div>
     </Card>

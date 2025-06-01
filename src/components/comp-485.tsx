@@ -99,7 +99,7 @@ type Item = {
   email: string
   location: string
   flag: string
-  status: "Active" | "Inactive" | "Pending"
+  status: "Active" | "Inactive" 
   balance: number
 }
 
@@ -205,14 +205,82 @@ export default function SensorStatusComponent() {
 
   const [data, setData] = useState<Item[]>([])
   useEffect(() => {
-    async function fetchPosts() {
-      const res = await fetch(
-        "https://raw.githubusercontent.com/origin-space/origin-images/refs/heads/main/users-01_fertyx.json"
-      )
-      const data = await res.json()
-      setData(data)
-    }
-    fetchPosts()
+    // Use local sample data instead of fetching from remote
+    const sampleData: Item[] = [
+      {
+        id: "1",
+        name: "SEN-001",
+        email: "sensor001@cropsense.com",
+        location: "Pune, Maharashtra",
+        flag: "🇮🇳",
+        status: "Active",
+        balance: 1200,
+      },
+      {
+        id: "2",
+        name: "SEN-002",
+        email: "sensor002@cropsense.com",
+        location: "Ludhiana, Punjab",
+        flag: "🇮🇳",
+        status: "Inactive",
+        balance: 950,
+      },
+      {
+        id: "3",
+        name: "SEN-003",
+        email: "sensor003@cropsense.com",
+        location: "Indore, Madhya Pradesh",
+        flag: "🇮🇳",
+        status: "Inactive",
+        balance: 500,
+      },
+      {
+        id: "4",
+        name: "SEN-004",
+        email: "sensor004@cropsense.com",
+        location: "Coimbatore, Tamil Nadu",
+        flag: "🇮🇳",
+        status: "Active",
+        balance: 1800,
+      },
+      {
+        id: "5",
+        name: "SEN-005",
+        email: "sensor005@cropsense.com",
+        location: "Ahmedabad, Gujarat",
+        flag: "🇮🇳",
+        status: "Inactive",
+        balance: 700,
+      },
+      {
+        id: "6",
+        name: "SEN-006",
+        email: "sensor006@cropsense.com",
+        location: "Hyderabad, Telangana",
+        flag: "🇮🇳",
+        status: "Active",
+        balance: 2100,
+      },
+      {
+        id: "7",
+        name: "SEN-007",
+        email: "sensor007@cropsense.com",
+        location: "Nagpur, Maharashtra",
+        flag: "🇮🇳",
+        status: "Inactive",
+        balance: 400,
+      },
+      {
+        id: "8",
+        name: "SEN-008",
+        email: "sensor008@cropsense.com",
+        location: "Lucknow, Uttar Pradesh",
+        flag: "🇮🇳",
+        status: "Active",
+        balance: 1600,
+      },
+    ];
+    setData(sampleData);
   }, [])
 
   const handleDeleteRows = () => {
