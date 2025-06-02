@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
-import { Sun, IndianRupee, Users, Bell, CalendarCheck2, CircleAlert, Check, CircleCheckIcon, ListChecks, ListCheck, Wheat, ArrowRight, CloudRainWind, MapPin } from "lucide-react";
+import { Sun, IndianRupee, Users, Bell, CalendarCheck2, CircleAlert, Check, CircleCheckIcon, ListChecks, ListCheck, Wheat, ArrowRight, CloudRainWind, MapPin, Earth } from "lucide-react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -144,6 +144,43 @@ export default function Page() {
                 </p>
                 <p className="text-[15px] font-normal mt-2 text-white">
                   Maintain this temperature for optimal crop growth.
+                </p>
+              </div>
+            </div>
+
+            {/* SOC Card */}
+            <div className="flex flex-row justify-between w-1/5 px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+              <svg
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="white"
+                aria-hidden="true"
+                className="absolute right-4 top-4 opacity-0 group-hover:opacity-100 transition-opacity text-emerald-500 duration-200 ease-in-out"
+              >
+                <path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"></path>
+              </svg>
+              <div className="flex flex-col gap-2 ">
+                <Earth className="size-6" />
+                <h2 className="text-[18px] font-light text-white">Soil Organic Carbon</h2>
+                <div className="flex flex-row gap-1 items-start pt-0">
+                  <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">2</p>
+                  <p className="!text-[22px] text-white/70">g/kg</p>
+                </div>
+                <h2 className="text-[18px] font-light text-white">Soil Oxygen Level</h2>
+                <div className="flex flex-row gap-1 items-start pt-0">
+                  <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">9.12</p>
+                  <p className="!text-[22px] text-white/70">kPa</p>
+                </div>
+                {/* <p className="text-[16px] font-light text-white/80 ">
+                  <span className="font-normal text-[14px]">
+                    <span className="text-yellow-300">H: 29°C</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span className="text-blue-300">L: 20°C</span>
+                  </span>
+                </p> */}
+                <p className="text-[15px] font-normal mt-2 text-white">
+                 Levels are below optimal range.
                 </p>
               </div>
             </div>
