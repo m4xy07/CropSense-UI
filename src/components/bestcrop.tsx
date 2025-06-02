@@ -56,10 +56,16 @@ export function MorphingDialogBasicNine() {
               />
             </div>
             </div>
-          <div className="text-center text-[22px] mt-2 text-white">
-            {/* {best_crop !== null ? capitalize(best_crop) : "Loading..."} */}
-            Tomato Namdhari 1068
-          </div>
+            <div className="text-center text-[22px] mt-2 text-white">
+            <a
+              href="https://www.bighaat.com/products/ns-5002-1068-tomato-seeds?variant=40614523174935"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-blue-400 transition-colors"
+            >
+              Tomato Namdhari 1068
+            </a>
+            </div>
         </div>
       </div>
     </div>
