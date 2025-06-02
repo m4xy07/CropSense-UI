@@ -51,6 +51,25 @@ export default function Page() {
   const { user } = useUser();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sensorData, setSensorData] = useState<any>(null);
+
+  useEffect(() => {
+    fetch("https://data.cropsense.tech/")
+      .then((res) => res.json())
+      .then((data) => {
+        // If data is an array, take the latest record
+        if (Array.isArray(data)) {
+          setSensorData(data[data.length - 1]);
+        } else {
+          setSensorData(data);
+        }
+      })
+      .catch(() => setSensorData(null));
+  }, []);
+
+  // Helper to format values
+  const formatValue = (val: number | undefined) =>
+    typeof val === "number" ? val.toFixed(2) : "--";
 
   const data = {
     user: {
@@ -114,7 +133,7 @@ export default function Page() {
                 <ThermometerSun className="size-6" />
                 <h2 className="text-[18px] font-light text-white">Temperature</h2>
                 <div className="flex flex-row gap-1 items-start pt-2">
-                  <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">24</p>
+                  <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">{formatValue(sensorData?.temperature)}</p>
                   <p className="!text-[22px] text-white/70">°C</p>
                 </div>
                 <p className="text-[16px] font-light text-white/80 ">
@@ -146,7 +165,7 @@ export default function Page() {
                 <Sprout className="size-6" />
                 <h2 className="text-[18px] font-light text-white">Soil Moisture</h2>
                 <div className="flex flex-row gap-1 items-start pt-2">
-                  <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">65</p>
+                  <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">{formatValue(sensorData?.moisture)}</p>
                   <p className="!text-[22px] text-white/70">%</p>
                 </div>
                 <div className="flex flex-row text-[16px] font-light text-white/80 ">
@@ -212,7 +231,7 @@ export default function Page() {
                 <Droplet className="size-6" />
                 <h2 className="text-[18px] font-light text-white">Humidity</h2>
                 <div className="flex flex-row gap-1 items-start pt-2">
-                  <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">82</p>
+                  <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">{formatValue(sensorData?.humidity)}</p>
                   <p className="!text-[22px] text-white/70">%</p>
                 </div>
                 <div className="flex flex-row text-[16px] font-light text-white/80 ">

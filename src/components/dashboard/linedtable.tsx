@@ -13,9 +13,9 @@ export default function NPKTableComponent() {
 
   // Hardcoded ideal values
   const ideal = {
-    nitrogen: 10,
-    phosphorus: 10,
-    potassium: 10,
+    nitrogen: 15,
+    phosphorus: 15,
+    potassium: 15,
   };
 
   useEffect(() => {
