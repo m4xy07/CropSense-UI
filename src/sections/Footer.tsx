@@ -96,7 +96,7 @@ export default function Footerdemo() {
             <address className="space-y-2 text-white/70 text-sm not-italic">
               <p>Aman Concave</p>
               <p>Tech City, TC 12345</p>
-              <p>Phone: 9552572779</p>
+              <p>Phone: XXXXXXXXXX</p>
               <p>Email: aman@cropsense.tech</p>
             </address>
           </div>
