@@ -82,10 +82,22 @@ export default function Footerdemo() {
                 About
               </a>
               <a
-                href="#"
+                href="/contact"
                 className="block w-fit transition-colors text-white/70 hover:text-white"
               >
                 Contact
+              </a>
+              <a
+                href="/shipping"
+                className="block w-fit transition-colors text-white/70 hover:text-white"
+              >
+                Shipping
+              </a>
+              <a
+                href="/refunds"
+                className="block w-fit transition-colors text-white/70 hover:text-white"
+              >
+                Refunds
               </a>
             </nav>
           </div>
@@ -180,13 +192,13 @@ export default function Footerdemo() {
           </p>
           <nav className="flex gap-4 text-sm">
             <a
-              href="#"
+              href="/privacy"
               className="transition-colors text-white/70 hover:text-white"
             >
               Privacy Policy
             </a>
             <a
-              href="#"
+              href="/terms"
               className="transition-colors text-white/70 hover:text-white"
             >
               Terms of Service
