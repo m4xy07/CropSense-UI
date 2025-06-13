@@ -22,6 +22,7 @@ import { NavUser } from "@/components/nav-user";
 import { useUser } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 import { TextShimmer } from "@/components/shining-text";
+import { Bell } from "lucide-react";
 
 
 export default function Page() {
@@ -175,7 +176,12 @@ export default function Page() {
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
-            <div className="flex flex-row gap-2">
+            <div className="flex flex-row gap-2 items-center">
+              <div className="relative hover:bg-[rgba(255,255,255,0.025)] group p-[6px] rounded-md flex flex-row items-center cursor-pointer transition-all duration-200 ease-in-out">
+                <div className="h-[10px] w-[10px] rounded-full bg-[#f4af29] alert-animation absolute top-0 right-0" />
+                <Bell className="w-[18px] h-[18px] text-[rgba(255,255,255,.75)] group-hover:text-[#fff] transition-all duration-200 ease-in-out" />
+              </div>
+              <Separator orientation="vertical" className="mx-2 h-4" />
                 <NavUser user={data.user} />
             </div>
           </div>

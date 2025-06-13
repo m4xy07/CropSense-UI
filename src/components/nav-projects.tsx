@@ -28,7 +28,7 @@ export function NavProjects({ sections }: { sections: Section[] }) {
           key={section.heading}
           isLast={idx === sections.length - 1}
         >
-          <div className="text-[12px] uppercase tracking-normal  text-white/80 px-4 pt-5 pb-2 font-light">
+          <div className="text-[12px] uppercase tracking-[0.1px]  text-white/80 px-4 pt-5 pb-2 font-normal font-inter">
             {section.heading}
           </div>
           <SidebarMenu>

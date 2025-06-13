@@ -28,8 +28,13 @@ import {
   Clock,
   Camera,
   MessageCircle,
+  Bell,
+  MapPin,
 } from "lucide-react";
 import Image from "next/image";
+import { NavUser } from "@/components/nav-user";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { useUser } from "@clerk/nextjs";
 
 // Sample Data
 const workers = [
@@ -128,7 +133,19 @@ const performance = {
   suggestions: ["Improve task timeliness", "Respond to alerts faster"],
 };
 
+
+
 export default function WorkerMonitorPage() {
+  const { user } = useUser();
+
+const data = {
+    user: {
+      name: user?.fullName || "Guest",
+      email: user?.primaryEmailAddress?.emailAddress || "guest@example.com",
+      avatar: user?.imageUrl || "/avatars/default.jpg",
+    },
+    
+  };
   const [acknowledged, setAcknowledged] = useState([false, false, false]);
   return (
     <SidebarProvider className="dark main-dashboard-theme theme-color font-inter">
@@ -139,9 +156,30 @@ export default function WorkerMonitorPage() {
             <div className="flex items-center gap-2 px-4">
               <SidebarTrigger className="-ml-1" />
               <Separator orientation="vertical" className="mr-2 h-4" />
-              <h2 className="text-2xl font-bold tracking-tight">
-                Worker Monitoring & KPIs
-              </h2>
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem className="hidden md:block">
+                    <BreadcrumbLink href="/dashboard">
+                      Dashboard
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator className="hidden md:block" />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage className="text-white">Workers</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+            </div>
+            <div className="flex flex-row gap-4">
+              <div className="flex flex-row gap-2 items-center">
+              <div className="relative hover:bg-[rgba(255,255,255,0.025)] group p-[6px] rounded-md flex flex-row items-center cursor-pointer transition-all duration-200 ease-in-out">
+                <div className="h-[10px] w-[10px] rounded-full bg-[#f4af29] alert-animation absolute top-0 right-0" />
+                <Bell className="w-[18px] h-[18px] text-[rgba(255,255,255,.75)] group-hover:text-[#fff] transition-all duration-200 ease-in-out" />
+              </div>
+              <Separator orientation="vertical" className="mx-2 h-4" />
+              <NavUser user={data.user} />
+              </div>
+              
             </div>
           </div>
         </header>
