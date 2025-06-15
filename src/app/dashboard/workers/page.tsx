@@ -187,7 +187,7 @@ const data = {
             </div>
           </div>
         </header>
-        <div className="flex flex-col gap-6 p-4">
+        <div className="flex flex-col gap-6 p-4 main-dashboard-second-part-theme theme-color min-h-screen">
           {/* Worker Summary Cards */}
           {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {workers.map((w, i) => (
@@ -243,8 +243,9 @@ const data = {
               </Card>
             ))}
           </div> */}
-
-          <WorkerTable />
+          <Card className="equipment-card-inner border border-zinc-50/10 rounded-xl">
+            <WorkerTable />
+          </Card>
 
           {/* KPI Table */}
           <Card className="equipment-card-inner border border-zinc-50/10 rounded-xl">

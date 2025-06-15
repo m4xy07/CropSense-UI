@@ -18,6 +18,7 @@ import {
   VisibilityState,
 } from "@tanstack/react-table"
 import {
+  ChartNoAxesColumn,
   ChevronDownIcon,
   ChevronFirstIcon,
   ChevronLastIcon,
@@ -344,7 +345,7 @@ export default function WorkerTable() {
               id={`${id}-input`}
               ref={inputRef}
               className={cn(
-                "peer min-w-60 ps-9",
+                "peer min-w-60 ps-9 w-full equipment-input theme-color bg-[rgba(255,255,255,.025)] transition-all  text-white rounded-md !py-2 !px-4 !h-9",
                 Boolean(table.getColumn("name")?.getFilterValue()) && "pe-9"
               )}
               value={
@@ -357,9 +358,9 @@ export default function WorkerTable() {
               type="text"
               aria-label="Filter by name or tasks"
             />
-            <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
+            {/* <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
               <ListFilterIcon size={16} aria-hidden="true" />
-            </div>
+            </div> */}
             {Boolean(table.getColumn("name")?.getFilterValue()) && (
               <button
                 className="text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
@@ -378,23 +379,24 @@ export default function WorkerTable() {
           {/* Filter by status */}
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="outline">
-                <FilterIcon
+              <Button variant="outline" className="!border-none flex items-center cursor-pointer w-fit bg-transparent py-[6px] px-[10px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps !h-fit ">
+                <ChartNoAxesColumn className="-mr-[8px] h-4 w-4 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff]"/>
+                {/* <FilterIcon
                   className="-ms-1 opacity-60"
                   size={16}
                   aria-hidden="true"
-                />
-                Status
+                /> */}
+                <span className="text-[14px] font-normal text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] pl-[6px]">Status</span>
                 {selectedStatuses.length > 0 && (
-                  <span className="bg-background text-muted-foreground/70 -me-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
+                  <span className="bg-[#ffffff0a] text-white -me-1 inline-flex h-4 w-4 max-h-full items-center rounded-xl border px-[5px] font-[inherit] text-[0.625rem] font-medium">
                     {selectedStatuses.length}
                   </span>
                 )}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto min-w-36 p-3" align="start">
+            <PopoverContent className="w-auto min-w-36 p-3 font-inter main-dashboard-theme theme-color border !border-zinc-50/10" align="start">
               <div className="space-y-3">
-                <div className="text-muted-foreground text-xs font-medium">
+                <div className="text-[#b2b2b2] text-xs font-medium">
                   Filters
                 </div>
                 <div className="space-y-3">
@@ -409,10 +411,10 @@ export default function WorkerTable() {
                       />
                       <Label
                         htmlFor={`${id}-${i}`}
-                        className="flex grow justify-between gap-2 font-normal"
+                        className="flex grow justify-between gap-2 font-normal text-white"
                       >
                         {value}{" "}
-                        <span className="text-muted-foreground ms-2 text-xs">
+                        <span className="text-[#b2b2b2] ms-2 text-xs">
                           {statusCounts.get(value)}
                         </span>
                       </Label>
@@ -425,17 +427,16 @@ export default function WorkerTable() {
           {/* Toggle columns visibility */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline">
+              <Button variant="outline" className="!border-none flex items-center cursor-pointer w-fit bg-transparent py-[6px] px-[10px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps !h-fit ">
                 <Columns3Icon
-                  className="-ms-1 opacity-60"
-                  size={16}
+                  className="-mr-[8px] h-4 w-4 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff]"
                   aria-hidden="true"
                 />
-                View
+                <span className="text-[14px] font-normal text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] pl-[6px]">View</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+            <DropdownMenuContent className="font-inter" align="end">
+              <DropdownMenuLabel className="text-[#b2b2b2] text-xs font-medium">Toggle columns</DropdownMenuLabel>
               {table
                 .getAllColumns()
                 .filter((column) => column.getCanHide())
@@ -462,14 +463,16 @@ export default function WorkerTable() {
           {table.getSelectedRowModel().rows.length > 0 && (
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button className="ml-auto" variant="outline">
+                <Button className="!border-none flex items-center cursor-pointer w-fit bg-transparent py-[6px] px-[10px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps !h-fit " variant="outline">
                   <TrashIcon
-                    className="-ms-1 opacity-60"
+                    className="-mr-[8px] h-4 w-4 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff]"
                     size={16}
                     aria-hidden="true"
                   />
+                  <span className="text-[14px] font-normal text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] pl-[6px]">
                   Delete
-                  <span className="bg-background text-muted-foreground/70 -me-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
+                  </span>
+                  <span className="bg-[#ffffff0a] text-white -me-1 inline-flex h-4 w-4 max-h-full items-center rounded-xl border px-[5px] font-[inherit] text-[0.625rem] font-medium">
                     {table.getSelectedRowModel().rows.length}
                   </span>
                 </Button>
@@ -506,13 +509,15 @@ export default function WorkerTable() {
             </AlertDialog>
           )}
           {/* Add user button */}
-          <Button className="ml-auto" variant="outline">
+          <Button className="!border-none flex items-center cursor-pointer w-fit bg-transparent py-[6px] px-[10px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps !h-fit " variant="outline">
             <PlusIcon
-              className="-ms-1 opacity-60"
+              className="-mr-[8px] h-4 w-4 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff]"
               size={16}
               aria-hidden="true"
             />
+            <span className="text-[14px] font-normal text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] pl-[6px]">
             Add user
+            </span>
           </Button>
         </div>
       </div>
@@ -626,7 +631,7 @@ export default function WorkerTable() {
               table.setPageSize(Number(value))
             }}
           >
-            <SelectTrigger id={id} className="w-fit whitespace-nowrap">
+            <SelectTrigger id={id} className="w-fit whitespace-nowrap !py-[6px] !px-[10px]">
               <SelectValue placeholder="Select number of results" />
             </SelectTrigger>
             <SelectContent className="[&_*[role=option]]:ps-2 [&_*[role=option]]:pe-8 [&_*[role=option]>span]:start-auto [&_*[role=option]>span]:end-2">
@@ -675,7 +680,7 @@ export default function WorkerTable() {
                 <Button
                   size="icon"
                   variant="outline"
-                  className="disabled:pointer-events-none disabled:opacity-50"
+                  className="disabled:pointer-events-none disabled:opacity-40 hover:bg-[#ffffff0f] bg-[#ffffff0a] rounded-[4px] px-[2px] py-[6px] text-[12px] !h-6 !w-6 !border !border-zinc-50/10"
                   onClick={() => table.firstPage()}
                   disabled={!table.getCanPreviousPage()}
                   aria-label="Go to first page"
@@ -688,7 +693,7 @@ export default function WorkerTable() {
                 <Button
                   size="icon"
                   variant="outline"
-                  className="disabled:pointer-events-none disabled:opacity-50"
+                  className="disabled:pointer-events-none disabled:opacity-40 hover:bg-[#ffffff0f] bg-[#ffffff0a] rounded-[4px] px-[2px] py-[6px] text-[12px] !h-6 !w-6 !border !border-zinc-50/10"
                   onClick={() => table.previousPage()}
                   disabled={!table.getCanPreviousPage()}
                   aria-label="Go to previous page"
@@ -701,7 +706,7 @@ export default function WorkerTable() {
                 <Button
                   size="icon"
                   variant="outline"
-                  className="disabled:pointer-events-none disabled:opacity-50"
+                  className="disabled:pointer-events-none disabled:opacity-40 hover:bg-[#ffffff0f] bg-[#ffffff0a] rounded-[4px] px-[2px] py-[6px] text-[12px] !h-6 !w-6 !border !border-zinc-50/10"
                   onClick={() => table.nextPage()}
                   disabled={!table.getCanNextPage()}
                   aria-label="Go to next page"
@@ -714,7 +719,7 @@ export default function WorkerTable() {
                 <Button
                   size="icon"
                   variant="outline"
-                  className="disabled:pointer-events-none disabled:opacity-50"
+                  className="disabled:pointer-events-none disabled:opacity-40 hover:bg-[#ffffff0f] bg-[#ffffff0a] rounded-[4px] px-[2px] py-[6px] text-[12px] !h-6 !w-6 !border !border-zinc-50/10"
                   onClick={() => table.lastPage()}
                   disabled={!table.getCanNextPage()}
                   aria-label="Go to last page"
@@ -738,14 +743,14 @@ function RowActions({ row }: { row: Row<Item> }) {
           <Button
             size="icon"
             variant="ghost"
-            className="shadow-none"
+            className="shadow-none dashboard-menu-button theme-color !h-7 !w-7"
             aria-label="Edit item"
           >
             <EllipsisIcon size={16} aria-hidden="true" />
           </Button>
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className="text-white">
         <DropdownMenuGroup>
           <DropdownMenuItem>
             <span>Edit</span>
@@ -763,9 +768,9 @@ function RowActions({ row }: { row: Row<Item> }) {
             <DropdownMenuShortcut>⌘A</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger>More</DropdownMenuSubTrigger>
+            <DropdownMenuSubTrigger className="font-inter">More</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent>
+              <DropdownMenuSubContent className="text-white">
                 <DropdownMenuItem>Move to project</DropdownMenuItem>
                 <DropdownMenuItem>Move to folder</DropdownMenuItem>
                 <DropdownMenuSeparator />
