@@ -37,6 +37,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { useUser } from "@clerk/nextjs";
 import WorkerTable from "@/components/dashboard/workertable";
 import NotificationsComponent from "@/components/comp-383";
+import StatusTracker from "@/components/dashboard/statuscheck";
 
 // Sample Data
 const workers = [
@@ -386,65 +387,33 @@ const data = {
             </CardContent>
           </Card>
 
-          {/* Performance Score Panel */}
-          <Card className="equipment-card-inner border border-zinc-50/10 rounded-xl">
-            <CardContent className="p-4 flex flex-col gap-2">
-              <div className="font-semibold text-lg text-white mb-2">
-                Performance Score
-              </div>
-              <div className="flex items-center gap-2">
-                {Array.from({ length: 5 }).map((_, idx) => (
-                  <Star
-                    key={idx}
-                    className={`w-6 h-6 ${
-                      idx < performance.stars
-                        ? "text-yellow-400"
-                        : "text-gray-600"
-                    }`}
-                  />
-                ))}
-                <span className="ml-2 text-white font-bold">
-                  {performance.stars} / 5
-                </span>
-              </div>
-              <div className="text-sm text-gray-300">
-                Warnings issued:{" "}
-                <span className="text-red-400 font-bold">
-                  {performance.warnings}
-                </span>
-              </div>
-              <div className="text-sm text-gray-300">
-                Improvement Suggestions:
-              </div>
-              <ul className="list-disc ml-6 text-gray-200">
-                {performance.suggestions.map((s, i) => (
-                  <li key={i}>{s}</li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
+          <div className="flex flex-row gap-4">
 
-          {/* IVR/SMS Integration Panel */}
-          <Card className="equipment-card-inner border border-zinc-50/10 rounded-xl">
-            <CardContent className="p-4">
-              <div className="font-semibold text-lg text-white mb-2">
-                IVR / SMS Integration (Simulated)
-              </div>
-              <div className="flex flex-col gap-2 text-sm text-gray-200">
-                <div>
-                  📞 <b>IVR:</b> &quot;Soil moisture is critically low for 12
-                  hours — no watering detected. Please call worker.&quot;
+            <StatusTracker />
+
+            {/* IVR/SMS Integration Panel */}
+            <Card className="equipment-card-inner border border-zinc-50/10 rounded-xl w-fit p-0">
+            <div className='flex flex-row justify-between px-5 py-4 border-b border-b-zinc-50/10 rounded-t-xl'>
+              IVR / SMS Integration (Simulated)
+            </div>
+              <CardContent className="px-5 py-4">
+                <div className="flex flex-col gap-2 text-sm text-gray-200">
+                  <div>
+                    📞 <b>IVR:</b> &quot;Soil moisture is critically low for 12
+                    hours — no watering detected. Please call worker.&quot;
+                  </div>
+                  <div>
+                    📱 <b>SMS:</b> &quot;Crop disease alert ignored for 2 days —
+                    escalation needed.&quot;
+                  </div>
+                  <div>
+                    🌐 <b>Language:</b> Hindi, English (auto-detect)
+                  </div>
                 </div>
-                <div>
-                  📱 <b>SMS:</b> &quot;Crop disease alert ignored for 2 days —
-                  escalation needed.&quot;
-                </div>
-                <div>
-                  🌐 <b>Language:</b> Hindi, English (auto-detect)
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </div>
+          
           
         </div>
       </SidebarInset>
