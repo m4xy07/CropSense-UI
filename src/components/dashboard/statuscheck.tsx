@@ -3,6 +3,7 @@ import * as HoverCardPrimitives from '@radix-ui/react-hover-card';
 import { RiArrowRightUpLine, RiCheckboxCircleFill } from '@remixicon/react';
 import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { SelectFertilizer } from './fertilizerselect';
 
 export function cx(...args) {
   return twMerge(clsx(...args));
@@ -57,7 +58,7 @@ const data = [
 ];
 
 const colorMapping = {
-	Operational: 'bg-emerald-500',
+	Operational: 'bg-green-400',
 	Downtime: 'bg-red-500',
 	Maintenance: 'bg-amber-500',
 };
@@ -200,35 +201,40 @@ const Tracker = React.forwardRef<HTMLDivElement, TrackerProps>(
 Block.displayName = 'Tracker';
 
 export default function Example() {
+	const [fertilizer, setFertilizer] = React.useState("NPK 15-15-15");
+
 	return (
 		<>
 		<div className='flex flex-col equipment-card-inner border border-zinc-50/10 rounded-xl w-fit'>
 		<div className='flex flex-row justify-between px-5 py-4 border-b border-b-zinc-50/10 rounded-t-xl'>
-			Fertilizer Schedule
+			<h2 className='text-[18px] font-normal mt-1'>
+				Fertilizer Schedule
+			</h2>
+			<SelectFertilizer fertilizer={fertilizer} setFertilizer={setFertilizer} />
 		</div>
-			<div className="w-[500px] space-y-6 rounded-tremor-default bg-tremor-background px-5 py-4">
+		
+			<div className="w-[500px] space-y-6 px-5 py-4">
 				<div>
-					<p className="flex justify-between text-tremor-default font-medium">
-						<span className="flex items-center gap-2 font-medium">
-							{/* <RiCheckboxCircleFill
-                className="size-5 text-emerald-500"
-                aria-hidden={true}
-              /> */}
-							{/* <span className="text-tremor-content-strong dark:text-dark-tremor-content-strong">
-								Fertilizer Schedule
-							</span> */}
+					<p className="flex justify-between font-normal">
+						<span className="flex items-center gap-2 font-normal">
+							 <span className="text-[14px]">
+								{fertilizer}
+							</span>
 						</span>
-						<span className="text-tremor-content-strong dark:text-dark-tremor-content-strong">
-							99.4% on time
+						<span className="text-[14px] text-[#4ad476] font-normal">
+							On schedule
 						</span>
 					</p>
 					<Tracker
 						hoverEffect
 						data={combinedData}
-						className="mt-3 flex w-full"
+						className="mt-4 flex w-full"
 					/>
-					<div className="mt-3 flex items-center justify-between text-tremor-default text-tremor-content dark:text-dark-tremor-content">
+					<div className="mt-4 flex items-center text-[14px] gap-3 font-normal">
 						<span>29 days ago</span>
+						<div className="flex-1 h-[1px] bg-zinc-50/10" />
+						<span className="whitespace-nowrap">99.4% on time</span>
+						<div className="flex-1 h-[1px] bg-zinc-50/10" />
 						<span>Today</span>
 					</div>
 				</div>

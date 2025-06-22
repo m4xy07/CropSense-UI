@@ -38,6 +38,7 @@ import { useUser } from "@clerk/nextjs";
 import WorkerTable from "@/components/dashboard/workertable";
 import NotificationsComponent from "@/components/comp-383";
 import StatusTracker from "@/components/dashboard/statuscheck";
+import { AreaChartComponent } from "@/components/dashboard/areachart";
 
 // Sample Data
 const workers = [
@@ -244,6 +245,14 @@ const data = {
               </Card>
             ))}
           </div> */}
+
+            <div className="flex flex-row gap-4">
+
+            <StatusTracker />
+            <AreaChartComponent />
+
+          </div>
+
           <Card className="equipment-card-inner border border-zinc-50/10 rounded-xl">
             <WorkerTable />
           </Card>
@@ -387,11 +396,8 @@ const data = {
             </CardContent>
           </Card>
 
-          <div className="flex flex-row gap-4">
-
-            <StatusTracker />
-
-            {/* IVR/SMS Integration Panel */}
+          
+          {/* IVR/SMS Integration Panel */}
             <Card className="equipment-card-inner border border-zinc-50/10 rounded-xl w-fit p-0">
             <div className='flex flex-row justify-between px-5 py-4 border-b border-b-zinc-50/10 rounded-t-xl'>
               IVR / SMS Integration (Simulated)
@@ -412,8 +418,6 @@ const data = {
                 </div>
               </CardContent>
             </Card>
-          </div>
-          
           
         </div>
       </SidebarInset>
