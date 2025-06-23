@@ -38,7 +38,7 @@ import { useUser } from "@clerk/nextjs";
 import WorkerTable from "@/components/dashboard/workertable";
 import NotificationsComponent from "@/components/comp-383";
 import StatusTracker from "@/components/dashboard/statuscheck";
-import { AreaChartComponent } from "@/components/dashboard/areachart";
+import { ChartAreaGradient } from "@/components/dashboard/areachart";
 
 // Sample Data
 const workers = [
@@ -190,72 +190,17 @@ const data = {
           </div>
         </header>
         <div className="flex flex-col gap-6 p-4 main-dashboard-second-part-theme theme-color min-h-screen">
-          {/* Worker Summary Cards */}
-          {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {workers.map((w, i) => (
-              <Card
-                key={i}
-                className="equipment-card-inner border border-zinc-50/10 rounded-xl"
-              >
-                <CardContent className="flex flex-col items-center p-4">
-                  <Image
-                    src={w.photo}
-                    alt={w.name}
-                    width={64}
-                    height={64}
-                    className="w-16 h-16 rounded-full mb-2"
-                  />
-                  <div className="font-semibold text-lg text-white">
-                    {w.name}
-                  </div>
-                  <div className="text-sm text-gray-300 mb-1">
-                    Assigned: {w.area}
-                  </div>
-                  <div className="text-sm text-gray-300 mb-1">
-                    Tasks: {w.tasksToday.join(", ")}
-                  </div>
-                  <div className="w-full bg-zinc-800 rounded-full h-2 mb-2 mt-1">
-                    <div
-                      className="bg-blue-500 h-2 rounded-full"
-                      style={{ width: `${w.completion}%` }}
-                    />
-                  </div>
-                  <div className="text-xs text-gray-400 mb-1">
-                    Task Completion: {w.completion}%
-                  </div>
-                  <div className="flex items-center gap-1 text-xs text-gray-400 mb-1">
-                    <Clock className="w-4 h-4" />
-                    Last check-in: {w.lastCheckIn}
-                  </div>
-                  <div className="flex items-center gap-1 text-xs text-gray-400">
-                    Performance:{" "}
-                    {Array.from({ length: 5 }).map((_, idx) => (
-                      <Star
-                        key={idx}
-                        className={`w-4 h-4 ${
-                          idx < Math.round(w.score)
-                            ? "text-yellow-400"
-                            : "text-gray-600"
-                        }`}
-                      />
-                    ))}{" "}
-                    <span className="ml-1">({w.score})</span>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div> */}
-
-            <div className="flex flex-row gap-4">
-
-            <StatusTracker />
-            <AreaChartComponent />
-
-          </div>
 
           <Card className="equipment-card-inner border border-zinc-50/10 rounded-xl">
             <WorkerTable />
           </Card>
+
+          <div className="flex flex-row gap-4">
+
+            <StatusTracker />
+            <ChartAreaGradient />
+
+          </div>
 
           {/* KPI Table */}
           <Card className="equipment-card-inner border border-zinc-50/10 rounded-xl">

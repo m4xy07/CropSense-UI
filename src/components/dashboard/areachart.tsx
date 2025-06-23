@@ -1,15 +1,11 @@
 "use client"
 
-import { TrendingUp } from "lucide-react"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis, ReferenceLine } from "recharts"
 
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
 import {
   ChartConfig,
@@ -17,93 +13,129 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-]
+import React from "react"
+import { SelectCrop } from "./cropselect"
+
+export const description = "An area chart with gradient fill"
+
+const cropChartData: Record<string, { data: { month: string; desktop: number }[]; threshold: number }> = {
+  Wheat: {
+    data: [
+      { month: '', desktop: 43 },
+      { month: '', desktop: 70 },
+      { month: '', desktop: 60 },
+      { month: '', desktop: 68 },
+      { month: '', desktop: 80 },
+      { month: '', desktop: 63 },
+      { month: '', desktop: 85 },
+      { month: '', desktop: 93 },
+    ],
+    threshold: 75,
+  },
+  Rice: {
+    data: [
+      { month: '', desktop: 60 },
+      { month: '', desktop: 65 },
+      { month: '', desktop: 70 },
+      { month: '', desktop: 72 },
+      { month: '', desktop: 68 },
+      { month: '', desktop: 74 },
+      { month: '', desktop: 77 },
+      { month: '', desktop: 69 },
+    ],
+    threshold: 75,
+  },
+  Corn: {
+    data: [
+      { month: '', desktop: 80 },
+      { month: '', desktop: 85 },
+      { month: '', desktop: 90 },
+      { month: '', desktop: 88 },
+      { month: '', desktop: 92 },
+      { month: '', desktop: 95 },
+      { month: '', desktop: 97 },
+      { month: '', desktop: 88 },
+    ],
+    threshold: 75,
+  },
+};
 
 const chartConfig = {
   desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
+    label: "Crop Health",
+    color: "#16a34a",
   },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
-  },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
-export function AreaChartComponent() {
+export function ChartAreaGradient() {
+  const [crop, setCrop] = React.useState("Wheat");
+  const cropData = cropChartData[crop] || cropChartData["Wheat"];
+  const lastValue = cropData.data[cropData.data.length - 1].desktop;
+  const belowThreshold = lastValue < cropData.threshold;
+  const healthTextClass = lastValue < 80 ? "text-red-500" : "text-[#4ad476]";
+
   return (
-    <Card className="equipment-card-inner border border-zinc-50/10 rounded-xl">
+    <Card className="equipment-card-inner border !p-0 border-zinc-50/10 rounded-xl flex flex-col w-[500px] h-[250px] overflow-hidden">
+      <div className='flex flex-row justify-between px-5 py-4 border-b border-b-zinc-50/10 rounded-t-xl'>
+        <h2 className='text-[18px] font-normal mt-1'>
+          Crop Health
+        </h2>
+        <SelectCrop crop={crop} setCrop={setCrop} />
+      </div>
       <CardContent>
-        <ChartContainer config={chartConfig}>
+        <div className="py-4 px-5 text-lg font-semibold flex flex-col gap-1 ">
+          <p className="text-[14px] font-medium text-white">
+            {crop}
+          </p>
+          <div className="flex flex-row justify-between items-center">
+            <span>
+              <span className={`leading-none ${healthTextClass}`}>
+                {lastValue}%
+              </span>
+              &nbsp;healthy
+            </span>
+            <span className="flex flex-row gap-1 items-center">
+              <span className={`text-[14px] font-medium ${belowThreshold ? 'text-red-500' : 'text-green-600'}`}>{belowThreshold ? `-${(cropData.threshold - lastValue).toFixed(1)}%` : `+${(lastValue - cropData.threshold).toFixed(1)}%`}</span>
+              <span className="text-[14px] text-white/80 font-normal">
+                since last week
+              </span>
+            </span>
+          </div>
+        </div>
+        <ChartContainer config={chartConfig} className="px-5 w-full h-[100px]">
           <AreaChart
-            accessibilityLayer
-            data={chartData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
+            data={cropData.data}
+            margin={{ top: 10, right: 0, bottom: 0, left: 0 }}
           >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
+            <CartesianGrid vertical={false} horizontal={false} />
+            <XAxis dataKey="month" tick={false} axisLine={false} />
+            <YAxis domain={[Math.min(...cropData.data.map(d => d.desktop)) - 5, Math.max(...cropData.data.map(d => d.desktop)) + 5]} hide />
+            <ReferenceLine
+              y={cropData.threshold}
+              stroke="#ef4444"
+              strokeWidth={1}
             />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <defs>
               <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="5%"
-                  stopColor="var(--color-desktop)"
-                  stopOpacity={0.8}
-                />
-                <stop
-                  offset="95%"
-                  stopColor="var(--color-desktop)"
-                  stopOpacity={0.1}
-                />
-              </linearGradient>
-              <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="5%"
-                  stopColor="var(--color-mobile)"
-                  stopOpacity={0.8}
-                />
-                <stop
-                  offset="95%"
-                  stopColor="var(--color-mobile)"
-                  stopOpacity={0.1}
-                />
+                <stop offset="5%" stopColor={belowThreshold ? '#ef4444' : 'var(--color-desktop)'} stopOpacity={0.8} />
+                <stop offset="95%" stopColor={belowThreshold ? '#ef4444' : 'var(--color-desktop)'} stopOpacity={0.1} />
               </linearGradient>
             </defs>
             <Area
-              dataKey="mobile"
-              type="natural"
-              fill="url(#fillMobile)"
-              fillOpacity={0.4}
-              stroke="var(--color-mobile)"
-              stackId="a"
-            />
-            <Area
               dataKey="desktop"
-              type="natural"
+              type="monotone"
               fill="url(#fillDesktop)"
               fillOpacity={0.4}
-              stroke="var(--color-desktop)"
+              stroke={belowThreshold ? '#ef4444' : 'var(--color-desktop)'}
+              strokeWidth={2}
+              dot={false}
+              activeDot={{ r: 5 }}
               stackId="a"
             />
           </AreaChart>
         </ChartContainer>
       </CardContent>
+      <CardFooter />
     </Card>
-  )
+  );
 }

@@ -215,7 +215,7 @@ export default function Example() {
 		
 			<div className="w-[500px] space-y-6 px-5 py-4">
 				<div>
-					<p className="flex justify-between font-normal">
+					<p className="flex justify-between font-normal items-center">
 						<span className="flex items-center gap-2 font-normal">
 							 <span className="text-[14px]">
 								{fertilizer}
