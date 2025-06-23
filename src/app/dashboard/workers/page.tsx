@@ -38,7 +38,8 @@ import { useUser } from "@clerk/nextjs";
 import WorkerTable from "@/components/dashboard/workertable";
 import NotificationsComponent from "@/components/comp-383";
 import StatusTracker from "@/components/dashboard/statuscheck";
-import { ChartAreaGradient } from "@/components/dashboard/areachart";
+import { CropHealthChart } from "@/components/dashboard/areachart";
+import { SoilMoistureKPI } from "@/components/dashboard/soilmoisturekpi";
 
 // Sample Data
 const workers = [
@@ -189,68 +190,19 @@ const data = {
             </div>
           </div>
         </header>
-        <div className="flex flex-col gap-6 p-4 main-dashboard-second-part-theme theme-color min-h-screen">
+        <div className="flex flex-col gap-[1.25rem] p-4 main-dashboard-second-part-theme theme-color min-h-screen">
 
           <Card className="equipment-card-inner border border-zinc-50/10 rounded-xl">
             <WorkerTable />
           </Card>
 
-          <div className="flex flex-row gap-4">
+          <div className="flex flex-row gap-[1.25rem]">
 
             <StatusTracker />
-            <ChartAreaGradient />
+            <CropHealthChart />
+            <SoilMoistureKPI />
 
           </div>
-
-          {/* KPI Table */}
-          <Card className="equipment-card-inner border border-zinc-50/10 rounded-xl">
-            <CardContent className="p-4">
-              <div className="font-semibold text-lg text-white mb-2">
-                Key Performance Indicators
-              </div>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>KPI</TableHead>
-                    <TableHead>Threshold</TableHead>
-                    <TableHead>Last Reading</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Action Taken</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {kpis.map((k, i) => (
-                    <TableRow key={i}>
-                      <TableCell>{k.kpi}</TableCell>
-                      <TableCell>{k.threshold}</TableCell>
-                      <TableCell>{k.last}</TableCell>
-                      <TableCell>
-                        {k.status === "Low" && (
-                          <Badge variant="destructive">⚠️ Low</Badge>
-                        )}
-                        {k.status === "Overdue" && (
-                          <Badge variant="destructive">❗Overdue</Badge>
-                        )}
-                        {k.status === "Alert" && (
-                          <Badge variant="destructive">❗Alert</Badge>
-                        )}
-                        {k.status === "Missed" && (
-                          <Badge variant="destructive">❗Missed</Badge>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        {k.action.startsWith("Not") ? (
-                          <span className="text-red-400">❌ {k.action}</span>
-                        ) : (
-                          <span className="text-green-400">✅ {k.action}</span>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
 
           {/* Smart Alerts Panel */}
           <Card className="equipment-card-inner border border-zinc-50/10 rounded-xl">

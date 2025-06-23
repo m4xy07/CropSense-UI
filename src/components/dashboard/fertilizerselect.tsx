@@ -16,12 +16,10 @@ export function SelectFertilizer({ fertilizer, setFertilizer }: { fertilizer: st
   return (
     <Select value={fertilizer} onValueChange={setFertilizer}>
       <SelectTrigger2 className="w-fit">
-        <div className="flex items-center cursor-pointer w-fit bg-transparent py-[6px] px-[10px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps">
             <FlaskConical className="h-4 w-4 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff]" />
                 <span className="text-[14px] font-normal text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] pl-[6px]">
                 <SelectValue />
                 </span>
-        </div>
         {/* <SelectValue placeholder="Select a fertilizer" /> */}
       </SelectTrigger2>
       <SelectContent>

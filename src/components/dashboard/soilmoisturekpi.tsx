@@ -14,49 +14,49 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 import React from "react"
-import { SelectCrop } from "./cropselect"
+import { SelectMoisture } from "./soilmoistureselect"
 
 export const description = "An area chart with gradient fill"
 
 const cropChartData: Record<string, { data: { month: string; desktop: number }[]; threshold: number }> = {
-  Wheat: {
+  "Plot 1": {
     data: [
-      { month: '', desktop: 43 },
-      { month: '', desktop: 70 },
-      { month: '', desktop: 60 },
-      { month: '', desktop: 68 },
-      { month: '', desktop: 80 },
-      { month: '', desktop: 63 },
-      { month: '', desktop: 85 },
-      { month: '', desktop: 93 },
+      { month: 'Week 1', desktop: 91 },
+      { month: 'Week 2', desktop: 92 },
+      { month: 'Week 3', desktop: 93 },
+      { month: 'Week 4', desktop: 94 },
+      { month: 'Week 5', desktop: 93 },
+      { month: 'Week 6', desktop: 92 },
+      { month: 'Week 7', desktop: 93 },
+      { month: 'Week 8', desktop: 94 },
     ],
-    threshold: 75,
+    threshold: 90,
   },
-  Rice: {
+  "Plot 2": {
     data: [
-      { month: '', desktop: 60 },
-      { month: '', desktop: 65 },
-      { month: '', desktop: 70 },
-      { month: '', desktop: 72 },
-      { month: '', desktop: 68 },
-      { month: '', desktop: 74 },
-      { month: '', desktop: 77 },
-      { month: '', desktop: 69 },
+      { month: 'Week 1', desktop: 92 },
+      { month: 'Week 2', desktop: 93 },
+      { month: 'Week 3', desktop: 94 },
+      { month: 'Week 4', desktop: 93 },
+      { month: 'Week 5', desktop: 92 },
+      { month: 'Week 6', desktop: 93 },
+      { month: 'Week 7', desktop: 94 },
+      { month: 'Week 8', desktop: 93 },
     ],
-    threshold: 75,
+    threshold: 90,
   },
-  Corn: {
+  "Plot 3": {
     data: [
-      { month: '', desktop: 80 },
-      { month: '', desktop: 85 },
-      { month: '', desktop: 90 },
-      { month: '', desktop: 88 },
-      { month: '', desktop: 92 },
-      { month: '', desktop: 95 },
-      { month: '', desktop: 97 },
-      { month: '', desktop: 88 },
+      { month: 'Week 1', desktop: 94 },
+      { month: 'Week 2', desktop: 93 },
+      { month: 'Week 3', desktop: 92 },
+      { month: 'Week 4', desktop: 93 },
+      { month: 'Week 5', desktop: 94 },
+      { month: 'Week 6', desktop: 93 },
+      { month: 'Week 7', desktop: 92 },
+      { month: 'Week 8', desktop: 93 },
     ],
-    threshold: 75,
+    threshold: 90,
   },
 };
 
@@ -67,9 +67,9 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function CropHealthChart() {
-  const [crop, setCrop] = React.useState("Wheat");
-  const cropData = cropChartData[crop] || cropChartData["Wheat"];
+export function SoilMoistureKPI() {
+  const [plot, setPlot] = React.useState("Plot 1");
+  const cropData = cropChartData[plot] || cropChartData["Plot 1"];
   const lastValue = cropData.data[cropData.data.length - 1].desktop;
   const belowThreshold = lastValue < cropData.threshold;
   const healthTextClass = lastValue < 80 ? "text-red-500" : "text-[#4ad476]";
@@ -78,14 +78,14 @@ export function CropHealthChart() {
     <Card className="equipment-card-inner border !p-0 border-zinc-50/10 rounded-xl flex flex-col w-1/3 h-[250px] overflow-hidden">
       <div className='flex flex-row justify-between px-5 py-4 border-b border-b-zinc-50/10 rounded-t-xl'>
         <h2 className='text-[18px] font-normal mt-1'>
-          Crop Health
+          Soil Moisture
         </h2>
-        <SelectCrop crop={crop} setCrop={setCrop} />
+        <SelectMoisture plot={plot} setPlot={setPlot} />
       </div>
       <CardContent>
         <div className="py-4 px-5 text-lg font-semibold flex flex-col gap-1 ">
           <p className="text-[14px] font-medium text-white leading-none mt-1">
-            {crop}
+            {plot}
           </p>
           <div className="flex flex-row justify-between items-center">
             <span>

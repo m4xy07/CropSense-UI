@@ -205,7 +205,7 @@ export default function Example() {
 
 	return (
 		<>
-		<div className='flex flex-col equipment-card-inner border border-zinc-50/10 rounded-xl w-fit'>
+		<div className='flex flex-col equipment-card-inner border border-zinc-50/10 rounded-xl w-1/3'>
 		<div className='flex flex-row justify-between px-5 py-4 border-b border-b-zinc-50/10 rounded-t-xl'>
 			<h2 className='text-[18px] font-normal mt-1'>
 				Fertilizer Schedule
@@ -213,7 +213,7 @@ export default function Example() {
 			<SelectFertilizer fertilizer={fertilizer} setFertilizer={setFertilizer} />
 		</div>
 		
-			<div className="w-[500px] space-y-6 px-5 py-4">
+			<div className="w-full space-y-6 px-5 py-4">
 				<div>
 					<p className="flex justify-between font-normal items-center">
 						<span className="flex items-center gap-2 font-normal">
