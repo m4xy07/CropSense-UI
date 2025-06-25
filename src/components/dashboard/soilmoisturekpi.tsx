@@ -62,7 +62,7 @@ const cropChartData: Record<string, { data: { month: string; desktop: number }[]
 
 const chartConfig = {
   desktop: {
-    label: "Crop Health",
+    label: "Soil Moisture",
     color: "#16a34a",
   },
 } satisfies ChartConfig;
@@ -116,7 +116,7 @@ export function SoilMoistureKPI() {
               strokeWidth={1}
             />
             <defs>
-              <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="fillMoisture" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor={belowThreshold ? '#ef4444' : 'var(--color-desktop)'} stopOpacity={0.8} />
                 <stop offset="95%" stopColor={belowThreshold ? '#ef4444' : 'var(--color-desktop)'} stopOpacity={0.1} />
               </linearGradient>
@@ -124,7 +124,7 @@ export function SoilMoistureKPI() {
             <Area
               dataKey="desktop"
               type="monotone"
-              fill="url(#fillDesktop)"
+              fill="url(#fillMoisture)"
               fillOpacity={0.4}
               stroke={belowThreshold ? '#ef4444' : 'var(--color-desktop)'}
               strokeWidth={2}
