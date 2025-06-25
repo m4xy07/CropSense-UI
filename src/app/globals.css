@@ -163,8 +163,6 @@ body {
   text-align: center;
   transition: all .2s ease;
   white-space: nowrap;
-  position: relative;
-  overflow: hidden;
 } */
 
 /* .pricing-card-price:hover {
@@ -1892,7 +1890,13 @@ body {
 }
 
 .alert-dashboard-theme{
-  background: linear-gradient(135deg, #0c0124 0%, #d104121f 100%);
+  background: linear-gradient(135deg, #0c0124 0%, #ec02112f 100%);
+}
+
+.smart-alert-theme{
+  background: var(--bgexec-3) !important;
+  box-shadow: inset 0 0 0 1px var(--fillexec-2);
+  border-radius: 12px;
 }
 
 .main-dashboard-theme{
@@ -2207,6 +2211,11 @@ body {
     backdrop-filter: blur(100px);
 }
 
+.animate-fade-in {
+    animation: fadeIn 0.6s ease;
+  }
+
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -2214,6 +2223,33 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Alert fade-in for 'No actions required.' */
+.alert-fade-in {
+  animation: alertFadeInKey 0.6s ease;
+}
+@keyframes alertFadeInKey {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Alert fade-out to right for individual alert dismiss and all */
+.alert-fade-out-right {
+  animation: alertFadeOutRightKey 0.4s forwards;
+}
+@keyframes alertFadeOutRightKey {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(60px); }
+}
+
+/* Smoothly collapse alert container height */
+.alert-container-fade-out {
+  height: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  overflow: hidden;
+  transition: height 0.5s cubic-bezier(0.4,0,0.2,1), padding 0.5s cubic-bezier(0.4,0,0.2,1);
 }
 
 

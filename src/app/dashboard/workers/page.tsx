@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import {
   SidebarProvider,
@@ -30,6 +30,11 @@ import {
   MessageCircle,
   Bell,
   MapPin,
+  Upload,
+  Check,
+  FlaskConicalOff,
+  CheckCheck,
+  MailWarning,
 } from "lucide-react";
 import Image from "next/image";
 import { NavUser } from "@/components/nav-user";
@@ -72,50 +77,20 @@ const workers = [
   },
 ];
 
-const kpis = [
-  {
-    kpi: "Soil Moisture",
-    threshold: ">30%",
-    last: "19%",
-    status: "Low",
-    action: "Not watered",
-  },
-  {
-    kpi: "Fertilizer Schedule",
-    threshold: "Weekly",
-    last: "Missed",
-    status: "Overdue",
-    action: "Not Done",
-  },
-  {
-    kpi: "Crop Health",
-    threshold: "Good",
-    last: "Poor (yellowing)",
-    status: "Alert",
-    action: "Unacknowledged",
-  },
-  {
-    kpi: "Task Log (weeding)",
-    threshold: "On 6th June",
-    last: "Not Logged",
-    status: "Missed",
-    action: "Worker Ignored",
-  },
-];
 
 const alerts = [
   {
-    icon: <AlertTriangle className="text-yellow-400" />,
-    msg: "No irrigation detected despite moisture <15% — Alert sent to Owner",
+    icon: <AlertTriangle className="text-yellow-400 size-5" />,
+    msg: "No irrigation detected in Plot 3 despite soil moisture being less than 40% — urgent action required",
     time: "Today, 6:30 AM",
   },
   {
-    icon: <XCircle className="text-red-500" />,
-    msg: "Fertilizer not applied on schedule — SMS sent to Worker",
+    icon: <FlaskConicalOff className="text-red-500 size-5" />,
+    msg: "Fertilizer not applied on schedule — soil nutrient levels critical",
     time: "Yesterday, 8:00 PM",
   },
   {
-    icon: <Camera className="text-blue-400" />,
+    icon: <Camera className="text-blue-400 size-5" />,
     msg: "Crop stress detected via camera feed — requires inspection",
     time: "Yesterday, 3:15 PM",
   },
@@ -151,7 +126,51 @@ const data = {
     },
     
   };
-  const [acknowledged, setAcknowledged] = useState([false, false, false]);
+  const [acknowledged, setAcknowledged] = useState({}); // key: msg, value: boolean
+  const [alertsList, setAlertsList] = useState(alerts);
+  const [allAcknowledged, setAllAcknowledged] = useState(false);
+  const [alertFade, setAlertFade] = useState({}); // key: msg, value: boolean
+  const [containerFade, setContainerFade] = useState(false);
+  const [ackAllDisabled, setAckAllDisabled] = useState(false);
+
+  const handleAcknowledgeAll = () => {
+    const fadeObj = {};
+    const ackObj = {};
+    alertsList.forEach(a => { fadeObj[a.msg] = true; ackObj[a.msg] = true; });
+    setAlertFade(fadeObj);
+    setAckAllDisabled(true);
+    setTimeout(() => {
+      setAlertsList([]);
+      setAcknowledged(ackObj);
+      setAllAcknowledged(true);
+      setContainerFade(true);
+      setAlertFade({});
+    }, 400);
+  };
+
+  const handleAcknowledge = (i: number) => {
+    const msg = alertsList[i].msg;
+    setAlertFade(prev => ({ ...prev, [msg]: true }));
+    setTimeout(() => {
+      setAlertsList(prev => prev.filter((_, idx) => idx !== i));
+      setAcknowledged(prev => ({ ...prev, [msg]: true }));
+      if (alertsList.length === 1) {
+        setAllAcknowledged(true);
+        setContainerFade(true);
+        setAckAllDisabled(true);
+        setAlertFade({});
+      }
+    }, 400);
+  };
+
+  // Re-enable Acknowledge All if new alerts appear
+  useEffect(() => {
+    if (alertsList.length > 0) {
+      setAckAllDisabled(false);
+      setContainerFade(false);
+      setAllAcknowledged(false);
+    }
+  }, [alertsList]);
   return (
     <SidebarProvider className="dark main-dashboard-theme theme-color font-inter">
       <AppSidebar />
@@ -177,10 +196,6 @@ const data = {
             </div>
             <div className="flex flex-row gap-4">
               <div className="flex flex-row gap-2 items-center mr-[-10px]">
-              {/* <div className="relative hover:bg-[rgba(255,255,255,0.025)] group p-[6px] rounded-md flex flex-row items-center cursor-pointer transition-all duration-200 ease-in-out">
-                <div className="h-[10px] w-[10px] rounded-full bg-[#f4af29] alert-animation absolute top-0 right-0" />
-                <Bell className="w-[18px] h-[18px] text-[rgba(255,255,255,.75)] group-hover:text-[#fff] transition-all duration-200 ease-in-out" />
-              </div> */}
               <NotificationsComponent />
               <Separator orientation="vertical" className="mx-2 h-4" />
               <NavUser user={data.user} />
@@ -205,41 +220,55 @@ const data = {
           </div>
 
           {/* Smart Alerts Panel */}
-          <Card className="equipment-card-inner border border-zinc-50/10 rounded-xl">
-            <CardContent className="p-4">
-              <div className="font-semibold text-lg text-white mb-2">
-                Smart Alerts
+          <Card className="equipment-card-inner border border-zinc-50/10 rounded-xl p-0 overflow-hidden">
+            <CardContent className="p-0">
+              <div className='flex flex-row justify-between px-5 py-4 border-b border-b-zinc-50/10 rounded-t-xl'>
+                <h2 className='text-[18px] font-normal mt-1'>
+                  Active Problems
+                </h2>
+                <div
+                  className={`flex items-center w-fit bg-transparent py-[6px] px-[10px] rounded-[8px] relative group transition-colors ease-in-out duration-200 theme-color dashboard-header-gps ${ackAllDisabled ? 'opacity-50 pointer-events-none' : 'cursor-pointer hover:bg-[rgba(255,255,255,.025)]'}`}
+                  onClick={ackAllDisabled ? undefined : handleAcknowledgeAll}
+                >
+                  <CheckCheck className="h-4 w-4 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff]" />
+                  <span className="text-[14px] font-normal text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] pl-[6px]">
+                    Acknowledge all
+                  </span>
+                </div>
               </div>
-              <div className="flex flex-col gap-3">
-                {alerts.map((a, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center gap-3 bg-zinc-900/60 rounded-lg p-3"
-                  >
-                    {a.icon}
-                    <div className="flex-1 text-white text-sm">{a.msg}</div>
-                    <div className="text-xs text-gray-400 mr-2">{a.time}</div>
-                    <Button
-                      size="sm"
-                      variant="secondary"
-                      className="mr-1"
-                      onClick={() =>
-                        setAcknowledged((ack) =>
-                          ack.map((v, idx) => (idx === i ? true : v))
-                        )
-                      }
-                      disabled={acknowledged[i]}
-                    >
-                      Acknowledge
-                    </Button>
-                    <Button size="sm" variant="destructive">
-                      Escalate
-                    </Button>
-                    <Button size="sm" variant="outline">
-                      Send Warning
-                    </Button>
+              <div className={`flex flex-col gap-4 px-5 py-4 min-h-[60px] transition-all duration-500 ease-in-out ${containerFade && alertsList.length === 0 ? 'alert-container-fade-out' : ''}`}
+                   style={{height: alertsList.length === 0 && allAcknowledged ? 0 : undefined, paddingTop: alertsList.length === 0 && allAcknowledged ? 0 : undefined, paddingBottom: alertsList.length === 0 && allAcknowledged ? 0 : undefined}}>
+                {alertsList.length === 0 && allAcknowledged ? (
+                  <div className="flex items-center justify-center w-full h-[60px] text-white text-base alert-fade-in">
+                    No actions required.
                   </div>
-                ))}
+                ) : (
+                  alertsList.map((a, i) => (
+                    <div
+                      key={a.msg}
+                      className={`flex items-center gap-3 p-3 smart-alert-theme color-theme transition-transform duration-400 ease-in-out ${alertFade[a.msg] ? 'alert-fade-out-right' : ''}`}
+                    >
+                      {a.icon}
+                      <div className="flex-1 text-white text-sm">{a.msg}</div>
+                      <div className="text-xs text-gray-400 mr-2">{a.time}</div>
+                      <Button
+                        size="sm"
+                        className="mr-1 gap-0 equipment-btn transition-all rent-now-btn text-neutral-50 font-normal !rounded-md"
+                        onClick={() => handleAcknowledge(i)}
+                        disabled={!!acknowledged[a.msg]}
+                      ><Check className="h-4 w-4 text-[rgba(255,255,255,.9)] mr-[6px]" />
+                        Acknowledge
+                      </Button>
+                      {/* <Button size="sm" variant="destructive">
+                        Escalate
+                      </Button> */}
+                      <Button size="sm" className="font-normal gap-0 alert-notification-theme border border-zinc-50/10 text-neutral-50 hover:text-white transition-all duration-200 ease-in-out bg-red-800/80 hover:bg-red-700">
+                      <MailWarning className="h-4 w-4 text-[rgba(255,255,255,.9)] mr-[6px]" />
+                        Issue Warning
+                      </Button>
+                    </div>
+                  ))
+                )}
               </div>
             </CardContent>
           </Card>
@@ -321,3 +350,4 @@ const data = {
     </SidebarProvider>
   );
 }
+

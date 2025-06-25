@@ -103,7 +103,7 @@ export function NPKDonutComponent() {
         </CardContent>
         <div className="items-center flex flex-col justify-center gap-4">
           <NPKTableComponent />
-          <div className="flex flex-row items-center justify-center gap-2 py-2 px-4 border border-zinc-50/10 alert-dashboard-theme rounded-lg">
+          <div className="flex flex-row items-center justify-center gap-2 py-2 px-4 border border-zinc-50/10 alert-dashboard-theme rounded-md">
             <div className="h-[10px] w-[10px] rounded-full bg-[#d10412] warning-animation" />
             <span className="text-[13px]">Deficiency detected! Take action now to avoid issues.</span>
           </div>

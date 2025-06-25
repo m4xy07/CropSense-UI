@@ -47,14 +47,14 @@ const cropChartData: Record<string, { data: { month: string; desktop: number }[]
   },
   "Plot 3": {
     data: [
-      { month: 'Week 1', desktop: 94 },
-      { month: 'Week 2', desktop: 93 },
-      { month: 'Week 3', desktop: 92 },
-      { month: 'Week 4', desktop: 93 },
-      { month: 'Week 5', desktop: 94 },
-      { month: 'Week 6', desktop: 93 },
-      { month: 'Week 7', desktop: 92 },
-      { month: 'Week 8', desktop: 93 },
+      { month: 'Week 1', desktop: 81 },
+      { month: 'Week 2', desktop: 60 },
+      { month: 'Week 3', desktop: 55 },
+      { month: 'Week 4', desktop: 71 },
+      { month: 'Week 5', desktop: 50 },
+      { month: 'Week 6', desktop: 43 },
+      { month: 'Week 7', desktop: 40 },
+      { month: 'Week 8', desktop: 35 },
     ],
     threshold: 90,
   },
@@ -92,7 +92,7 @@ export function SoilMoistureKPI() {
               <span className={`leading-none ${healthTextClass}`}>
                 {lastValue}%
               </span>
-              &nbsp;healthy
+              &nbsp;moist
             </span>
             <span className="flex flex-row gap-1 items-center">
               <span className={`text-[14px] font-medium ${belowThreshold ? 'text-red-500' : 'text-green-600'}`}>{belowThreshold ? `-${(cropData.threshold - lastValue).toFixed(1)}%` : `+${(lastValue - cropData.threshold).toFixed(1)}%`}</span>

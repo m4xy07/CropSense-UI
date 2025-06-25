@@ -64,7 +64,7 @@ const getStatus = (currentVal: number, idealVal: number) => {
 };
 
   return (
-    <div className="rounded-xl border border-zinc-50/10 overflow-hidden">
+    <div className="rounded-md border border-zinc-50/10 overflow-hidden">
       {/* Header */}
       <div className="grid grid-cols-4 bg-transparent text-[#e4e4e4] border-b border-zinc-50/10">
         <div className="py-2 px-4 text-center font-medium border-r border-zinc-50/10 text-[14px] bg-[#ffffff0a]">Values</div>
