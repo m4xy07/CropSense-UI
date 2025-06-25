@@ -9,66 +9,134 @@ export function cx(...args) {
   return twMerge(clsx(...args));
 }
 
-const data = [
-	{ date: '22 May, 2025', tooltip: 'Operational' },
-	{ date: '23 May, 2025', tooltip: 'Operational' },
-	{ date: '24 May, 2025', tooltip: 'Operational' },
-	{ date: '25 May, 2025', tooltip: 'Operational' },
-	{ date: '26 May, 2025', tooltip: 'Operational' },
-	{ date: '27 May, 2025', tooltip: 'Operational' },
-	{ date: '28 May, 2025', tooltip: 'Operational' },
-	{ date: '29 May, 2025', tooltip: 'Operational' },
-	{ date: '30 May, 2025', tooltip: 'Operational' },
-	{
-		date: '31 May, 2025',
-		tooltip: 'Downtime',
-		href: '#',
-		description: 'Down for 2 hours. Learn more in status report.',
-	},
-	{ date: '1 Jun, 2025', tooltip: 'Operational' },
-	{ date: '2 Jun, 2025', tooltip: 'Operational' },
-	{ date: '3 Jun, 2025', tooltip: 'Operational' },
-	{ date: '4 Jun, 2025', tooltip: 'Operational' },
-	{ date: '5 Jun, 2025', tooltip: 'Operational' },
-	{ date: '6 Jun, 2025', tooltip: 'Operational' },
-	{ date: '7 Jun, 2025', tooltip: 'Operational' },
-	{ date: '8 Jun, 2025', tooltip: 'Operational' },
-	{
-		date: '9 Jun, 2025',
-		tooltip: 'Downtime',
-		href: '#',
-		description: 'Down for 1 hour. Learn more in status report.',
-	},
-	{ date: '10 Jun, 2025', tooltip: 'Operational' },
-	{ date: '11 Jun, 2025', tooltip: 'Operational' },
-	{ date: '12 Jun, 2025', tooltip: 'Operational' },
-	{ date: '13 Jun, 2025', tooltip: 'Operational' },
-	{ date: '14 Jun, 2025', tooltip: 'Operational' },
-	{
-		date: '15 Jun, 2025',
-		tooltip: 'Downtime',
-		href: '#',
-		description: 'Down for 1 hour and 10 minutes. Learn more in status report.',
-	},
-	{ date: '16 Jun, 2025', tooltip: 'Operational' },
-	{ date: '17 Jun, 2025', tooltip: 'Operational' },
-	{ date: '18 Jun, 2025', tooltip: 'Operational' },
-	{ date: '19 Jun, 2025', tooltip: 'Operational' },
-	{ date: '20 Jun, 2025', tooltip: 'Operational' },
-];
-
-const colorMapping = {
-	Operational: 'bg-green-400',
-	Downtime: 'bg-red-500',
-	Maintenance: 'bg-amber-500',
+const fertilizerTrackerData = {
+  "NPK 15-15-15": [
+    { date: '22 May, 2025', tooltip: 'Operational' },
+    { date: '23 May, 2025', tooltip: 'Operational' },
+    { date: '24 May, 2025', tooltip: 'Operational' },
+    { date: '25 May, 2025', tooltip: 'Operational' },
+    { date: '26 May, 2025', tooltip: 'Operational' },
+    { date: '27 May, 2025', tooltip: 'Operational' },
+    { date: '28 May, 2025', tooltip: 'Operational' },
+    { date: '29 May, 2025', tooltip: 'Operational' },
+    { date: '30 May, 2025', tooltip: 'Operational' },
+    {
+      date: '31 May, 2025',
+      tooltip: 'Downtime',
+      href: '#',
+      description: 'Down for 2 hours. Learn more in status report.',
+    },
+    { date: '1 Jun, 2025', tooltip: 'Operational' },
+    { date: '2 Jun, 2025', tooltip: 'Operational' },
+    { date: '3 Jun, 2025', tooltip: 'Operational' },
+    { date: '4 Jun, 2025', tooltip: 'Operational' },
+    { date: '5 Jun, 2025', tooltip: 'Operational' },
+    { date: '6 Jun, 2025', tooltip: 'Operational' },
+    { date: '7 Jun, 2025', tooltip: 'Operational' },
+    { date: '8 Jun, 2025', tooltip: 'Operational' },
+    {
+      date: '9 Jun, 2025',
+      tooltip: 'Downtime',
+      href: '#',
+      description: 'Down for 1 hour. Learn more in status report.',
+    },
+    { date: '10 Jun, 2025', tooltip: 'Operational' },
+    { date: '11 Jun, 2025', tooltip: 'Operational' },
+    { date: '12 Jun, 2025', tooltip: 'Operational' },
+    { date: '13 Jun, 2025', tooltip: 'Operational' },
+    { date: '14 Jun, 2025', tooltip: 'Operational' },
+    {
+      date: '15 Jun, 2025',
+      tooltip: 'Downtime',
+      href: '#',
+      description: 'Down for 1 hour and 10 minutes. Learn more in status report.',
+    },
+    { date: '16 Jun, 2025', tooltip: 'Operational' },
+    { date: '17 Jun, 2025', tooltip: 'Operational' },
+    { date: '18 Jun, 2025', tooltip: 'Operational' },
+    { date: '19 Jun, 2025', tooltip: 'Operational' },
+    { date: '20 Jun, 2025', tooltip: 'Operational' },
+  ],
+  "NPK 10-10-10": [
+    { date: '22 May, 2025', tooltip: 'Operational' },
+    { date: '23 May, 2025', tooltip: 'Operational' },
+    { date: '24 May, 2025', tooltip: 'Maintenance' },
+    { date: '25 May, 2025', tooltip: 'Operational' },
+    { date: '26 May, 2025', tooltip: 'Operational' },
+    { date: '27 May, 2025', tooltip: 'Downtime', href: '#', description: 'Down for 3 hours. Learn more in status report.' },
+    { date: '28 May, 2025', tooltip: 'Operational' },
+    { date: '29 May, 2025', tooltip: 'Operational' },
+    { date: '30 May, 2025', tooltip: 'Operational' },
+    { date: '31 May, 2025', tooltip: 'Operational' },
+    { date: '1 Jun, 2025', tooltip: 'Operational' },
+    { date: '2 Jun, 2025', tooltip: 'Operational' },
+    { date: '3 Jun, 2025', tooltip: 'Operational' },
+    { date: '4 Jun, 2025', tooltip: 'Operational' },
+    { date: '5 Jun, 2025', tooltip: 'Operational' },
+    { date: '6 Jun, 2025', tooltip: 'Operational' },
+    { date: '7 Jun, 2025', tooltip: 'Operational' },
+    { date: '8 Jun, 2025', tooltip: 'Operational' },
+    { date: '9 Jun, 2025', tooltip: 'Operational' },
+    { date: '10 Jun, 2025', tooltip: 'Operational' },
+    { date: '11 Jun, 2025', tooltip: 'Operational' },
+    { date: '12 Jun, 2025', tooltip: 'Operational' },
+    { date: '13 Jun, 2025', tooltip: 'Operational' },
+    { date: '14 Jun, 2025', tooltip: 'Operational' },
+    { date: '15 Jun, 2025', tooltip: 'Operational' },
+    { date: '16 Jun, 2025', tooltip: 'Operational' },
+    { date: '17 Jun, 2025', tooltip: 'Operational' },
+    { date: '18 Jun, 2025', tooltip: 'Operational' },
+    { date: '19 Jun, 2025', tooltip: 'Operational' },
+    { date: '20 Jun, 2025', tooltip: 'Operational' },
+  ],
+  "NPK 20-20-20": [
+    { date: '22 May, 2025', tooltip: 'Operational' },
+    { date: '23 May, 2025', tooltip: 'Operational' },
+    { date: '24 May, 2025', tooltip: 'Operational' },
+    { date: '25 May, 2025', tooltip: 'Operational' },
+    { date: '26 May, 2025', tooltip: 'Operational' },
+    { date: '27 May, 2025', tooltip: 'Operational' },
+    { date: '28 May, 2025', tooltip: 'Operational' },
+    { date: '29 May, 2025', tooltip: 'Operational' },
+    { date: '30 May, 2025', tooltip: 'Maintenance' },
+    { date: '31 May, 2025', tooltip: 'Operational' },
+    { date: '1 Jun, 2025', tooltip: 'Operational' },
+    { date: '2 Jun, 2025', tooltip: 'Downtime', href: '#', description: 'Down for 30 minutes. Learn more in status report.' },
+    { date: '3 Jun, 2025', tooltip: 'Operational' },
+    { date: '4 Jun, 2025', tooltip: 'Operational' },
+    { date: '5 Jun, 2025', tooltip: 'Operational' },
+    { date: '6 Jun, 2025', tooltip: 'Operational' },
+    { date: '7 Jun, 2025', tooltip: 'Operational' },
+    { date: '8 Jun, 2025', tooltip: 'Operational' },
+    { date: '9 Jun, 2025', tooltip: 'Operational' },
+    { date: '10 Jun, 2025', tooltip: 'Operational' },
+    { date: '11 Jun, 2025', tooltip: 'Operational' },
+    { date: '12 Jun, 2025', tooltip: 'Operational' },
+    { date: '13 Jun, 2025', tooltip: 'Operational' },
+    { date: '14 Jun, 2025', tooltip: 'Operational' },
+    { date: '15 Jun, 2025', tooltip: 'Operational' },
+    { date: '16 Jun, 2025', tooltip: 'Operational' },
+    { date: '17 Jun, 2025', tooltip: 'Operational' },
+    { date: '18 Jun, 2025', tooltip: 'Operational' },
+    { date: '19 Jun, 2025', tooltip: 'Operational' },
+    { date: '20 Jun, 2025', tooltip: 'Operational' },
+  ],
 };
 
-const combinedData = data.map((item) => {
-	return {
-		...item,
-		color: colorMapping[item.tooltip],
-	};
-});
+// Map color for each fertilizer's tracker data
+function getCombinedData(fertilizer) {
+  const colorMapping = {
+    Operational: 'bg-green-400',
+    Downtime: 'bg-red-500',
+    Maintenance: 'bg-amber-500',
+  };
+  // Normalize fertilizer value and keys: remove spaces/dashes, lowercase
+  const normalize = (str) => (str || '').toLowerCase().replace(/\s|-/g, '');
+  const normalizedFertilizer = normalize(fertilizer);
+  const key = Object.keys(fertilizerTrackerData).find(k => normalize(k) === normalizedFertilizer);
+  const data = key ? fertilizerTrackerData[key] : [];
+  return data.map((item) => ({ ...item, color: colorMapping[item.tooltip] }));
+}
 
 const defaultBackgroundColor = 'bg-gray-200';
 
@@ -227,7 +295,7 @@ export default function Example() {
 					</p>
 					<Tracker
 						hoverEffect
-						data={combinedData}
+						data={getCombinedData(fertilizer)}
 						className="mt-4 flex w-full"
 					/>
 					<div className="mt-4 flex items-center text-[14px] gap-3 font-normal">
