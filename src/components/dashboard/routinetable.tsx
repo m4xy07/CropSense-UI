@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useId, useMemo, useRef, useState } from "react"
+import { useId, useMemo, useRef, useState } from "react"
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -122,6 +122,7 @@ const statusFilterFn: FilterFn<Item> = (
   return filterValue.includes(status)
 }
 
+// Rearranged columns for better logical order
 const columns: ColumnDef<Item>[] = [
   {
     id: "select",
@@ -154,7 +155,15 @@ const columns: ColumnDef<Item>[] = [
     size: 160,
     enableHiding: false,
   },
-  // Priority column (after Task, before Location)
+  // Location column (second)
+  {
+    header: "Location",
+    accessorKey: "location",
+    cell: ({ row }) => <span>{row.getValue("location")}</span>,
+    size: 120,
+    enableHiding: false,
+  },
+  // Priority column (third)
   {
     header: "Priority",
     accessorKey: "priority",
@@ -175,16 +184,14 @@ const columns: ColumnDef<Item>[] = [
     },
     size: 100,
     enableHiding: false,
+    sortingFn: (rowA, rowB, columnId) => {
+      const order = { High: 3, Medium: 2, Low: 1 };
+      const a = order[rowA.getValue(columnId) as string] || 0;
+      const b = order[rowB.getValue(columnId) as string] || 0;
+      return a - b;
+    },
   },
-  // Location column (second)
-  {
-    header: "Location",
-    accessorKey: "location",
-    cell: ({ row }) => <span>{row.getValue("location")}</span>,
-    size: 120,
-    enableHiding: false,
-  },
-  // Status column (third)
+  // Status column (fourth)
   {
     header: "Status",
     accessorKey: "status",
@@ -200,8 +207,14 @@ const columns: ColumnDef<Item>[] = [
     ),
     size: 100,
     filterFn: statusFilterFn,
+    sortingFn: (rowA, rowB, columnId) => {
+      const order = { Active: 3, Pending: 2, Inactive: 1 };
+      const a = order[rowA.getValue(columnId) as string] || 0;
+      const b = order[rowB.getValue(columnId) as string] || 0;
+      return a - b;
+    },
   },
-  // Start Time column (fourth)
+  // Start Time column (fifth)
   {
     header: "Start Time",
     accessorKey: "startTime",
@@ -209,7 +222,7 @@ const columns: ColumnDef<Item>[] = [
     size: 100,
     enableHiding: false,
   },
-  // End Time column (fifth)
+  // End Time column (sixth)
   {
     header: "End Time",
     accessorKey: "endTime",
@@ -217,7 +230,7 @@ const columns: ColumnDef<Item>[] = [
     size: 100,
     enableHiding: false,
   },
-  // Sensor Validation column (sixth)
+  // Sensor Validation column (seventh)
   {
     header: "Sensor Validation",
     accessorKey: "sensorValidation",
@@ -252,41 +265,121 @@ export default function RoutineTable() {
     },
   ])
 
-  const [data, setData] = useState<Item[]>([])
-  useEffect(() => {
-    // Map legacy data to new routine table format
-    async function fetchLocalData() {
-      const res = await fetch("/data/workers.json")
-      const legacyData = await res.json()
-      // Map legacy fields to new Item fields for the routine table
-      const mapped = Array.isArray(legacyData) ? legacyData.map((w: any, idx: number) => {
-        let startTime = "--", endTime = "--";
-        if (w.lastActive) {
-          const date = new Date(w.lastActive);
-          startTime = date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
-          const endDate = new Date(date.getTime() + 2 * 60 * 60 * 1000);
-          endTime = endDate.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
-        }
-        // Assign priority based on status or task as a simple example
-        let priority = "Low";
-        if (w.status === "Inactive" || (w.tasks && w.tasks.toLowerCase().includes("fertilizer"))) priority = "High";
-        else if (w.status === "Pending") priority = "Medium";
-        return {
-          id: w.id,
-          task: w.tasks ? w.tasks.split(",")[0].trim() : "-",
-          location: w.location ? w.location.replace(/Plot /i, "Plot ") : `Plot ${idx + 1}`,
-          startTime,
-          endTime,
-          sensorValidation: w.status === "Active" ? "Valid" : (w.status === "Inactive" ? "Sensor Error" : "Pending"),
-          status: w.status || "Pending",
-          taskTimestamp: w.lastActive || undefined,
-          priority,
-        }
-      }) : [];
-      setData(mapped)
-    }
-    fetchLocalData()
-  }, [])
+  // Add more meaningful data records for demonstration
+  const initialData: Item[] = [
+    {
+      id: "1",
+      task: "Irrigation",
+      location: "Plot 1",
+      startTime: "06:00 AM",
+      endTime: "08:00 AM",
+      sensorValidation: "Valid",
+      status: "Active",
+      priority: "High",
+      taskTimestamp: new Date().toISOString(),
+    },
+    {
+      id: "2",
+      task: "Fertilizer Application",
+      location: "Plot 2",
+      startTime: "09:00 AM",
+      endTime: "10:00 AM",
+      sensorValidation: "Valid",
+      status: "Pending",
+      priority: "Medium",
+      taskTimestamp: new Date().toISOString(),
+    },
+    {
+      id: "3",
+      task: "Weeding",
+      location: "Plot 3",
+      startTime: "11:00 AM",
+      endTime: "12:00 PM",
+      sensorValidation: "Sensor Error",
+      status: "Inactive",
+      priority: "High",
+      taskTimestamp: new Date().toISOString(),
+    },
+    {
+      id: "4",
+      task: "Harvesting",
+      location: "Plot 4",
+      startTime: "01:00 PM",
+      endTime: "03:00 PM",
+      sensorValidation: "Valid",
+      status: "Active",
+      priority: "Medium",
+      taskTimestamp: new Date().toISOString(),
+    },
+    {
+      id: "5",
+      task: "Soil Testing",
+      location: "Plot 5",
+      startTime: "03:30 PM",
+      endTime: "04:30 PM",
+      sensorValidation: "Pending",
+      status: "Pending",
+      priority: "Low",
+      taskTimestamp: new Date().toISOString(),
+    },
+    {
+      id: "6",
+      task: "Pest Control",
+      location: "Plot 6",
+      startTime: "05:00 PM",
+      endTime: "06:00 PM",
+      sensorValidation: "Valid",
+      status: "Active",
+      priority: "High",
+      taskTimestamp: new Date().toISOString(),
+    },
+    {
+      id: "7",
+      task: "Tractor Maintenance",
+      location: "Workshop",
+      startTime: "07:00 AM",
+      endTime: "08:00 AM",
+      sensorValidation: "Valid",
+      status: "Inactive",
+      priority: "Low",
+      taskTimestamp: new Date().toISOString(),
+    },
+    {
+      id: "8",
+      task: "Seed Sowing",
+      location: "Plot 7",
+      startTime: "08:30 AM",
+      endTime: "10:00 AM",
+      sensorValidation: "Valid",
+      status: "Active",
+      priority: "Medium",
+      taskTimestamp: new Date().toISOString(),
+    },
+    {
+      id: "9",
+      task: "Compost Preparation",
+      location: "Compost Yard",
+      startTime: "10:30 AM",
+      endTime: "12:00 PM",
+      sensorValidation: "Pending",
+      status: "Pending",
+      priority: "Low",
+      taskTimestamp: new Date().toISOString(),
+    },
+    {
+      id: "10",
+      task: "Spraying",
+      location: "Plot 8",
+      startTime: "02:00 PM",
+      endTime: "03:00 PM",
+      sensorValidation: "Valid",
+      status: "Active",
+      priority: "High",
+      taskTimestamp: new Date().toISOString(),
+    },
+  ];
+
+  const [data, setData] = useState<Item[]>(initialData)
 
   const handleDeleteRows = () => {
     const selectedRows = table.getSelectedRowModel().rows
