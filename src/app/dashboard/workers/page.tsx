@@ -45,6 +45,7 @@ import NotificationsComponent from "@/components/comp-383";
 import StatusTracker from "@/components/dashboard/statuscheck";
 import { CropHealthChart } from "@/components/dashboard/areachart";
 import { SoilMoistureKPI } from "@/components/dashboard/soilmoisturekpi";
+import RoutineTable from "@/components/dashboard/routinetable";
 
 // Sample Data
 const workers = [
@@ -273,53 +274,9 @@ const data = {
             </CardContent>
           </Card>
 
-          {/* Daily Task Assignment & Logs */}
+
           <Card className="equipment-card-inner border border-zinc-50/10 rounded-xl">
-            <CardContent className="p-4">
-              <div className="font-semibold text-lg text-white mb-2">
-                Daily Task Assignment & Logs
-              </div>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Task</TableHead>
-                    <TableHead>Time</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Proof</TableHead>
-                    <TableHead>Sensor Validation</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {tasks.map((t, i) => (
-                    <TableRow key={i}>
-                      <TableCell>{t.task}</TableCell>
-                      <TableCell>{t.time}</TableCell>
-                      <TableCell>
-                        {t.done ? (
-                          <span className="text-green-400">Done</span>
-                        ) : (
-                          <span className="text-red-400">Missed</span>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        {t.proof ? (
-                          <CheckCircle className="text-green-400" />
-                        ) : (
-                          <XCircle className="text-red-400" />
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        {t.task === "Watering" && !t.done ? (
-                          <Badge variant="destructive">⚠️ Flagged</Badge>
-                        ) : (
-                          <Badge variant="default">OK</Badge>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
+            <RoutineTable />
           </Card>
 
           
