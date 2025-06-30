@@ -118,7 +118,7 @@ export default function NotificationsComponent() {
         >
           <Bell className="!w-[18px] !h-[18px] text-[rgba(255,255,255,.75)] group-hover:text-[#fff] transition-all duration-200 ease-in-out" aria-hidden="true" />
           {unreadCount > 0 && (
-            <Badge className="!bg-[#f4af29] alert-animation absolute  -top-[4px] -right-[4px] w-[16px] h-[16px] text-[11px] text-[#0a0118] font-bold font-inter -translate-x-1/2 px-1">
+            <Badge className="!bg-[#f4af29] alert-animation absolute  -top-[4px] -right-[4px] w-[16px] h-[16px] text-[11px] text-[#0a0118] font-bold font-inter -translate-x-1/2 px-1 rounded-full">
               {unreadCount > 99 ? "99+" : unreadCount}
             </Badge>
           )}

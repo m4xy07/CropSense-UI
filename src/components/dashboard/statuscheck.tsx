@@ -268,7 +268,7 @@ const Tracker = React.forwardRef<HTMLDivElement, TrackerProps>(
 
 Block.displayName = 'Tracker';
 
-export default function Example() {
+export default function StatusTracker() {
 	const [fertilizer, setFertilizer] = React.useState("NPK 15-15-15");
 
 	return (
