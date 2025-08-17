@@ -248,13 +248,35 @@ const columns: ColumnDef<Item>[] = [
   },
 ]
 
+
+// Cookie helpers
+function setCookie(name: string, value: string, days = 365) {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+}
+function getCookie(name: string) {
+  return document.cookie.split('; ').reduce((r, v) => {
+    const parts = v.split('=');
+    return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+  }, '');
+}
+
 export default function RoutineTable() {
   const id = useId()
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  // Read initial pageSize from cookie, default to 5
+  const getInitialPageSize = () => {
+    if (typeof window !== 'undefined') {
+      const cookieVal = getCookie('routineTablePageSize');
+      const parsed = parseInt(cookieVal, 10);
+      if (!isNaN(parsed) && [5, 10, 25, 50].includes(parsed)) return parsed;
+    }
+    return 5;
+  };
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: getInitialPageSize(),
   })
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -398,7 +420,16 @@ export default function RoutineTable() {
     onSortingChange: setSorting,
     enableSortingRemoval: false,
     getPaginationRowModel: getPaginationRowModel(),
-    onPaginationChange: setPagination,
+    onPaginationChange: (updater) => {
+      setPagination((prev) => {
+        const next = typeof updater === 'function' ? updater(prev) : updater;
+        // Save pageSize to cookie if changed
+        if (next.pageSize !== prev.pageSize) {
+          setCookie('routineTablePageSize', String(next.pageSize));
+        }
+        return next;
+      });
+    },
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     getFilteredRowModel: getFilteredRowModel(),
@@ -453,7 +484,7 @@ export default function RoutineTable() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 px-5 py-4">
       {/* Filters */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
@@ -608,7 +639,7 @@ export default function RoutineTable() {
               </AlertDialogContent>
             </AlertDialog>
           )}
-          {/* Add user button */}
+          {/* Set up a Routine button */}
           <Button className="!border-none flex items-center cursor-pointer w-fit bg-transparent py-[6px] px-[10px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps !h-fit " variant="outline">
             <PlusIcon
               className="-mr-[8px] h-4 w-4 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff]"
@@ -616,7 +647,7 @@ export default function RoutineTable() {
               aria-hidden="true"
             />
             <span className="text-[14px] font-normal text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] pl-[6px]">
-            Add user
+            Set up a routine
             </span>
           </Button>
         </div>
@@ -728,7 +759,9 @@ export default function RoutineTable() {
           <Select
             value={table.getState().pagination.pageSize.toString()}
             onValueChange={(value) => {
-              table.setPageSize(Number(value))
+              const num = Number(value);
+              table.setPageSize(num);
+              setCookie('routineTablePageSize', String(num));
             }}
           >
             <SelectTrigger id={id} className="w-fit whitespace-nowrap !py-[6px] !px-[10px]">

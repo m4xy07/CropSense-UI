@@ -335,7 +335,8 @@ export default function WorkerTable() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 px-5 py-4">
+      
       {/* Filters */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
@@ -516,7 +517,7 @@ export default function WorkerTable() {
               aria-hidden="true"
             />
             <span className="text-[14px] font-normal text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] pl-[6px]">
-            Add user
+            Assign tasks
             </span>
           </Button>
         </div>

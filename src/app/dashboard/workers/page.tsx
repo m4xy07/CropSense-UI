@@ -208,7 +208,12 @@ const data = {
         </header>
         <div className="flex flex-col gap-[1.25rem] p-4 main-dashboard-second-part-theme theme-color min-h-screen">
 
-          <Card className="equipment-card-inner border border-zinc-50/10 rounded-xl">
+          <Card className="equipment-card-inner border border-zinc-50/10 rounded-xl !p-0">
+          <div className='flex flex-row justify-between px-5 py-4 border-b border-b-zinc-50/10 rounded-t-xl'>
+            <h2 className='text-[18px] font-normal mt-1'>
+              Worker Management
+            </h2>
+          </div>
             <WorkerTable />
           </Card>
 
@@ -275,7 +280,12 @@ const data = {
           </Card>
 
 
-          <Card className="equipment-card-inner border border-zinc-50/10 rounded-xl">
+          <Card className="equipment-card-inner border border-zinc-50/10 rounded-xl !p-0">
+          <div className='flex flex-row justify-between px-5 py-4 border-b border-b-zinc-50/10 rounded-t-xl'>
+            <h2 className='text-[18px] font-normal mt-1'>
+              Routine Management
+            </h2>
+          </div>
             <RoutineTable />
           </Card>
 
