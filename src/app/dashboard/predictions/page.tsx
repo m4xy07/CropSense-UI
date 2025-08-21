@@ -147,12 +147,13 @@ export default function Page() {
             <HarvestableMonthCards />
             
           </div>
-          <div className="flex flex-row gap-4">
+          <div className="flex flex-row gap-4 w-full overflow-hidden">
           <MorphingDialogBasicTen />
           <TwoLineChartComponent  />
-          <TwoLineChart2Component />
+          
           </div>
-          <div className="flex flex-row gap-4">
+          <div className="flex flex-row gap-4 w-full overflow-hidden">
+            <TwoLineChart2Component />
             <TwoLineChart3Component />
             <TwoLineChart4Component />
           </div>

@@ -93,7 +93,7 @@ export default function UploadComponent({ onFileUpload, loading }: { onFileUploa
         </div>
 
         {previewUrl && (
-          <div className="absolute top-12 right-3">
+          <div className="absolute -top-3 -right-3">
             <button
               type="button"
               className="focus-visible:border-ring focus-visible:ring-ring/50 z-50 flex size-8 cursor-pointer items-center justify-center rounded-full transition-all ease-in-out duration-200 image-upload text-white outline-none hover:bg-black/80 focus-visible:ring-[3px]"
@@ -109,7 +109,7 @@ export default function UploadComponent({ onFileUpload, loading }: { onFileUploa
 
       {errors.length > 0 && (
         <div
-          className="text-destructive flex items-center gap-1 text-xs"
+          className="text-destructive text-red-500 flex items-center gap-1 text-xs"
           role="alert"
         >
           <AlertCircleIcon className="size-3 shrink-0" />

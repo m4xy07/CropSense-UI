@@ -61,7 +61,7 @@ export function MorphingDialogBasicNine() {
               href="https://www.bighaat.com/products/ns-5002-1068-tomato-seeds?variant=40614523174935"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline hover:text-blue-400 transition-colors"
+              className=" hover:text-blue-400 transition-colors ease-in-out duration-200"
             >
               Tomato Namdhari 1068
             </a>

@@ -2,8 +2,8 @@
 
 import {
   CartesianGrid,
-  Line,
-  LineChart,
+  Area,
+  AreaChart,
   XAxis,
   YAxis,
   ResponsiveContainer,
@@ -47,16 +47,16 @@ const chartConfig = {
 
 export function TwoLineChartComponent() {
   return (
-    <Card className="p-8 w-[580px] max-w-[600px] h-full equipment-card-inner border-zinc-50/10">
+    <Card className="p-8 w-3/4 h-full equipment-card-inner border-zinc-50/10">
       <CardHeader>
         <CardTitle className="text-[20px] font-normal text-white">
           Crop Disease Prediction Comparison
         </CardTitle>
       </CardHeader>
       <CardContent className="h-[320px]">
-        <ChartContainer config={chartConfig} className="h-[320px] w-[480px]">
+        <ChartContainer config={chartConfig} className="h-[320px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={chartData} margin={{ top: 20, left: 20, bottom: 20, right: -20 }}>
+            <AreaChart data={chartData} margin={{ top: 20, left: 20, bottom: 20, right: -20 }}>
               <CartesianGrid vertical={false} />
               <XAxis
                 dataKey="Epochs"
@@ -91,21 +91,37 @@ export function TwoLineChartComponent() {
                 cursor={false}
                 content={<ChartTooltipContent className="w-[160px]" />}
               />
-              <Line
+              <defs>
+                <linearGradient id="fillAccuracy1" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="var(--color-accuracy1)" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="var(--color-accuracy1)" stopOpacity={0.1} />
+                </linearGradient>
+                <linearGradient id="fillAccuracy2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="var(--color-accuracy2)" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="var(--color-accuracy2)" stopOpacity={0.1} />
+                </linearGradient>
+              </defs>
+              <Area
                 dataKey="accuracy1"
                 type="monotone"
+                fill="url(#fillAccuracy1)"
+                fillOpacity={0.4}
                 stroke="var(--color-accuracy1)"
                 strokeWidth={2}
                 dot={false}
+                stackId="1"
               />
-              <Line
+              <Area
                 dataKey="accuracy2"
                 type="monotone"
+                fill="url(#fillAccuracy2)"
+                fillOpacity={0.4}
                 stroke="var(--color-accuracy2)"
                 strokeWidth={2}
                 dot={false}
+                stackId="2"
               />
-            </LineChart>
+            </AreaChart>
           </ResponsiveContainer>
         </ChartContainer>
       </CardContent>
