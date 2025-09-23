@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { Bell } from "lucide-react"
+import { useState, useEffect, useMemo } from "react"
+import { Bell, Thermometer, Droplets, Leaf, CloudRain, Activity, TestTube } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -14,55 +14,61 @@ import {
 const initialNotifications = [
   {
     id: 1,
-    image: "/avatar-80-01.jpg",
-    user: "Chris Tompson",
-    action: "requested review on",
-    target: "PR #42: Feature implementation",
+    icon: Droplets,
+    iconColor: "text-blue-400",
+    user: "Soil Sensor SM-01",
+    action: "detected critical moisture level",
+    target: "Plot A: 32% (below 40% threshold)",
     timestamp: "15 minutes ago",
     unread: true,
   },
   {
     id: 2,
-    image: "/avatar-80-02.jpg",
-    user: "Emma Davis",
-    action: "shared",
-    target: "New component library",
+    icon: Leaf,
+    iconColor: "text-green-400",
+    user: "NPK Sensor NP-03",
+    action: "recorded nitrogen depletion in",
+    target: "Plot B: 12 ppm (requires fertilizer)",
     timestamp: "45 minutes ago",
     unread: true,
   },
   {
     id: 3,
-    image: "/avatar-80-03.jpg",
-    user: "James Wilson",
-    action: "assigned you to",
-    target: "API integration task",
+    icon: Thermometer,
+    iconColor: "text-red-400",
+    user: "Temperature Sensor TH-02",
+    action: "measured heat stress levels",
+    target: "Tomato field: 38°C (above optimal)",
     timestamp: "4 hours ago",
     unread: false,
   },
   {
     id: 4,
-    image: "/avatar-80-04.jpg",
-    user: "Alex Morgan",
-    action: "replied to your comment in",
-    target: "Authentication flow",
+    icon: CloudRain,
+    iconColor: "text-gray-400",
+    user: "Weather Station WS-01",
+    action: "updated precipitation forecast",
+    target: "85mm rainfall expected in 24h",
     timestamp: "12 hours ago",
     unread: false,
   },
   {
     id: 5,
-    image: "/avatar-80-05.jpg",
-    user: "Sarah Chen",
-    action: "commented on",
-    target: "Dashboard redesign",
+    icon: Activity,
+    iconColor: "text-purple-400",
+    user: "Humidity Sensor HM-04",
+    action: "detected high humidity spike",
+    target: "Plot C: 92% RH (disease risk)",
     timestamp: "2 days ago",
     unread: false,
   },
   {
     id: 6,
-    image: "/avatar-80-06.jpg",
-    user: "Miky Derya",
-    action: "mentioned you in",
-    target: "Origin UI open graph image",
+    icon: TestTube,
+    iconColor: "text-yellow-400",
+    user: "pH Sensor PH-05",
+    action: "measured acidic soil conditions",
+    target: "Plot D: pH 5.2 (needs lime treatment)",
     timestamp: "2 weeks ago",
     unread: false,
   },
@@ -85,8 +91,45 @@ function Dot({ className }: { className?: string }) {
 }
 
 export default function NotificationsComponent() {
-  const [notifications, setNotifications] = useState(initialNotifications)
-  const unreadCount = notifications.filter((n) => n.unread).length
+  const [isLoaded, setIsLoaded] = useState(false)
+  
+  // Initialize state with a function to check localStorage first
+  const [notifications, setNotifications] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const savedNotifications = localStorage.getItem('cropsense-notifications')
+      if (savedNotifications) {
+        try {
+          const parsed = JSON.parse(savedNotifications)
+          // Merge with initialNotifications to ensure we have the icon components
+          return initialNotifications.map(initial => {
+            const saved = parsed.find((p: any) => p.id === initial.id)
+            return saved ? { ...initial, unread: saved.unread } : initial
+          })
+        } catch (error) {
+          console.error('Failed to parse saved notifications:', error)
+        }
+      }
+    }
+    return initialNotifications
+  })
+
+  // Mark as loaded after initial render
+  useEffect(() => {
+    setIsLoaded(true)
+  }, [])
+
+  // Calculate unread count reactively with useMemo
+  const unreadCount = useMemo(() => {
+    return notifications.filter((n) => n.unread).length
+  }, [notifications])
+
+  // Save notifications to localStorage whenever they change (but only after initial load)
+  useEffect(() => {
+    if (typeof window !== 'undefined' && isLoaded) {
+      const notificationsToSave = notifications.map(({ icon, iconColor, ...rest }) => rest)
+      localStorage.setItem('cropsense-notifications', JSON.stringify(notificationsToSave))
+    }
+  }, [notifications, isLoaded])
 
   const handleMarkAllAsRead = () => {
     setNotifications(
@@ -117,7 +160,7 @@ export default function NotificationsComponent() {
           aria-label="Open notifications"
         >
           <Bell className="!w-[18px] !h-[18px] text-[rgba(255,255,255,.75)] group-hover:text-[#fff] transition-all duration-200 ease-in-out" aria-hidden="true" />
-          {unreadCount > 0 && (
+          {isLoaded && unreadCount > 0 && (
             <Badge className="!bg-[#f4af29] alert-animation absolute  -top-[4px] -right-[4px] w-[16px] h-[16px] text-[11px] text-[#0a0118] font-bold font-inter -translate-x-1/2 px-1 rounded-full">
               {unreadCount > 99 ? "99+" : unreadCount}
             </Badge>
@@ -127,7 +170,7 @@ export default function NotificationsComponent() {
       <PopoverContent className="w-80 p-1 !border-none font-inter notifications-context-menu theme-color">
         <div className="flex items-baseline justify-between gap-4 px-3 py-2">
           <div className="text-sm font-semibold">Notifications</div>
-          {unreadCount > 0 && (
+          {isLoaded && unreadCount > 0 && (
             <button
               className="text-xs font-medium hover:underline"
               onClick={handleMarkAllAsRead}
@@ -147,13 +190,9 @@ export default function NotificationsComponent() {
             className="hover:bg-[#ffffff0a] rounded-md px-3 py-2 text-sm transition-colors"
           >
             <div className="relative flex items-start gap-3 pe-3">
-              <img
-                className="size-9 rounded-md"
-                src={notification.image}
-                width={32}
-                height={32}
-                alt={notification.user}
-              />
+              <div className="size-9 rounded-md bg-[#ffffff0a] flex items-center justify-center">
+                <notification.icon className={`size-5 ${notification.iconColor}`} />
+              </div>
               <div className="flex-1 space-y-1">
                 <button
                   className="text-white/80 text-left after:absolute after:inset-0"

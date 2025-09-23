@@ -66,6 +66,7 @@ import SensorStatusComponent from "@/components/comp-485";
 import { NPKDonutComponent } from "@/components/dashboard/npkdonut";
 import { UpcomingEventsComponent } from "@/components/dashboard/upcomingevents";
 import ToastComponent from "@/components/comp-298";
+import NotificationsComponent from "@/components/comp-383";
 
 const API_URL = "https://data.cropsense.tech/data";
 
@@ -129,13 +130,12 @@ export default function Page() {
             </div>
             <div className="flex flex-row gap-2 items-center">
               {/* <ToastComponent /> */}
-              <div className="relative hover:bg-[rgba(255,255,255,0.025)] group p-[6px] rounded-md flex flex-row items-center cursor-pointer transition-all duration-200 ease-in-out">
-                <div className="h-[10px] w-[10px] rounded-full bg-[#f4af29] alert-animation absolute top-0 right-0" />
-                <Bell className="w-[18px] h-[18px] text-[rgba(255,255,255,.75)] group-hover:text-[#fff] transition-all duration-200 ease-in-out" />
-              </div>
-
-              <Separator orientation="vertical" className="mx-2 h-4" />
-              <NavUser user={data.user} />
+              <div className="flex flex-row gap-2 items-center mr-[-10px]">
+                            <NotificationsComponent />
+                            <Separator orientation="vertical" className="mx-2 h-4" />
+                            <NavUser user={data.user} />
+                            
+                            </div>
             </div>
           </div>
         </header>
@@ -414,7 +414,7 @@ export default function Page() {
                       rice <span className="text-[#9CA3AF]">this season</span>
                     </p>
                     <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
-                      Jun 3, 2025
+                      Sep 24, 2025
                     </p>
                   </div>
                 </div>
@@ -434,7 +434,7 @@ export default function Page() {
                       tomato <span className="text-[#9CA3AF]">crop</span>
                     </p>
                     <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
-                      Jun 3, 2025
+                      Sep 24, 2025
                     </p>
                   </div>
                 </div>
@@ -455,7 +455,7 @@ export default function Page() {
                       234-999
                     </p>
                     <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
-                      Jun 3, 2025
+                      Sep 24, 2025
                     </p>
                   </div>
                 </div>
@@ -478,7 +478,7 @@ export default function Page() {
                       tomorrow
                     </p>
                     <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
-                      Jun 3, 2025
+                      Sep 24, 2025
                     </p>
                   </div>
                 </div>
@@ -513,7 +513,7 @@ export default function Page() {
                       <span className="text-[#9CA3AF]">since last week</span>
                     </p>
                     <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
-                      Jun 3, 2025
+                      Sep 24, 2025
                     </p>
                   </div>
                 </div>
