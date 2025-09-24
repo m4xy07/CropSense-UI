@@ -1,34 +1,9 @@
 import { PlusIcon } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 
 export function MorphingDialogBasicNine() {
-  const [best_crop, setBestCrop] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchBestCrop = async () => {
-      try {
-        const response = await fetch("https://data.cropsense.tech");
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (Array.isArray(data) && data.length > 0) {
-          const latestBestCrop = data[data.length - 1]?.best_crop;
-          setBestCrop(latestBestCrop);
-        } else {
-          console.warn("API returned an empty or invalid response.");
-        }
-      } catch (error) {
-        console.error("Error fetching best crop status:", error);
-      }
-    };
-
-    fetchBestCrop();
-  }, []);
+  // Static data
+  const best_crop = "soybean";
 
   const capitalize = (str: string) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -48,7 +23,7 @@ export function MorphingDialogBasicNine() {
             </p>
             <div className="w-full h-[200px] relative">
               <Image
-              src="/Tomato.jpg"
+              src="/Soybean.jpg"
               alt="crop image"
               layout="fill"
               objectFit="cover"
@@ -58,12 +33,12 @@ export function MorphingDialogBasicNine() {
             </div>
             <div className="text-center text-[22px] mt-2 text-white">
             <a
-              href="https://www.bighaat.com/products/ns-5002-1068-tomato-seeds?variant=40614523174935"
+              href="https://www.bighaat.com/products/soybean-seeds"
               target="_blank"
               rel="noopener noreferrer"
               className=" hover:text-blue-400 transition-colors ease-in-out duration-200"
             >
-              Tomato Namdhari 1068
+              {best_crop ? capitalize(best_crop) : "Soybean"}
             </a>
             </div>
         </div>

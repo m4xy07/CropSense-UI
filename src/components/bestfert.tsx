@@ -1,35 +1,10 @@
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import Button from './Button';
 import Link from 'next/link';
 
 export function MorphingDialogBasicTen() {
-  const [recommendedFertilizer, setRecommendedFertilizer] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchRecommendedFertilizer = async () => {
-      try {
-        const response = await fetch("https://data.cropsense.tech/");
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (Array.isArray(data) && data.length > 0) {
-          const latest = data[data.length - 1]?.recommended_fertilizer;
-          setRecommendedFertilizer(latest);
-        } else {
-          console.warn("API returned an empty or invalid response.");
-        }
-      } catch (error) {
-        console.error("Error fetching recommended fertilizer:", error);
-      }
-    };
-
-    fetchRecommendedFertilizer();
-  }, []);
+  // Static data
+  const recommendedFertilizer = "NPK 15-15-15";
 
   const capitalize = (str: string) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -52,13 +27,11 @@ export function MorphingDialogBasicTen() {
             <div className="flex flex-col items-center">
             <Image src="/NPK15.png" alt="fertilizer image" width={175} height={175} className="rounded-xl" />
             <div className="text-center text-white">
-              {/* {recommendedFertilizer !== null ? capitalize(recommendedFertilizer) : "Loading..."} */}
-              NPK 15-15-15
+              {recommendedFertilizer}
             </div>
             </div>
             <div className='w-fit flex items-center justify-center mx-auto'>
-              {/* <Button>Order {recommendedFertilizer !== null ? capitalize(recommendedFertilizer) : "Loading..."}</Button> */}
-              <Link href="https://dir.indiamart.com/impcat/npk-fertilizer/npk-ratio-15-15-15-q15410334/"><Button>Order NPK 15-15-15</Button></Link>
+              <Link href="https://dir.indiamart.com/impcat/npk-fertilizer/npk-ratio-15-15-15-q15410334/"><Button>Order {recommendedFertilizer}</Button></Link>
             </div>
             
         </div>

@@ -20,7 +20,86 @@ import {
 } from "@/components/ui/chart"
 import { Skeleton } from "@/components/ui/skeleton"
 
-const API_URL = "https://data.cropsense.tech/data"
+// Static NPK data based on provided values
+const STATIC_NPK_VALUES = {
+  nitrogen: 10.9,
+  phosphorus: 5.2,
+  potassium: 8.6,
+};
+
+// Interface for NPK data points
+interface NPKDataPoint {
+  time: string;
+  displayTime: string;
+  nitrogen: number;
+  phosphorus: number;
+  potassium: number;
+}
+
+// Generate realistic historical NPK data points
+const generateStaticNPKData = (timeFrame: string): NPKDataPoint[] => {
+  const now = new Date("2025-09-24T18:45:12.000Z");
+  let startDate: Date;
+  let pointCount: number;
+  
+  switch (timeFrame) {
+    case "24 hours":
+      startDate = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+      pointCount = 24;
+      break;
+    case "7 days":
+      startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      pointCount = 7;
+      break;
+    case "14 days":
+      startDate = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
+      pointCount = 14;
+      break;
+    case "1 month":
+      startDate = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+      pointCount = 30;
+      break;
+    case "lifetime":
+      startDate = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000); // 3 months
+      pointCount = 90;
+      break;
+    default:
+      startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      pointCount = 7;
+  }
+  
+  const data: NPKDataPoint[] = [];
+  const timeStep = (now.getTime() - startDate.getTime()) / pointCount;
+  
+  for (let i = 0; i <= pointCount; i++) {
+    const currentTime = new Date(startDate.getTime() + i * timeStep);
+    
+    // Add realistic variation to NPK values (±15% variation)
+    const nitrogenVariation = (Math.random() - 0.5) * 0.3;
+    const phosphorusVariation = (Math.random() - 0.5) * 0.3;
+    const potassiumVariation = (Math.random() - 0.5) * 0.3;
+    
+    // Add some cyclical patterns for realism
+    const cycleFactor = Math.sin(i / pointCount * Math.PI * 2) * 0.1;
+    
+    const nitrogen = Math.max(0, STATIC_NPK_VALUES.nitrogen * (1 + nitrogenVariation + cycleFactor));
+    const phosphorus = Math.max(0, STATIC_NPK_VALUES.phosphorus * (1 + phosphorusVariation - cycleFactor));
+    const potassium = Math.max(0, STATIC_NPK_VALUES.potassium * (1 + potassiumVariation + cycleFactor * 0.5));
+    
+    data.push({
+      time: currentTime.toISOString(),
+      displayTime: currentTime.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      }),
+      nitrogen: parseFloat(nitrogen.toFixed(2)),
+      phosphorus: parseFloat(phosphorus.toFixed(2)),
+      potassium: parseFloat(potassium.toFixed(2)),
+    });
+  }
+  
+  return data;
+};
 
 const chartConfig = {
   nitrogen: { label: "Nitrogen", color: "hsl(var(--chart-1))" },
@@ -47,7 +126,7 @@ export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpande
   const [ticks, setTicks] = useState<string[]>([])
 
   useEffect(() => {
-    const fetchData = async () => {
+    const generateData = () => {
       setLoading(true)
       setChartData([])
       setLatestValues(null)
@@ -55,146 +134,98 @@ export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpande
       setDateRange(null)
     
       try {
-        const response = await fetch(API_URL)
-        if (!response.ok) throw new Error("Failed to fetch data")
-        const data = await response.json()
-    
-        if (Array.isArray(data) && data.length > 0) {
-          const now = new Date()
-          let startDate
-    
+        // Generate static NPK data
+        const data = generateStaticNPKData(timeFrame);
+        
+        if (data.length > 0) {
+          setChartData(data);
+
+          const totalPoints = data.length;
+          let tickCount = 0;
           switch (timeFrame) {
             case "24 hours":
-              startDate = new Date(now.getTime() - 24 * 60 * 60 * 1000)
-              break
+              tickCount = 2;
+              break;
             case "7 days":
-              startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
-              break
+              tickCount = 3;
+              break;
             case "14 days":
-              startDate = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000)
-              break
+              tickCount = 5;
+              break;
             case "1 month":
-              startDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1)) // ✅ Fix UTC issue
-              break
+              tickCount = 5;
+              break;
             case "lifetime":
-              startDate = new Date(data[0].time)
-              break
-            default:
-              startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
-          }
-
-          const filteredData = data.filter((entry) => {
-            const entryTime = new Date(entry.time)
-            return entryTime.getTime() >= startDate.getTime() && entryTime.getTime() <= now.getTime()
-          })
-    
-          if (filteredData.length === 0) {
-            console.warn("No data found in the selected time range.")
-          }
-
-          const formattedData = filteredData.map((entry) => {
-            const parsedDate = new Date(entry.time) // Parse the `time` field
-            console.log("Parsed date:", parsedDate, "Original time:", entry.time) // Debugging log
-            return {
-              time: entry.time, // Keep the original ISO 8601 string
-              displayTime: parsedDate.toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-              }), // Add a separate field for display
-              nitrogen: entry.npk_uptake_nitrogen,
-              phosphorus: entry.npk_uptake_phosphorus,
-              potassium: entry.npk_uptake_potassium,
-            }
-          })
-
-          setChartData(formattedData)
-
-          const totalPoints = formattedData.length
-          let tickCount = 0
-          switch (timeFrame) {
-            case "24 hours":
-              tickCount = 2 // 2 date points
-              break
-            case "7 days":
-              tickCount = 3 // 3 date points
-              break
-            case "14 days":
-              tickCount = 5 // 6 date points
-              break
-            case "1 month":
-              tickCount = 5 // 5 date points
-              break
-            case "lifetime":
-              tickCount = Math.min(12, totalPoints) // 1 point per month, up to 12 months
-              break
+              tickCount = Math.min(12, totalPoints);
+              break;
           }
 
           // Ensure ticks are evenly distributed
           const calculatedTicks = Array.from({ length: tickCount }, (_, i) => {
-            const index = Math.floor((i * totalPoints) / tickCount)
-            return formattedData[index]?.displayTime
-          }).filter(Boolean)
-          setTicks(calculatedTicks)
+            const index = Math.floor((i * (totalPoints - 1)) / (tickCount - 1));
+            return data[index]?.displayTime;
+          }).filter(Boolean);
+          setTicks(calculatedTicks);
 
           // Set date range with formatted dates
           const formatDate = (dateString: string) => {
-            const parsedDate = new Date(dateString) // Parse the `time` field
-            const day = parsedDate.getUTCDate() // Use getUTCDate instead of getDate
-            const month = parsedDate.toLocaleString("en-US", { month: "long", timeZone: "UTC" }) // Ensure UTC
+            const parsedDate = new Date(dateString);
+            const day = parsedDate.getUTCDate();
+            const month = parsedDate.toLocaleString("en-US", { month: "long", timeZone: "UTC" });
             const suffix =
               day % 10 === 1 && day !== 11 ? "st" :
               day % 10 === 2 && day !== 12 ? "nd" :
-              day % 10 === 3 && day !== 13 ? "rd" : "th"
+              day % 10 === 3 && day !== 13 ? "rd" : "th";
           
-            return `${day}${suffix} ${month}`
-          }
+            return `${day}${suffix} ${month}`;
+          };
 
-          const earliestDate = formatDate(filteredData[0].time)
-          const latestDate = formatDate(filteredData[filteredData.length - 1].time)
-          setDateRange(`${earliestDate} - ${latestDate}`)
+          const earliestDate = formatDate(data[0].time);
+          const latestDate = formatDate(data[data.length - 1].time);
+          setDateRange(`${earliestDate} - ${latestDate}`);
 
           // Latest values
-          const latestEntry = filteredData[filteredData.length - 1]
+          const latestEntry = data[data.length - 1];
           setLatestValues({
-            nitrogen: latestEntry.npk_uptake_nitrogen,
-            phosphorus: latestEntry.npk_uptake_phosphorus,
-            potassium: latestEntry.npk_uptake_potassium,
-          })
+            nitrogen: latestEntry.nitrogen,
+            phosphorus: latestEntry.phosphorus,
+            potassium: latestEntry.potassium,
+          });
 
           // Calculate time-frame average
-          const avgValues = filteredData.reduce(
+          const avgValues = data.reduce(
             (acc, entry) => {
-              acc.nitrogen += entry.npk_uptake_nitrogen
-              acc.phosphorus += entry.npk_uptake_phosphorus
-              acc.potassium += entry.npk_uptake_potassium
-              return acc
+              acc.nitrogen += entry.nitrogen;
+              acc.phosphorus += entry.phosphorus;
+              acc.potassium += entry.potassium;
+              return acc;
             },
             { nitrogen: 0, phosphorus: 0, potassium: 0 }
-          )
+          );
 
-          const totalEntries = filteredData.length
+          const totalEntries = data.length;
           const avgNPK = {
             nitrogen: avgValues.nitrogen / totalEntries,
             phosphorus: avgValues.phosphorus / totalEntries,
             potassium: avgValues.potassium / totalEntries,
-          }
+          };
 
           // Calculate percentage change
           setValueChange({
-            nitrogen: ((latestEntry.npk_uptake_nitrogen - avgNPK.nitrogen) / avgNPK.nitrogen) * 100,
-            phosphorus: ((latestEntry.npk_uptake_phosphorus - avgNPK.phosphorus) / avgNPK.phosphorus) * 100,
-            potassium: ((latestEntry.npk_uptake_potassium - avgNPK.potassium) / avgNPK.potassium) * 100,
-          })
+            nitrogen: ((latestEntry.nitrogen - avgNPK.nitrogen) / avgNPK.nitrogen) * 100,
+            phosphorus: ((latestEntry.phosphorus - avgNPK.phosphorus) / avgNPK.phosphorus) * 100,
+            potassium: ((latestEntry.potassium - avgNPK.potassium) / avgNPK.potassium) * 100,
+          });
         }
       } catch (error) {
-        console.error("Error fetching NPK uptake data:", error)
+        console.error("Error generating NPK uptake data:", error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchData()
-  }, [timeFrame])
+    generateData();
+  }, [timeFrame]);
 
   return (
     <Card className="equipment-card-inner border-zinc-50/10">

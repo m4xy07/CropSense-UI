@@ -76,23 +76,23 @@ export default function Page() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sensorData, setSensorData] = useState<any>(null);
 
-  useEffect(() => {
-    fetch("https://data.cropsense.tech/")
-      .then((res) => res.json())
-      .then((data) => {
-        // If data is an array, take the latest record
-        if (Array.isArray(data)) {
-          setSensorData(data[data.length - 1]);
-        } else {
-          setSensorData(data);
-        }
-      })
-      .catch(() => setSensorData(null));
-  }, []);
+  // useEffect(() => {
+  //   fetch("https://data.cropsense.tech/")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       // If data is an array, take the latest record
+  //       if (Array.isArray(data)) {
+  //         setSensorData(data[data.length - 1]);
+  //       } else {
+  //         setSensorData(data);
+  //       }
+  //     })
+  //     .catch(() => setSensorData(null));
+  // }, []);
 
-  // Helper to format values
-  const formatValue = (val: number | undefined) =>
-    typeof val === "number" ? val.toFixed(2) : "--";
+  // // Helper to format values
+  // const formatValue = (val: number | undefined) =>
+  //   typeof val === "number" ? val.toFixed(2) : "--";
 
   const data = {
     user: {
@@ -162,7 +162,8 @@ export default function Page() {
                 </h2>
                 <div className="flex flex-row gap-1 items-start pt-2">
                   <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">
-                    {formatValue(sensorData?.temperature)}
+                    {/* {formatValue(sensorData?.temperature)} */}
+                    23
                   </p>
                   <p className="!text-[22px] text-white/70">°C</p>
                 </div>
@@ -244,7 +245,8 @@ export default function Page() {
                 </h2>
                 <div className="flex flex-row gap-1 items-start pt-2">
                   <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">
-                    {formatValue(sensorData?.moisture)}
+                    {/* {formatValue(sensorData?.moisture)} */}
+                    43
                   </p>
                   <p className="!text-[22px] text-white/70">%</p>
                 </div>
@@ -319,7 +321,8 @@ export default function Page() {
                 <h2 className="text-[18px] font-light text-white">Humidity</h2>
                 <div className="flex flex-row gap-1 items-start pt-2">
                   <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">
-                    {formatValue(sensorData?.humidity)}
+                    {/* {formatValue(sensorData?.humidity)} */}
+                    71
                   </p>
                   <p className="!text-[22px] text-white/70">%</p>
                 </div>

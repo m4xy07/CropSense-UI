@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import { GroupChartComponent } from "@/components/dashboard/groupchart";
 import { LineChartComponent } from "@/components/dashboard/linecharts";
@@ -40,7 +40,31 @@ import { useUser } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 import NotificationsComponent from "@/components/comp-383";
 
-const API_URL = "https://data.cropsense.tech/data";
+// Static data from provided JSON
+const staticData = {
+  time: "2025-09-23T18:45:12.000Z",
+  temperature: 26.8,
+  humidity: 78.5,
+  aqi: 58,
+  hi: 28.4,
+  alt: 560.0,
+  pres: 1008.7,
+  moisture: 48.3,
+  raining: "yes",
+  wifi_strength: -54.2,
+  best_crop: "soybean",
+  recommended_fertilizer: "NPK 15-15-15",
+  npk_uptake_nitrogen: 10.9,
+  npk_uptake_phosphorus: 5.2,
+  npk_uptake_potassium: 8.6,
+  harvestable_months: [
+    {
+      month: "October",
+      wholesale_price: 102.4,
+      retail_price: 156.7
+    }
+  ]
+};
 
 export default function Page() {
   const { user } = useUser();
@@ -52,63 +76,23 @@ export default function Page() {
       email: user?.primaryEmailAddress?.emailAddress || "guest@example.com",
       avatar: user?.imageUrl || "/avatars/default.jpg",
     },
-    
   };
 
-  const [currentTime, setCurrentTime] = useState<string>("");
-  const [altitude, setAltitude] = useState<number | null>(null);
-  const [timeFrame, setTimeFrame] = useState<string>("7 days");
-  const [chartData, setChartData] = useState<{
-    chartData: { label: string; price: number }[];
-    harvestableMonth: string;
-    bestCrop: string;
-    recommendedFertilizer: string;
-  } | null>(null);
+  // Static values instead of dynamic state
+  const currentTime = new Date().toLocaleTimeString();
+  const altitude = staticData.alt;
+  const timeFrame = "7 days";
+  const chartData = {
+    chartData: [
+      { label: "Wholesale", price: staticData.harvestable_months[0].wholesale_price },
+      { label: "Retail", price: staticData.harvestable_months[0].retail_price }
+    ],
+    harvestableMonth: staticData.harvestable_months[0].month,
+    bestCrop: staticData.best_crop,
+    recommendedFertilizer: staticData.recommended_fertilizer,
+  };
 
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      setCurrentTime(now.toLocaleTimeString());
-    };
 
-    updateTime();
-    const intervalId = setInterval(updateTime, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(API_URL);
-        if (!response.ok) throw new Error("Failed to fetch data");
-
-        const data = await response.json();
-        if (Array.isArray(data) && data.length > 0) {
-          const latestRecord = data[data.length - 1];
-          const latestMonthData = latestRecord.harvestable_months[latestRecord.harvestable_months.length - 1];
-
-          setAltitude(parseFloat(latestRecord?.alt?.toFixed(2)));
-
-          setChartData({
-            chartData: [
-              { label: "Wholesale", price: parseFloat(latestMonthData.wholesale_price.toFixed(2)) },
-              { label: "Retail", price: parseFloat(latestMonthData.retail_price.toFixed(2)) },
-            ],
-            harvestableMonth: latestMonthData.month,
-            bestCrop: latestRecord.best_crop || "Unknown",
-            recommendedFertilizer: latestRecord.recommended_fertilizer || "Unknown",
-          });
-        } else {
-          console.warn("API returned an empty or invalid response.");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <SidebarProvider className="dark main-dashboard-theme theme-color font-inter">

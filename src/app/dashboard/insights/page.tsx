@@ -26,7 +26,31 @@ import { usePathname } from "next/navigation";
 import { NavUser } from "@/components/nav-user";
 import NotificationsComponent from "@/components/comp-383";
 
-const API_URL = "https://data.cropsense.tech/data";
+// Static placeholder data based on provided values
+const STATIC_DATA = {
+  time: "2025-09-24T18:45:12.000Z",
+  temperature: 26.8,
+  humidity: 78.5,
+  aqi: 58,
+  hi: 28.4,
+  alt: 560.0,
+  pres: 1008.7,
+  moisture: 48.3,
+  raining: "yes",
+  wifi_strength: -54.2,
+  best_crop: "soybean",
+  recommended_fertilizer: "NPK 15-15-15",
+  npk_uptake_nitrogen: 10.9,
+  npk_uptake_phosphorus: 5.2,
+  npk_uptake_potassium: 8.6,
+  harvestable_months: [
+    {
+      month: "October",
+      wholesale_price: 102.4,
+      retail_price: 156.7
+    }
+  ]
+};
 
 export default function Page() {
 
@@ -42,62 +66,24 @@ export default function Page() {
     
   };
 
-  const [currentTime, setCurrentTime] = useState<string>("");
-  const [altitude, setAltitude] = useState<number | null>(null);
-  const [rainStatus, setRainStatus] = useState<string | null>(null);
-  const [wifiStrength, setWifiStrength] = useState<number | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  // Static values based on provided data
+  const currentTime = "6:45 PM";
+  const altitude = STATIC_DATA.alt;
+  const rainStatus = STATIC_DATA.raining.charAt(0).toUpperCase() + STATIC_DATA.raining.slice(1);
+  const wifiStrength = STATIC_DATA.wifi_strength;
+  const loading = false;
   const [timeFrame, setTimeFrame] = useState<string>(Cookies.get("timeFrame") || "7 days");
 
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      let hours = now.getHours();
-      const minutes = now.getMinutes();
-      const ampm = hours >= 12 ? "PM" : "AM";
-      hours = hours % 12;
-      hours = hours ? hours : 12; // the hour '0' should be '12'
-      const minutesStr = minutes < 10 ? "0" + minutes : minutes;
-      setCurrentTime(`${hours}:${minutesStr} ${ampm}`);
-    };
-    updateTime();
-    const intervalId = setInterval(updateTime, 1000);
-    return () => clearInterval(intervalId);
-  }, []);
+  // Static time - no need for dynamic updates
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(API_URL);
-        if (!response.ok) throw new Error("Failed to fetch data");
-
-        const data = await response.json();
-        if (Array.isArray(data) && data.length > 0) {
-          const latestRecord = data[data.length - 1];
-          setAltitude(parseFloat(latestRecord?.alt?.toFixed(2)) || null);
-          setRainStatus(
-            latestRecord?.raining
-              ? String(latestRecord.raining).charAt(0).toUpperCase() + String(latestRecord.raining).slice(1)
-              : "Unknown"
-          );
-          setWifiStrength(latestRecord?.wifiStrength || null);
-        } else {
-          console.warn("API returned an empty or invalid response.");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+  // Static data - no need for API fetching
 
   useEffect(() => {
     Cookies.set("timeFrame", timeFrame, { expires: 7 });
   }, [timeFrame]);
 
   const getWifiStatus = () => {
+    // Using static wifi strength value of -54.2 (High Strength)
     if (wifiStrength === null) {
       return { text: "Disconnected", icon: <WifiOff className="w-5 h-5  text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] mr-[6px]" /> };
     }
