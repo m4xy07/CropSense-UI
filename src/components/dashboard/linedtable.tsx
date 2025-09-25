@@ -9,12 +9,7 @@ type NPKData = {
 };
 
 export default function NPKTableComponent() {
-  // Using placeholder values instead of dynamic API data
-  const [current, setCurrent] = useState<NPKData | null>({
-    nitrogen: 12.5,
-    phosphorus: 18.2,
-    potassium: 14.7,
-  });
+  const [current, setCurrent] = useState<NPKData | null>(null);
 
   // Hardcoded ideal values
   const ideal = {
@@ -23,27 +18,26 @@ export default function NPKTableComponent() {
     potassium: 15,
   };
 
-  // Commented out dynamic NPK data fetching from URL
-  // useEffect(() => {
-  //   async function fetchNPK() {
-  //     try {
-  //       const response = await fetch("https://data.cropsense.tech");
-  //       const data = await response.json();
+  useEffect(() => {
+    async function fetchNPK() {
+      try {
+        const response = await fetch("https://data.cropsense.tech");
+        const data = await response.json();
 
-  //       const latest = Array.isArray(data) ? data[0] : data;
+        const latest = Array.isArray(data) ? data[0] : data;
 
-  //       setCurrent({
-  //         nitrogen: latest.npk_uptake_nitrogen,
-  //         phosphorus: latest.npk_uptake_phosphorus,
-  //         potassium: latest.npk_uptake_potassium,
-  //       });
-  //     } catch (error) {
-  //       console.error("Failed to fetch NPK data", error);
-  //     }
-  //   }
+        setCurrent({
+          nitrogen: latest.npk_uptake_nitrogen,
+          phosphorus: latest.npk_uptake_phosphorus,
+          potassium: latest.npk_uptake_potassium,
+        });
+      } catch (error) {
+        console.error("Failed to fetch NPK data", error);
+      }
+    }
 
-  //   fetchNPK();
-  // }, []);
+    fetchNPK();
+  }, []);
 
 const getStatus = (currentVal: number, idealVal: number) => {
   const difference = Math.abs(currentVal - idealVal).toFixed(1);

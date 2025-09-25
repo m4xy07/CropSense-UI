@@ -29,60 +29,40 @@ interface NPKData {
 }
 
 export function NPKDonutComponent() {
-  // Commented out dynamic NPK data fetching - using placeholder values instead
-  // const [chartData, setChartData] = useState<any[]>([])
+  const [chartData, setChartData] = useState<any[]>([])
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const res = await fetch("https://data.cropsense.tech/")
-  //       const data = await res.json()
-  //       const latest: NPKData = data[0]
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch("https://data.cropsense.tech/")
+        const data = await res.json()
+        const latest: NPKData = data[0]
 
-  //       const transformedData = [
-  //       {
-  //           label: "Nitrogen",
-  //           value: parseFloat(latest.npk_uptake_nitrogen.toFixed(2)),
-  //           fill: "#d7721a", // Cyan
-  //       },
-  //       {
-  //           label: "Phosphorus",
-  //           value: parseFloat(latest.npk_uptake_phosphorus.toFixed(2)),
-  //           fill: "#d52c9e", // Orange
-  //       },
-  //       {
-  //           label: "Potassium",
-  //           value: parseFloat(latest.npk_uptake_potassium.toFixed(2)),
-  //           fill: "#974ae5", // Purple
-  //       },
-  //       ]
-  //       setChartData(transformedData)
-  //     } catch (err) {
-  //       console.error("Failed to fetch NPK data:", err)
-  //     }
-  //   }
+        const transformedData = [
+        {
+            label: "Nitrogen",
+            value: parseFloat(latest.npk_uptake_nitrogen.toFixed(2)),
+            fill: "#d7721a", // Cyan
+        },
+        {
+            label: "Phosphorus",
+            value: parseFloat(latest.npk_uptake_phosphorus.toFixed(2)),
+            fill: "#d52c9e", // Orange
+        },
+        {
+            label: "Potassium",
+            value: parseFloat(latest.npk_uptake_potassium.toFixed(2)),
+            fill: "#974ae5", // Purple
+        },
+        ]
+        setChartData(transformedData)
+      } catch (err) {
+        console.error("Failed to fetch NPK data:", err)
+      }
+    }
 
-  //   fetchData()
-  // }, [])
-
-  // Using placeholder NPK values instead of dynamic data
-  const chartData = [
-    {
-      label: "Nitrogen",
-      value: 12.5,
-      fill: "#d7721a", // Cyan
-    },
-    {
-      label: "Phosphorus", 
-      value: 18.2,
-      fill: "#d52c9e", // Orange
-    },
-    {
-      label: "Potassium",
-      value: 14.7,
-      fill: "#974ae5", // Purple
-    },
-  ]
+    fetchData()
+  }, [])
 
   const chartConfig: ChartConfig = {
   value: { label: "Uptake" },

@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useState, useRef } from "react";
+import dynamic from "next/dynamic";
 import CheckIcon from "@/assets/check.svg";
 import { AppSidebar } from "@/components/app-sidebar";
 import {
@@ -19,63 +20,20 @@ import {
 } from "@/components/ui/sidebar";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import { FileText } from "lucide-react";
+import { Bell, FileText } from "lucide-react";
 import { NavUser } from "@/components/nav-user";
 import { useUser } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
 import NotificationsComponent from "@/components/comp-383";
 
-// Static sensor data for last 3 days
-const staticSensorDataArray = [
-  {
-    time: "2025-09-24T18:45:12.000Z", // Today
-    temperature: 26.8,
-    humidity: 78.5,
-    aqi: 58,
-    hi: 28.4,
-    alt: 560.0,
-    pres: 1008.7,
-    moisture: 48.3,
-    raining: "yes",
-    recommended_fertilizer: "NPK 15-15-15",
-    npk_uptake_nitrogen: 10.9,
-    npk_uptake_phosphorus: 5.2,
-    npk_uptake_potassium: 8.6,
-  },
-  {
-    time: "2025-09-23T18:45:12.000Z", // Yesterday
-    temperature: 25.3,
-    humidity: 82.1,
-    aqi: 62,
-    hi: 27.8,
-    alt: 559.5,
-    pres: 1009.2,
-    moisture: 51.7,
-    raining: "no",
-    recommended_fertilizer: "NPK 15-15-15",
-    npk_uptake_nitrogen: 11.2,
-    npk_uptake_phosphorus: 4.8,
-    npk_uptake_potassium: 9.1,
-  },
-  {
-    time: "2025-09-22T18:45:12.000Z", // Day before yesterday
-    temperature: 27.5,
-    humidity: 75.2,
-    aqi: 55,
-    hi: 29.1,
-    alt: 560.2,
-    pres: 1007.8,
-    moisture: 46.9,
-    raining: "no",
-    recommended_fertilizer: "NPK 15-15-15",
-    npk_uptake_nitrogen: 10.5,
-    npk_uptake_phosphorus: 5.6,
-    npk_uptake_potassium: 8.2,
-  }
-];
+const API_URL = "https://data.cropsense.tech/data";
 
 export default function Page() {
+  const [sensorData, setSensorData] = useState<any[]>([]);
   const reportRef = useRef<HTMLDivElement>(null);
+
   const { user } = useUser();
+  const pathname = usePathname();
 
   const data = {
     user: {
@@ -85,11 +43,33 @@ export default function Page() {
     },
   };
 
-  // Format the static data with timestamps for last 3 days
-  const sensorData = staticSensorDataArray.map(item => ({
-    ...item,
-    timestamp: new Date(item.time).toLocaleString(),
-  }));
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error("Failed to fetch data");
+
+        const data = await response.json();
+        const latestThree = data
+          .slice(-3)
+          .reverse()
+          .map((item) => ({
+            ...item,
+            timestamp: item.time
+              ? new Date(item.time).toLocaleString()
+              : "No Timestamp Available",
+          }));
+
+        setSensorData(latestThree);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+    const intervalId = setInterval(fetchData, 60000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   const generatePDF = async () => {
     const element = reportRef.current;
@@ -231,13 +211,12 @@ export default function Page() {
             {renderCard(
               "Rain",
               sensorData.map((item) => {
-                const raining = item?.raining;
-                if (typeof raining === "number") {
-                  return (raining as number).toFixed(2);
-                } else if (typeof raining === "boolean") {
-                  return raining ? "Yes" : "No";
-                } else if (typeof raining === "string") {
-                  return raining.charAt(0).toUpperCase() + raining.slice(1);
+                if (typeof item?.raining === "number") {
+                  return item.raining.toFixed(2);
+                } else if (typeof item?.raining === "boolean") {
+                  return item.raining ? "Yes" : "No";
+                } else if (typeof item?.raining === "string") {
+                  return item.raining;
                 } else {
                   return "N/A";
                 }
