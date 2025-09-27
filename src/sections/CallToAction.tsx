@@ -4,6 +4,7 @@ import starsBg from "@/assets/stars.png";
 import gridlines from "@/assets/grid-lines.png";
 import {motion, useMotionTemplate, useMotionValue, useScroll, useTransform} from "framer-motion";
 import { RefObject, useEffect, useRef } from "react";
+import Link from "next/link";
 
 
 const useRelativeMousePosition = (to: RefObject<HTMLElement>) => {
@@ -77,7 +78,9 @@ export const CallToAction = () => {
           Increase your revenue and make informed decisions with our powerful analytics tools!
         </p>
         <div className="flex justify-center mt-8">
+        <Link href="/dashboard">
         <Button>Start Today!</Button>
+        </Link>
         </div>
         </div>  
         </motion.div>
