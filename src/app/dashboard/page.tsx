@@ -162,7 +162,7 @@ export default function Page() {
                 </h2>
                 <div className="flex flex-row gap-1 items-start pt-2">
                   <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">
-                    {formatValue(sensorData?.temperature)}
+                    26.8
                   </p>
                   <p className="!text-[22px] text-white/70">°C</p>
                 </div>
@@ -244,7 +244,7 @@ export default function Page() {
                 </h2>
                 <div className="flex flex-row gap-1 items-start pt-2">
                   <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">
-                    {formatValue(sensorData?.moisture)}
+                    48.3
                   </p>
                   <p className="!text-[22px] text-white/70">%</p>
                 </div>
@@ -319,7 +319,7 @@ export default function Page() {
                 <h2 className="text-[18px] font-light text-white">Humidity</h2>
                 <div className="flex flex-row gap-1 items-start pt-2">
                   <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">
-                    {formatValue(sensorData?.humidity)}
+                    78.5
                   </p>
                   <p className="!text-[22px] text-white/70">%</p>
                 </div>
@@ -359,7 +359,7 @@ export default function Page() {
                 </h2>
                 <div className="flex flex-row gap-1 items-start pt-2">
                   <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">
-                    93
+                    91
                   </p>
                   <p className="!text-[22px] text-white/70">%</p>
                 </div>

@@ -1,15 +1,12 @@
 import { RiArrowDownLine } from "@remixicon/react";
-import { useEffect, useState } from "react";
-
-
-type NPKData = {
-  nitrogen: number;
-  phosphorus: number;
-  potassium: number;
-};
 
 export default function NPKTableComponent() {
-  const [current, setCurrent] = useState<NPKData | null>(null);
+  // Static NPK data based on provided values
+  const current = {
+    nitrogen: 10.9,
+    phosphorus: 5.2,
+    potassium: 8.6,
+  };
 
   // Hardcoded ideal values
   const ideal = {
@@ -17,27 +14,6 @@ export default function NPKTableComponent() {
     phosphorus: 15,
     potassium: 15,
   };
-
-  useEffect(() => {
-    async function fetchNPK() {
-      try {
-        const response = await fetch("https://data.cropsense.tech");
-        const data = await response.json();
-
-        const latest = Array.isArray(data) ? data[0] : data;
-
-        setCurrent({
-          nitrogen: latest.npk_uptake_nitrogen,
-          phosphorus: latest.npk_uptake_phosphorus,
-          potassium: latest.npk_uptake_potassium,
-        });
-      } catch (error) {
-        console.error("Failed to fetch NPK data", error);
-      }
-    }
-
-    fetchNPK();
-  }, []);
 
 const getStatus = (currentVal: number, idealVal: number) => {
   const difference = Math.abs(currentVal - idealVal).toFixed(1);
@@ -74,25 +50,23 @@ const getStatus = (currentVal: number, idealVal: number) => {
       </div>
 
       {/* Current Row */}
-      {current && (
-        <div className="grid grid-cols-4 border-b border-zinc-50/10">
-          <div className="py-2 px-2 text-center font-medium text-[#e4e4e4] text-[14px] border-r bg-[#ffffff0a] border-zinc-50/10">
-            Current
-          </div>
-          <div className="py-2 px-2 text-center border-r border-zinc-50/10 text-[14px] flex flex-row items-center justify-center">
-            {current.nitrogen.toFixed(1)}
-            <div className="text-xs text-gray-400 flex flex-col justify-center">{getStatus(current.nitrogen, ideal.nitrogen)}</div>
-          </div>
-          <div className="py-2 px-2 text-center border-r border-zinc-50/10 text-[14px] flex flex-row items-center justify-center">
-            {current.phosphorus.toFixed(1)}
-            <div className="text-xs text-gray-400 flex flex-col justify-center">{getStatus(current.phosphorus, ideal.phosphorus)}</div>
-          </div>
-          <div className="py-2 px-2 text-center text-[14px] flex flex-row items-center justify-center">
-            {current.potassium.toFixed(1)}
-            <div className="text-xs text-gray-400 flex flex-col justify-center">{getStatus(current.potassium, ideal.potassium)}</div>
-          </div>
+      <div className="grid grid-cols-4 border-b border-zinc-50/10">
+        <div className="py-2 px-2 text-center font-medium text-[#e4e4e4] text-[14px] border-r bg-[#ffffff0a] border-zinc-50/10">
+          Current
         </div>
-      )}
+        <div className="py-2 px-2 text-center border-r border-zinc-50/10 text-[14px] flex flex-row items-center justify-center">
+          {current.nitrogen.toFixed(1)}
+          <div className="text-xs text-gray-400 flex flex-col justify-center">{getStatus(current.nitrogen, ideal.nitrogen)}</div>
+        </div>
+        <div className="py-2 px-2 text-center border-r border-zinc-50/10 text-[14px] flex flex-row items-center justify-center">
+          {current.phosphorus.toFixed(1)}
+          <div className="text-xs text-gray-400 flex flex-col justify-center">{getStatus(current.phosphorus, ideal.phosphorus)}</div>
+        </div>
+        <div className="py-2 px-2 text-center text-[14px] flex flex-row items-center justify-center">
+          {current.potassium.toFixed(1)}
+          <div className="text-xs text-gray-400 flex flex-col justify-center">{getStatus(current.potassium, ideal.potassium)}</div>
+        </div>
+      </div>
 
       {/* Ideal Row */}
       <div className="grid grid-cols-4 border-b last:border-none border-zinc-50/10">
