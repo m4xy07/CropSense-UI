@@ -2255,3 +2255,219 @@ body {
 .cl-userButtonPopoverFooter{
   display: none !important;
 }
+.cl-userButtonPopoverCard{
+  background: var(--bgexec-1) !important;
+  --bgexec-1: linear-gradient(135deg, #0c0124 0%, #021529 100%);
+    --bgexec-2: rgba(255, 255, 255, .025);
+    --bgexec-3: rgba(255, 255, 255, .025);
+    --shadowexec-2: 0 4px 12px rgba(0, 0, 0, .12);
+    --fillexec-1: rgba(255, 255, 255, .025);
+    --fillexec-2: rgba(255, 255, 255, .05);
+    --fillexec-3: rgba(255, 255, 255, .075);
+    --txtexec-3: rgba(255, 255, 255, .45);
+    --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+    font-family: Inter;
+    color: #fafafa;
+    
+}
+
+.cl-userButtonPopoverMain{
+  background: none;
+  color: #fafafa;
+}
+
+.cl-internal-r3g8qb > button{
+  border-top: 1px solid rgba(255,255,255,.075);
+  border-right: none;
+  border-bottom: none;
+  border-left: none;
+}
+
+.cl-button__manageAccount:focus, .cl-button__manageAccount:hover{
+  background-color: rgba(255, 255, 255, .05);
+  color: #fafafa;
+}
+
+.cl-button__signOut:focus, .cl-button__signOut:hover{
+  background-color: rgba(255, 255, 255, .05);
+  color: #fafafa;
+}
+
+.cl-internal-1dxo0ah{
+  flex: none;
+}
+
+.cl-internal-18lqs2k{
+  font-weight: 400;
+  font-size: 14px !important;
+  gap: 0.75rem;
+}
+
+.cl-internal-1dxo0ah svg{
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.cl-internal-15hkgn2{
+  display: none !important;
+}
+
+.cl-internal-1ye2xna{
+  background: var(--fillexec-2) !important;
+    backdrop-filter: blur(60px);
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    margin-right: 0px;
+    box-shadow: inset 0 0 0 1px var(--fillexec-3);
+}
+
+.cl-internal-1xtwf22{
+  --fillexec-3: rgba(255, 255, 255, .075);
+  background: var(--bgexec-1) !important;
+  border-radius: 0px;
+  border-color: var(--fillexec-3);
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+  border-style: solid;
+  margin-block: 0px; 
+  margin-inline-end: 0px;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.cl-modalContent{
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 1px var(--fillexec-3);
+  background: var(--bgexec-1) !important;
+  --bgexec-1: linear-gradient(135deg, #0c0124 0%, #021529 100%);
+    --bgexec-2: rgba(255, 255, 255, .025);
+    --bgexec-3: rgba(255, 255, 255, .025);
+    --shadowexec-2: 0 4px 12px rgba(0, 0, 0, .12);
+    --fillexec-1: rgba(255, 255, 255, .025);
+    --fillexec-2: rgba(255, 255, 255, .05);
+    --fillexec-3: rgba(255, 255, 255, .075);
+    --txtexec-3: rgba(255, 255, 255, .45);
+    --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+    
+}
+
+.cl-active {
+  font-size: 14px;
+  font-weight: 400;
+  color: #fff;
+  background-color: rgba(255, 255, 255, .05);
+}
+
+.cl-button__account{
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.cl-button__security{
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.cl-button__account:focus, .cl-button__account:active, .cl-button__account:hover{
+  background-color: rgba(255, 255, 255, .05);
+
+}
+
+
+.cl-button__security:active, .cl-button__security:focus, .cl-button__security:hover{
+  background-color: rgba(255, 255, 255, .05);
+}
+
+.cl-internal-4kkc6r{
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.cl-internal-yjm6g1{
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.cl-internal-1ek0dft{
+      border-top-color: rgba(255, 255, 255, .075);
+}
+
+.cl-internal-62rzw8{
+      border-top-color: rgba(255, 255, 255, .075);  
+}
+
+.cl-internal-shxxyl{
+  border-top-color: rgba(255, 255, 255, .075); 
+}
+
+.cl-internal-1roaz2h[data-color="primary"]{
+  box-shadow: inset 0 0 0 1px var(--fillexec-3);
+}
+
+.cl-internal-1roaz2h{
+  color: #fafafa;
+}
+
+.cl-menuList{
+  font-family: Inter;
+}
+
+:root {
+  --clerk-color-ring: transparent !important;
+}
+
+.cl-actionCard{
+  background: var(--bgexec-1) !important;
+  box-shadow: inset 0 0 0 1px var(--fillexec-3) !important;
+}
+
+.cl-formButtonPrimary.cl-button {
+    color: #0c0124;
+}
+
+.cl-internal-hvfjwo{
+  color: #fafafa;
+      
+}
+
+.cl-internal-hvfjwo[data-variant="outline"]{
+  box-shadow: inset 0 0 0 1px var(--fillexec-3);
+}
+
+.cl-menuList__connectedAccounts{
+  background: var(--bgexec-1) !important;
+  box-shadow: inset 0 0 0 1px var(--fillexec-3) !important;
+  
+}
+
+.cl-internal-1wblu3u{
+  color: #fafafa;
+}
+
+.cl-internal-epsslq:hover{
+  background-color: rgba(255, 255, 255, .05);
+}
+
+.cl-internal-166si8r{
+  background: var(--bgexec-1) !important;
+  box-shadow: inset 0 0 0 1px var(--fillexec-3) !important;
+  --bgexec-1: linear-gradient(135deg, #0c0124 0%, #021529 100%);
+    --bgexec-2: rgba(255, 255, 255, .025);
+    --bgexec-3: rgba(255, 255, 255, .025);
+    --shadowexec-2: 0 4px 12px rgba(0, 0, 0, .12);
+    --fillexec-1: rgba(255, 255, 255, .025);
+    --fillexec-2: rgba(255, 255, 255, .05);
+    --fillexec-3: rgba(255, 255, 255, .075);
+    --txtexec-3: rgba(255, 255, 255, .45);
+    --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+}
+
+.cl-internal-lpzoqi{
+  color: #fafafa !important;
+}
