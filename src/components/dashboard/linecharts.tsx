@@ -1,7 +1,7 @@
 "use client";
 
 import { TrendingUp, TrendingDown } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ComponentType } from "react";
 import {
   Card,
   CardContent,
@@ -17,10 +17,17 @@ import { AQIChart } from "./aqichart";
 import { HeatIndexChart } from "./hichart";
 import { PressureChart } from "./pressurechart";
 import { MoistureChart } from "./moisturechart";
+import { formatDateRangeLabel } from "@/lib/date-format";
 
 const API_URL = "https://data.cropsense.tech/data";
 
-const chartComponents = {
+type ChartComponentProps = {
+  data: { time: string; value: number }[];
+  ticks: string[];
+  timeFrame: string;
+};
+
+const chartComponents: Record<string, ComponentType<ChartComponentProps>> = {
   temperature: TemperatureChart,
   humidity: HumidityChart,
   aqi: AQIChart,
@@ -109,8 +116,15 @@ export function LineChartComponent({
             return entryDate >= startDate && entryDate <= now;
           });
 
+          if (filteredData.length === 0) {
+            setChartData({ data: [], ticks: [] });
+            setDateRange(null);
+            setValueChange(null);
+            return;
+          }
+
           const formattedData = filteredData.map((entry) => ({
-            time: new Date(entry.time).toISOString().split("T")[0], // Keeps YYYY-MM-DD format
+            time: entry.time,
             value: entry[dataFieldMap[dataType]],
           }));
 
@@ -119,7 +133,7 @@ export function LineChartComponent({
           let tickCount = 0;
           switch (timeFrame) {
             case "24 hours":
-              tickCount = 2; // 2 date points
+              tickCount = 6; // 2 date points
               break;
             case "7 days":
               tickCount = 3; // 3 date points
@@ -143,22 +157,14 @@ export function LineChartComponent({
 
           setChartData({ data: formattedData, ticks });
 
-          const formatDate = (dateString: string) => {
-            const date = new Date(dateString);
-            const day = date.getDate();
-            const month = date.toLocaleString("en-US", { month: "long" });
-            const suffix =
-              day % 10 === 1 && day !== 11
-                ? "st"
-                : day % 10 === 2 && day !== 12
-                ? "nd"
-                : day % 10 === 3 && day !== 13
-                ? "rd"
-                : "th";
-            return `${day}${suffix} ${month}`;
-          };
-
-          setDateRange(`${formatDate(formattedData[0].time)} - ${formatDate(formattedData[formattedData.length - 1].time)}`);
+          if (formattedData.length > 0) {
+            setDateRange(
+              formatDateRangeLabel(
+                formattedData[0].time,
+                formattedData[formattedData.length - 1].time,
+              ),
+            );
+          }
 
           let timeFrameAvgValue =
             filteredData.reduce((sum, entry) => sum + entry[dataFieldMap[dataType]], 0) / filteredData.length;
@@ -188,7 +194,17 @@ export function LineChartComponent({
         <div className="font-inter">{loading ? <Skeleton className="h-6 w-20" /> : value !== null ? `${value}${unitMap[dataType]}` : "No data available"}</div>
       </CardHeader>
       <CardContent>
-        {loading ? <Skeleton className="h-[277px] w-full" /> : ChartComponent && <ChartComponent data={chartData?.data} ticks={chartData?.ticks} />}
+        {loading ? (
+          <Skeleton className="h-[277px] w-full" />
+        ) : (
+          ChartComponent && (
+            <ChartComponent
+              data={chartData?.data ?? []}
+              ticks={chartData?.ticks ?? []}
+              timeFrame={timeFrame}
+            />
+          )
+        )}
       </CardContent>
       <CardFooter>
         {loading ? (

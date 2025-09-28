@@ -19,6 +19,11 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 import { Skeleton } from "@/components/ui/skeleton"
+import {
+  formatChartTickLabel,
+  formatChartTooltipLabel,
+  formatDateRangeLabel,
+} from "@/lib/date-format"
 
 const API_URL = "https://data.cropsense.tech/data"
 
@@ -34,7 +39,7 @@ interface StackedChartExpandedProps {
 
 export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpandedProps) {
   const [chartData, setChartData] = useState<
-    { time: string; displayTime: string; nitrogen: number; phosphorus: number; potassium: number }[]
+    { time: string; nitrogen: number; phosphorus: number; potassium: number }[]
   >([])
   const [loading, setLoading] = useState<boolean>(true)
   const [dateRange, setDateRange] = useState<string | null>(null)
@@ -92,20 +97,18 @@ export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpande
             console.warn("No data found in the selected time range.")
           }
 
-          const formattedData = filteredData.map((entry) => {
-            const parsedDate = new Date(entry.time) // Parse the `time` field
-            console.log("Parsed date:", parsedDate, "Original time:", entry.time) // Debugging log
-            return {
-              time: entry.time, // Keep the original ISO 8601 string
-              displayTime: parsedDate.toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-              }), // Add a separate field for display
-              nitrogen: entry.npk_uptake_nitrogen,
-              phosphorus: entry.npk_uptake_phosphorus,
-              potassium: entry.npk_uptake_potassium,
-            }
-          })
+          if (filteredData.length === 0) {
+            setChartData([])
+            setTicks([])
+            return
+          }
+
+          const formattedData = filteredData.map((entry) => ({
+            time: entry.time,
+            nitrogen: entry.npk_uptake_nitrogen,
+            phosphorus: entry.npk_uptake_phosphorus,
+            potassium: entry.npk_uptake_potassium,
+          }))
 
           setChartData(formattedData)
 
@@ -113,7 +116,7 @@ export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpande
           let tickCount = 0
           switch (timeFrame) {
             case "24 hours":
-              tickCount = 2 // 2 date points
+              tickCount = 6 // 2 date points
               break
             case "7 days":
               tickCount = 3 // 3 date points
@@ -132,26 +135,13 @@ export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpande
           // Ensure ticks are evenly distributed
           const calculatedTicks = Array.from({ length: tickCount }, (_, i) => {
             const index = Math.floor((i * totalPoints) / tickCount)
-            return formattedData[index]?.displayTime
+            return formattedData[index]?.time
           }).filter(Boolean)
           setTicks(calculatedTicks)
 
-          // Set date range with formatted dates
-          const formatDate = (dateString: string) => {
-            const parsedDate = new Date(dateString) // Parse the `time` field
-            const day = parsedDate.getUTCDate() // Use getUTCDate instead of getDate
-            const month = parsedDate.toLocaleString("en-US", { month: "long", timeZone: "UTC" }) // Ensure UTC
-            const suffix =
-              day % 10 === 1 && day !== 11 ? "st" :
-              day % 10 === 2 && day !== 12 ? "nd" :
-              day % 10 === 3 && day !== 13 ? "rd" : "th"
-          
-            return `${day}${suffix} ${month}`
-          }
-
-          const earliestDate = formatDate(filteredData[0].time)
-          const latestDate = formatDate(filteredData[filteredData.length - 1].time)
-          setDateRange(`${earliestDate} - ${latestDate}`)
+          const earliestDate = formattedData[0].time
+          const latestDate = formattedData[formattedData.length - 1].time
+          setDateRange(formatDateRangeLabel(earliestDate, latestDate))
 
           // Latest values
           const latestEntry = filteredData[filteredData.length - 1]
@@ -206,10 +196,17 @@ export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpande
       </CardHeader>
       <CardContent>
         {loading ? <Skeleton className="h-[600px] w-full" /> : (
-          <ChartContainer config={chartConfig}>
+              <ChartContainer config={chartConfig}>
             <AreaChart data={chartData} margin={{ left: 0, right: 0, top: 0 }}>
               <CartesianGrid vertical={false} />
-              <XAxis dataKey="displayTime" tickLine={false} axisLine={false} tickMargin={8} ticks={ticks} />
+                  <XAxis
+                    dataKey="time"
+                    tickLine={false}
+                    axisLine={false}
+                    tickMargin={8}
+                    ticks={ticks}
+                    tickFormatter={(time) => formatChartTickLabel(time as string, timeFrame)}
+                  />
               <YAxis hide />
               <ChartTooltip
                 cursor={false}
@@ -217,27 +214,10 @@ export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpande
                   <ChartTooltipContent
                     className="w-[175px]"
                     indicator="line"
-                    labelFormatter={(time, payload) => {
-                      // Use the original `time` value from the payload
-                      const originalTime = payload?.[0]?.payload?.time;
-                      const parsedDate = new Date(originalTime); // Parse the original ISO 8601 string
-                      console.log("Label formatter date:", parsedDate, "Original time:", originalTime); // Debugging log
-                      if (isNaN(parsedDate.getTime())) {
-                        console.error("Invalid date:", originalTime);
-                        return "Invalid date";
-                      }
-                      const day = parsedDate.getDate();
-                      const month = parsedDate.toLocaleString("en-US", { month: "long" });
-                      const suffix =
-                        day % 10 === 1 && day !== 11
-                          ? "st"
-                          : day % 10 === 2 && day !== 12
-                          ? "nd"
-                          : day % 10 === 3 && day !== 13
-                          ? "rd"
-                          : "th";
-                      return `${day}${suffix} ${month}, ${parsedDate.getFullYear()}`;
-                    }}
+                        labelFormatter={(time, payload) => {
+                          const originalTime = (payload?.[0]?.payload as { time?: string })?.time
+                          return formatChartTooltipLabel(originalTime ?? (time as string), timeFrame)
+                        }}
                   />
                 }
               />

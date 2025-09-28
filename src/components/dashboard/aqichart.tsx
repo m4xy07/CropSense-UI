@@ -4,6 +4,7 @@ import * as React from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
 import { CardContent } from "@/components/ui/card";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { formatChartTickLabel, formatChartTooltipLabel } from "@/lib/date-format";
 
 const chartConfig = {
   aqi: {
@@ -15,9 +16,11 @@ const chartConfig = {
 export function AQIChart({
   data,
   ticks,
+  timeFrame,
 }: {
   data: { time: string; value: number }[];
   ticks: string[];
+  timeFrame: string;
 }) {
   return (
     <CardContent>
@@ -26,7 +29,7 @@ export function AQIChart({
           <CartesianGrid vertical={false} />
           <XAxis
             dataKey="time"
-            tickFormatter={(time) => new Date(time).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+            tickFormatter={(time) => formatChartTickLabel(time as string, timeFrame)}
             tickLine={false}
             axisLine={false}
             tickMargin={8}
@@ -38,20 +41,7 @@ export function AQIChart({
               <ChartTooltipContent
                 className="w-[175px]"
                 nameKey="aqi"
-                labelFormatter={(time) => {
-                  const date = new Date(time);
-                  const day = date.getDate();
-                  const month = date.toLocaleString("en-US", { month: "long" });
-                  const suffix =
-                    day % 10 === 1 && day !== 11
-                      ? "st"
-                      : day % 10 === 2 && day !== 12
-                      ? "nd"
-                      : day % 10 === 3 && day !== 13
-                      ? "rd"
-                      : "th";
-                  return `${day}${suffix} ${month}, ${date.getFullYear()}`;
-                }}
+                labelFormatter={(time) => formatChartTooltipLabel(time as string, timeFrame)}
               />
             }
           />
