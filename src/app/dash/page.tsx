@@ -189,12 +189,13 @@ export default function Page() {
           </div>
         </header> */}
       
-
-        <div className="overflow-hidden w-[1024px] p-4">
-          {/* Carousel Container */}
-          <div 
-            ref={carouselRef}
-            className="relative w-full overflow-hidden cursor-grab active:cursor-grabbing select-none min-h-[600px]"
+        {/* Centered Carousel Container */}
+        <div className="flex items-center justify-center min-h-screen w-full">
+          <div className="overflow-hidden w-[1024px] p-4">
+            {/* Carousel Container */}
+            <div 
+              ref={carouselRef}
+              className="relative w-full overflow-hidden cursor-grab active:cursor-grabbing select-none h-fit items-center justify-center"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
@@ -204,17 +205,17 @@ export default function Page() {
             onMouseLeave={handleMouseUp}
           >
             <div 
-              className="flex transition-transform duration-300 ease-out h-full"
+              className="flex transition-transform duration-300 ease-out h-fit"
               style={{
                 transform: `translateX(${(-currentSlide * 100) + (isDragging ? -dragOffset / 10 : 0)}%)`
               }}
             >
               {/* Slide 1: KPI Cards */}
-              <div className="w-full flex-shrink-0 px-4 min-h-[500px]">
+              <div className="w-full flex-shrink-0 px-4 ">
                 <div className="w-full flex flex-1 flex-col gap-[1.25rem] h-full">
               <div className="flex flex-row gap-[1.25rem] w-full">
                 {/* Temperature Today Card */}
-                <div className="flex flex-row justify-between w-1/3 px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+                <div className="flex flex-row justify-between w-1/3 h-[250px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -249,7 +250,7 @@ export default function Page() {
                 </div>
 
                 {/* SOC Card */}
-                <div className="flex flex-row justify-between w-1/3 px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+                <div className="flex flex-row justify-between w-1/3 h-[250px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -279,7 +280,7 @@ export default function Page() {
                 </div>
 
                 {/* Soil Moisture Card */}
-                <div className="flex flex-row justify-between w-1/3 px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+                <div className="flex flex-row justify-between w-1/3 h-[250px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -316,7 +317,7 @@ export default function Page() {
 
               <div className="flex flex-row gap-[1.25rem] w-full">
                 {/* pH Level Card */}
-                <div className="flex flex-row justify-between w-1/3 px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+                <div className="flex flex-row justify-between w-1/3 h-[250px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -350,7 +351,7 @@ export default function Page() {
                 </div>
 
                 {/* Humidity Card */}
-                <div className="flex flex-row justify-between w-1/3 px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+                <div className="flex flex-row justify-between w-1/3 h-[250px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -385,7 +386,7 @@ export default function Page() {
                 </div>
 
                 {/* Plant Health Card */}
-                <div className="flex flex-row justify-between w-1/3 px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+                <div className="flex flex-row justify-between w-1/3 h-[250px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -430,7 +431,7 @@ export default function Page() {
           </div>
 
               {/* Slide 2: Recent Activity */}
-              <div className="w-full flex-shrink-0 px-4 min-h-[500px]">
+              <div className="w-full flex-shrink-0 px-4 h-fit">
                 <div className="flex justify-center items-start w-full h-full">
                   {/* Recent Activity Card */}
                   <div className="flex flex-col gap-4 justify-between rounded-xl equipment-card-inner w-full border border-zinc-50/10 h-fit">
@@ -502,29 +503,6 @@ export default function Page() {
                         via Paytm Merchant ID{" "}
                       </span>{" "}
                       234-999
-                    </p>
-                    <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
-                      Sep 24, 2025
-                    </p>
-                  </div>
-                </div>
-                {/* Activity 4 */}
-                <div className="bg-transparent flex flex-row gap-4">
-                  <div className="bg-[rgba(103,191,255,.75)] rounded-full p-[8px] h-fit w-fit flex items-start mb-3">
-                    <CloudRainWind
-                      className="inline-flex text-white size-4"
-                      aria-hidden="true"
-                    />
-                  </div>
-                  <div className="border-b border-zinc-50/10 w-full mt-1 pb-3 flex flex-row justify-between">
-                    <p className="text-white text-[14px]">
-                      Light <span className="text-[#9CA3AF]">to</span> moderate
-                      showers
-                      <span className="text-[#9CA3AF]">
-                        {" "}
-                        expected in your area
-                      </span>{" "}
-                      tomorrow
                     </p>
                     <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
                       Sep 24, 2025
@@ -678,7 +656,7 @@ export default function Page() {
             </div>
 
             {/* Carousel Dots Indicator */}
-            {/* <div className="flex justify-center mt-6 space-x-2">
+            <div className="flex justify-center mt-0 space-x-2">
               {Array.from({ length: totalSlides }).map((_, index) => (
                 <button
                   key={index}
@@ -690,8 +668,9 @@ export default function Page() {
                   }`}
                 />
               ))}
-            </div> */}
+            </div>
           </div>
+        </div>
       </SidebarInset>
     </SidebarProvider>
   );

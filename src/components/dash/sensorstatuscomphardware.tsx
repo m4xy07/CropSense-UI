@@ -192,7 +192,7 @@ export default function SensorStatusComponentHardware() {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 7,
+    pageSize: 8,
   })
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -275,6 +275,24 @@ export default function SensorStatusComponentHardware() {
         name: "SEN-008",
         email: "sensor008@cropsense.com",
         location: "Sector 08",
+        flag: "🇮🇳",
+        status: "Active",
+        balance: 1600,
+      },
+      {
+        id: "9",
+        name: "SEN-009",
+        email: "sensor009@cropsense.com",
+        location: "Sector 09",
+        flag: "🇮🇳",
+        status: "Active",
+        balance: 1600,
+      },
+      {
+        id: "10",
+        name: "SEN-010",
+        email: "sensor010@cropsense.com",
+        location: "Sector 10",
         flag: "🇮🇳",
         status: "Active",
         balance: 1600,
