@@ -10,6 +10,8 @@ import {
   ArrowRight,
   CloudRainWind,
   Earth,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import {
   Breadcrumb,
@@ -86,6 +88,19 @@ export default function Page() {
   const goToSlide = (slideIndex: number) => {
     if (slideIndex >= 0 && slideIndex < totalSlides) {
       setCurrentSlide(slideIndex);
+    }
+  };
+
+  // Arrow navigation functions
+  const goToPrevSlide = () => {
+    if (currentSlide > 0) {
+      setCurrentSlide(currentSlide - 1);
+    }
+  };
+
+  const goToNextSlide = () => {
+    if (currentSlide < totalSlides - 1) {
+      setCurrentSlide(currentSlide + 1);
     }
   };
 
@@ -190,20 +205,43 @@ export default function Page() {
         </header> */}
       
         {/* Centered Carousel Container */}
-        <div className="flex items-center justify-center min-h-screen w-full">
-          <div className="overflow-hidden w-[1024px] p-4">
-            {/* Carousel Container */}
-            <div 
-              ref={carouselRef}
-              className="relative w-full overflow-hidden cursor-grab active:cursor-grabbing select-none h-fit items-center justify-center"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
-          >
+        <div className="flex items-center justify-center min-h-screen w-full ">
+          <div className="relative w-[1024px] p-4">
+            {/* Left Arrow */}
+            <button
+              onClick={goToPrevSlide}
+              disabled={currentSlide === 0}
+              className={`absolute left-2 top-1/2 transform -translate-y-1/2 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200 backdrop-blur-sm ${
+                currentSlide === 0 ? 'opacity-30 cursor-not-allowed' : 'opacity-70 hover:opacity-100'
+              }`}
+            >
+              <ChevronLeft className="w-6 h-6 text-white" />
+            </button>
+
+            {/* Right Arrow */}
+            <button
+              onClick={goToNextSlide}
+              disabled={currentSlide === totalSlides - 1}
+              className={`absolute right-2 top-1/2 transform -translate-y-1/2 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200 backdrop-blur-sm ${
+                currentSlide === totalSlides - 1 ? 'opacity-30 cursor-not-allowed' : 'opacity-70 hover:opacity-100'
+              }`}
+            >
+              <ChevronRight className="w-6 h-6 text-white" />
+            </button>
+
+            <div className="overflow-hidden">
+              {/* Carousel Container */}
+              <div 
+                ref={carouselRef}
+                className="relative w-full overflow-hidden cursor-grab active:cursor-grabbing select-none h-fit items-center justify-center"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+            >
             <div 
               className="flex transition-transform duration-300 ease-out h-fit"
               style={{
@@ -212,10 +250,10 @@ export default function Page() {
             >
               {/* Slide 1: KPI Cards */}
               <div className="w-full flex-shrink-0 px-4 ">
-                <div className="w-full flex flex-1 flex-col gap-[1.25rem] h-full">
-              <div className="flex flex-row gap-[1.25rem] w-full">
+                <div className="w-full flex flex-1 flex-col gap-[1rem] h-full ">
+              <div className="flex flex-row gap-[1rem] w-full justify-center mx-auto ">
                 {/* Temperature Today Card */}
-                <div className="flex flex-row justify-between w-1/3 h-[250px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+                <div className="flex flex-row justify-between w-[292px] h-[275px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -229,15 +267,15 @@ export default function Page() {
                   </svg>
                   <div className="flex flex-col gap-2 ">
                     <ThermometerSun className="size-6" />
-                    <h2 className="text-[18px] font-light text-white">Temperature</h2>
+                    <h2 className="text-[24px] font-light text-white">Temperature</h2>
                     <div className="flex flex-row gap-1 items-start pt-2">
-                      <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">
+                      <p className="text-[36px] !leading-10 !font-medium pricing-card-btn-amount">
                         {formatValue(sensorData?.temperature)}
                       </p>
                       <p className="!text-[22px] text-white/70">°C</p>
                     </div>
                     <p className="text-[16px] font-light text-white/80 ">
-                      <span className="font-normal text-[14px]">
+                      <span className="font-normal text-[16px]">
                         <span className="text-yellow-300">H: 29°C</span>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         <span className="text-blue-300">L: 20°C</span>
@@ -250,7 +288,7 @@ export default function Page() {
                 </div>
 
                 {/* SOC Card */}
-                <div className="flex flex-row justify-between w-1/3 h-[250px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+                <div className="flex flex-row justify-between w-[292px] h-[275px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -264,15 +302,15 @@ export default function Page() {
                   </svg>
                   <div className="flex flex-col gap-2 ">
                     <Earth className="size-6" />
-                    <h2 className="text-[18px] font-light text-white">Soil Organic Carbon</h2>
+                    <h2 className="text-[24px] font-light text-white">Soil Organic Carbon</h2>
                     <div className="flex flex-row gap-1 items-start pt-0">
-                      <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">2</p>
+                      <p className="text-[36px] !leading-10 !font-medium pricing-card-btn-amount">2</p>
                       <p className="!text-[22px] text-white/70">g/kg</p>
                     </div>
 
-                    <h2 className="text-[18px] font-light text-white">Soil Oxygen Level</h2>
+                    <h2 className="text-[24px] font-light text-white">Soil Oxygen Level</h2>
                     <div className="flex flex-row gap-1 items-start pt-0">
-                      <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">9.12</p>
+                      <p className="text-[36px] !leading-10 !font-medium pricing-card-btn-amount">9.12</p>
                       <p className="!text-[22px] text-white/70">kPa</p>
                     </div>
                     <p className="text-[15px] font-normal mt-2 text-white">Levels are below optimal range.</p>
@@ -280,7 +318,7 @@ export default function Page() {
                 </div>
 
                 {/* Soil Moisture Card */}
-                <div className="flex flex-row justify-between w-1/3 h-[250px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+                <div className="flex flex-row justify-between w-[292px] h-[275px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -294,19 +332,19 @@ export default function Page() {
                   </svg>
                   <div className="flex flex-col gap-2 ">
                     <Sprout className="size-6" />
-                    <h2 className="text-[18px] font-light text-white">Soil Moisture</h2>
+                    <h2 className="text-[24px] font-light text-white">Soil Moisture</h2>
                     <div className="flex flex-row gap-1 items-start pt-2">
-                      <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">
+                      <p className="text-[36px] !leading-10 !font-medium pricing-card-btn-amount">
                         {formatValue(sensorData?.moisture)}
                       </p>
                       <p className="!text-[22px] text-white/70">%</p>
                     </div>
                     <div className="flex flex-row text-[16px] font-light text-white/80 ">
-                      <span className="inline-flex items-center gap-x-1 text-[14px] font-semibold text-red-500">
+                      <span className="inline-flex items-center gap-x-1 text-[16px] font-semibold text-red-500">
                         <RiArrowDownLine className="size-4 -mr-1" aria-hidden={true} />
                         8%&nbsp;
                       </span>
-                      <p className="font-normal text-[14px]">below optimal level</p>
+                      <p className="font-normal text-[16px]">below optimal level</p>
                     </div>
                     <p className="text-[15px] font-normal mt-2 text-white">
                       Provide more water to maintain optimal soil moisture levels.
@@ -315,9 +353,9 @@ export default function Page() {
                 </div>
               </div>
 
-              <div className="flex flex-row gap-[1.25rem] w-full">
+              <div className="flex flex-row gap-[1rem] w-full justify-center mx-auto ">
                 {/* pH Level Card */}
-                <div className="flex flex-row justify-between w-1/3 h-[250px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+                <div className="flex flex-row justify-between w-[292px] h-[275px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -331,18 +369,18 @@ export default function Page() {
                   </svg>
                   <div className="flex flex-col gap-2 ">
                     <Droplets className="size-6" />
-                    <h2 className="text-[18px] font-light text-white">pH Level</h2>
+                    <h2 className="text-[24px] font-light text-white">pH Level</h2>
                     <div className="flex flex-row gap-1 items-start pt-2">
-                      <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">
+                      <p className="text-[36px] !leading-10 !font-medium pricing-card-btn-amount">
                         7.6
                       </p>
                     </div>
                     <div className="flex flex-row text-[16px] font-light text-white/80 ">
-                      <span className="inline-flex items-center gap-x-1 text-[14px] font-semibold text-orange-300">
+                      <span className="inline-flex items-center gap-x-1 text-[16px] font-semibold text-orange-300">
                         <RiArrowDownLine className="size-4 -mr-1" aria-hidden={true} />
                         0.3&nbsp;
                       </span>
-                      <p className="font-normal text-[14px]">below optimal level</p>
+                      <p className="font-normal text-[16px]">below optimal level</p>
                     </div>
                     <p className="text-[15px] font-normal mt-2 text-white">
                       Add acidic compost to balance pH levels.
@@ -351,7 +389,7 @@ export default function Page() {
                 </div>
 
                 {/* Humidity Card */}
-                <div className="flex flex-row justify-between w-1/3 h-[250px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+                <div className="flex flex-row justify-between w-[292px] h-[275px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -365,19 +403,19 @@ export default function Page() {
                   </svg>
                   <div className="flex flex-col gap-2 ">
                     <Droplet className="size-6" />
-                    <h2 className="text-[18px] font-light text-white">Humidity</h2>
+                    <h2 className="text-[24px] font-light text-white">Humidity</h2>
                     <div className="flex flex-row gap-1 items-start pt-2">
-                      <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">
+                      <p className="text-[36px] !leading-10 !font-medium pricing-card-btn-amount">
                         {formatValue(sensorData?.humidity)}
                       </p>
                       <p className="!text-[22px] text-white/70">%</p>
                     </div>
                     <div className="flex flex-row text-[16px] font-light text-white/80 ">
-                      <span className="inline-flex items-center gap-x-1 text-[14px] font-semibold text-red-500">
+                      <span className="inline-flex items-center gap-x-1 text-[16px] font-semibold text-red-500">
                         <RiArrowUpLine className="size-4 -mr-1" aria-hidden={true} />
                         12%&nbsp;
                       </span>
-                      <p className="font-normal text-[14px]">above optimal level</p>
+                      <p className="font-normal text-[16px]">above optimal level</p>
                     </div>
                     <p className="text-[15px] font-normal mt-2 text-white">
                       Ensure ventilation is sufficient to prevent mold growth.
@@ -386,7 +424,7 @@ export default function Page() {
                 </div>
 
                 {/* Plant Health Card */}
-                <div className="flex flex-row justify-between w-1/3 h-[250px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
+                <div className="flex flex-row justify-between w-[292px] h-[275px] px-5 py-4 rounded-xl equipment-card-inner border border-zinc-50/10 group relative">
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -400,24 +438,24 @@ export default function Page() {
                   </svg>
                   <div className="flex flex-col gap-2 ">
                     <Leaf className="size-6" />
-                    <h2 className="text-[18px] font-light text-white">
+                    <h2 className="text-[24px] font-light text-white">
                       Plant Health
                     </h2>
                     <div className="flex flex-row gap-1 items-start pt-2">
-                      <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">
+                      <p className="text-[36px] !leading-10 !font-medium pricing-card-btn-amount">
                         93
                       </p>
                       <p className="!text-[22px] text-white/70">%</p>
                     </div>
                     <div className="flex flex-row text-[16px] font-light text-white/80 ">
-                      <span className="inline-flex items-center text-[14px] font-semibold text-red-500">
+                      <span className="inline-flex items-center text-[16px] font-semibold text-red-500">
                         <RiCheckboxCircleFill
                           className="-ml-0.5 size-4 shrink-0 text-green-600"
                           aria-hidden={true}
                         />
                         &nbsp;
                       </span>
-                      <p className="font-normal text-[14px] text-green-600">
+                      <p className="font-normal text-[16px] text-green-600">
                         Within optimal level!
                       </p>
                     </div>
@@ -655,8 +693,8 @@ export default function Page() {
 
             </div>
 
-            {/* Carousel Dots Indicator */}
-            <div className="flex justify-center mt-0 space-x-2">
+            {/* Carousel Dots Indicator - Commented Out */}
+            {/* <div className="flex justify-center mt-0 space-x-2">
               {Array.from({ length: totalSlides }).map((_, index) => (
                 <button
                   key={index}
@@ -668,6 +706,7 @@ export default function Page() {
                   }`}
                 />
               ))}
+            </div> */}
             </div>
           </div>
         </div>
