@@ -53,6 +53,7 @@ import NotificationsComponent from "@/components/comp-383";
 import SensorStatusComponentHardware from "@/components/dash/sensorstatuscomphardware";
 import { NPKDonutComponentHardware } from "@/components/dash/npkdonuthardware";
 import { UpcomingEventsComponentHardware } from "@/components/dash/upcomingeventshardware";
+import { DockDemo } from "@/components/dash/dockcomponent";
 
 const API_URL = "https://data.cropsense.tech/data";
 
@@ -206,7 +207,7 @@ export default function Page() {
       
         {/* Centered Carousel Container */}
         <div className="flex items-center justify-center min-h-screen w-full ">
-          <div className="relative w-[1024px] p-4">
+          <div className="relative w-[1024px] p-4 pb-24">
             {/* Left Arrow */}
             <button
               onClick={goToPrevSlide}
@@ -693,20 +694,9 @@ export default function Page() {
 
             </div>
 
-            {/* Carousel Dots Indicator - Commented Out */}
-            {/* <div className="flex justify-center mt-0 space-x-2">
-              {Array.from({ length: totalSlides }).map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className={`w-2 h-2 rounded-full transition-colors duration-200 ${
-                    index === currentSlide
-                      ? 'bg-white'
-                      : 'bg-white/30 hover:bg-white/50'
-                  }`}
-                />
-              ))}
-            </div> */}
+            <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-50 w-full flex justify-center">
+              <DockDemo currentSlide={currentSlide} onSlideChange={goToSlide} />
+            </div>
             </div>
           </div>
         </div>
