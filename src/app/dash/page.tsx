@@ -694,7 +694,7 @@ export default function Page() {
 
             </div>
 
-            <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-50 w-full flex justify-center">
+            <div className="absolute bottom-[76px] left-1/2 transform -translate-x-1/2 z-50 w-full flex justify-center">
               <DockDemo currentSlide={currentSlide} onSlideChange={goToSlide} />
             </div>
             </div>

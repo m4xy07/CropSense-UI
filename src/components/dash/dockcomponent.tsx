@@ -12,19 +12,19 @@ export function DockDemo({ currentSlide, onSlideChange }: { currentSlide?: numbe
     <div className="relative">
       <Dock direction="middle">
         <DockIcon onClick={() => onSlideChange?.(0)}>
-          <LayoutDashboard className="size-6" />
+          <LayoutDashboard className="size-[22px]" />
         </DockIcon>
         <DockIcon onClick={() => onSlideChange?.(1)}>
-          <Activity className="size-6" />
+          <Activity className="size-[22px]" />
         </DockIcon>
         <DockIcon onClick={() => onSlideChange?.(2)}>
-          <Radio className="size-6" />
+          <Radio className="size-[22px]" />
         </DockIcon>
         <DockIcon onClick={() => onSlideChange?.(3)}>
-          <PieChart className="size-6" />
+          <PieChart className="size-[22px]" />
         </DockIcon>
         <DockIcon onClick={() => onSlideChange?.(4)}>
-          <Calendar className="size-6" />
+          <Calendar className="size-[22px]" />
         </DockIcon>
       </Dock>
     </div>
