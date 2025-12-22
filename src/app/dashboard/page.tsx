@@ -170,7 +170,7 @@ export default function Page() {
                   <span className="font-normal text-[14px]">
                     <span className="text-yellow-300">H: 29°C</span>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <span className="text-blue-300">L: 20°C</span>
+                    <span className="text-blue-300">L: 9°C</span>
                   </span>
                 </p>
                 <p className="text-[15px] font-normal mt-2 text-white">
