@@ -503,7 +503,7 @@ export default function Page() {
                       rice <span className="text-[#9CA3AF]">this season</span>
                     </p>
                     <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
-                      Sep 24, 2025
+                      Dec 16, 2025
                     </p>
                   </div>
                 </div>
@@ -523,7 +523,7 @@ export default function Page() {
                       tomato <span className="text-[#9CA3AF]">crop</span>
                     </p>
                     <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
-                      Sep 24, 2025
+                      Dec 16, 2025
                     </p>
                   </div>
                 </div>
@@ -544,7 +544,7 @@ export default function Page() {
                       234-999
                     </p>
                     <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
-                      Sep 24, 2025
+                      Dec 16, 2025
                     </p>
                   </div>
                 </div>
@@ -568,7 +568,7 @@ export default function Page() {
                       tomorrow
                     </p>
                     <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
-                      Sep 24, 2025
+                      Dec 16, 2025
                     </p>
                   </div>
                 </div>
@@ -591,7 +591,7 @@ export default function Page() {
                       tomorrow
                     </p>
                     <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
-                      Sep 24, 2025
+                      Dec 16, 2025
                     </p>
                   </div>
                 </div>
@@ -614,7 +614,7 @@ export default function Page() {
                       tomorrow
                     </p>
                     <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
-                      Sep 24, 2025
+                      Dec 16, 2025
                     </p>
                   </div>
                 </div>
@@ -649,7 +649,7 @@ export default function Page() {
                       <span className="text-[#9CA3AF]">since last week</span>
                     </p>
                     <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
-                      Sep 24, 2025
+                      Dec 16, 2025
                     </p>
                   </div>
                 </div>
