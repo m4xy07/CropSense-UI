@@ -1,11 +1,7 @@
 /** @type {import('next').NextConfig} */
-const NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY =
-  process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
 const nextConfig = {
-  env: {
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
-  },
+
   webpack(config) {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>
