@@ -26,8 +26,6 @@ import { usePathname } from "next/navigation";
 import { NavUser } from "@/components/nav-user";
 import NotificationsComponent from "@/components/comp-383";
 
-const API_URL = "https://data.cropsense.tech/data";
-
 export default function Page() {
 
   const { user } = useUser();
@@ -66,31 +64,11 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(API_URL);
-        if (!response.ok) throw new Error("Failed to fetch data");
-
-        const data = await response.json();
-        if (Array.isArray(data) && data.length > 0) {
-          const latestRecord = data[data.length - 1];
-          setAltitude(parseFloat(latestRecord?.alt?.toFixed(2)) || null);
-          setRainStatus(
-            latestRecord?.raining
-              ? String(latestRecord.raining).charAt(0).toUpperCase() + String(latestRecord.raining).slice(1)
-              : "Unknown"
-          );
-          setWifiStrength(latestRecord?.wifiStrength || null);
-        } else {
-          console.warn("API returned an empty or invalid response.");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
+    // Artificial data setup
+    setAltitude(21.43);
+    setRainStatus("Sunny");
+    setWifiStrength(-50); // Strong signal
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -98,16 +76,7 @@ export default function Page() {
   }, [timeFrame]);
 
   const getWifiStatus = () => {
-    if (wifiStrength === null) {
-      return { text: "Disconnected", icon: <WifiOff className="w-5 h-5  text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] mr-[6px]" /> };
-    }
-    if (wifiStrength > -70) {
-      return { text: "High Strength", icon: <WifiHigh className="w-5 h-5  text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] -mt-[6px] mr-[6px]" /> };
-    }
-    if (wifiStrength > -81) {
-      return { text: "Low Strength", icon: <WifiLow className="w-5 h-5  text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] mr-[6px]" /> };
-    }
-    return { text: "Unstable", icon: <WifiZero className="w-5 h-5  text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] mr-[6px]" /> };
+    return { text: "Connected", icon: <WifiHigh className="w-5 h-5  text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] -mt-[6px] mr-[6px]" /> };
   };
 
   const wifiStatus = getWifiStatus();

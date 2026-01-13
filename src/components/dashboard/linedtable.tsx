@@ -1,5 +1,5 @@
 import { RiArrowDownLine } from "@remixicon/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 
 type NPKData = {
@@ -9,35 +9,19 @@ type NPKData = {
 };
 
 export default function NPKTableComponent() {
-  const [current, setCurrent] = useState<NPKData | null>(null);
+  const [current, setCurrent] = useState<NPKData | null>({
+    nitrogen: 12,
+    phosphorus: 2,
+    potassium: 6,
+  });
 
   // Hardcoded ideal values
   const ideal = {
-    nitrogen: 15,
-    phosphorus: 15,
-    potassium: 15,
+    nitrogen: 14,
+    phosphorus: 1,
+    potassium: 7,
   };
 
-  useEffect(() => {
-    async function fetchNPK() {
-      try {
-        const response = await fetch("https://data.cropsense.tech");
-        const data = await response.json();
-
-        const latest = Array.isArray(data) ? data[0] : data;
-
-        setCurrent({
-          nitrogen: latest.npk_uptake_nitrogen,
-          phosphorus: latest.npk_uptake_phosphorus,
-          potassium: latest.npk_uptake_potassium,
-        });
-      } catch (error) {
-        console.error("Failed to fetch NPK data", error);
-      }
-    }
-
-    fetchNPK();
-  }, []);
 
 const getStatus = (currentVal: number, idealVal: number) => {
   const difference = Math.abs(currentVal - idealVal).toFixed(1);

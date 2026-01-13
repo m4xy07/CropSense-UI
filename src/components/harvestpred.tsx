@@ -1,34 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AlertComponent from "./trianglealert";
 
 export function HarvestableMonthCards() {
-  const [harvestableMonths, setHarvestableMonths] = useState<any[]>([]);
-
-  useEffect(() => {
-    const fetchBestCrop = async () => {
-      try {
-        const response = await fetch("https://data.cropsense.tech");
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (Array.isArray(data) && data.length > 0) {
-          const latestHarvestableMonths =
-            data[data.length - 1]?.harvestable_months;
-          setHarvestableMonths(latestHarvestableMonths);
-        } else {
-          console.warn("API returned an empty or invalid response.");
-        }
-      } catch (error) {
-        console.error("Error fetching best crop status:", error);
-      }
-    };
-
-    fetchBestCrop();
-  }, []);
+  const harvestableMonths = [
+    { month: "March", wholesale_price: 22.50, retail_price: 35.00 },
+    { month: "April", wholesale_price: 21.00, retail_price: 32.00 },
+  ];
 
   return (
     <div className="w-full p-8 equipment-card-inner rounded-xl shadow-md border border-zinc-50/10">
@@ -36,11 +13,11 @@ export function HarvestableMonthCards() {
         Potential Harvestable Months & Rates
       </h2>
       <p className=" text-base text-zinc-50/70 pt-4">
-        You&apos;ll be able to sell tomato in the following months. The prices
+        You&apos;ll be able to sell wheat in the following months. The prices
         are based on the current market trends.
       </p>
       <div className="flex flex-wrap pt-4 gap-[6rem]">
-        {harvestableMonths.slice(0, 3).map(
+        {harvestableMonths.map(
           (item, index) =>
             item && (
               <div
@@ -51,8 +28,7 @@ export function HarvestableMonthCards() {
                 <div className="flex flex-row items-left justify-between">
                   <div className="p-0 w-full flex flex-col gap-2">
                     <div className="text-left text-[22px] text-white">
-                      {/* {item.month} */}
-                      February
+                      {item.month}
                     </div>
                     <div className="flex flex-row gap-[5rem]">
                       <div className="flex flex-col gap-2">
@@ -65,8 +41,7 @@ export function HarvestableMonthCards() {
                           </div>
                         </div>
                         <div className="text-left text-[28px] text-zinc-200">
-                          {/* ₹ {parseFloat(item.wholesale_price).toFixed(2)} */}{" "}
-                          ₹ 51 / kg
+                          ₹ {item.wholesale_price.toFixed(2)} / kg
                         </div>
                       </div>
                       <div className="flex flex-col gap-2">
@@ -79,8 +54,7 @@ export function HarvestableMonthCards() {
                           </div>
                         </div>
                         <div className="text-left text-[28px] text-zinc-200">
-                          {/* ₹ {parseFloat(item.retail_price).toFixed(2)} */} ₹
-                          67 / kg
+                          ₹ {item.retail_price.toFixed(2)} / kg
                         </div>
                       </div>
                     </div>

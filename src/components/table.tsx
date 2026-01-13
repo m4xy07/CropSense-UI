@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/table"
 
 // Generate event dates relative to today
-const today = new Date("2025-09-29");
+const today = new Date("2026-01-12");
 function addDays(date, days) {
   const result = new Date(date);
   result.setDate(result.getDate() + days);

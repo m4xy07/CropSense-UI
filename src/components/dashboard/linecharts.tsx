@@ -19,8 +19,6 @@ import { PressureChart } from "./pressurechart";
 import { MoistureChart } from "./moisturechart";
 import { formatDateRangeLabel } from "@/lib/date-format";
 
-const API_URL = "https://data.cropsense.tech/data";
-
 type ChartComponentProps = {
   data: { time: string; value: number }[];
   ticks: string[];
@@ -70,7 +68,7 @@ export function LineChartComponent({
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const generateData = () => {
       setLoading(true);
       setChartData(null);
       setValue(null);
@@ -78,43 +76,76 @@ export function LineChartComponent({
       setDateRange(null);
 
       try {
-        const requestUrl = `${API_URL}?timeFrame=${encodeURIComponent(timeFrame)}`;
-        const response = await fetch(requestUrl);
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        const data = await response.json();
+        const now = new Date();
+        let startDate;
+        let points = 24; // Default number of points
 
-        if (Array.isArray(data) && data.length > 0) {
-          let latestValue = data[data.length - 1]?.[dataFieldMap[dataType]];
-          if (latestValue === undefined) throw new Error(`Data field ${dataFieldMap[dataType]} is undefined`);
-          if (dataType === "pressure") latestValue /= 100;
-          setValue(parseFloat(latestValue.toFixed(2)));
+        switch (timeFrame) {
+          case "24 hours":
+            startDate = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+            points = 24;
+            break;
+          case "7 days":
+            startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+            points = 28; // 4 per day
+            break;
+          case "14 days":
+            startDate = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
+            points = 28; // 2 per day
+            break;
+          case "1 month":
+            startDate = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+            points = 30; // 1 per day
+            break;
+          case "lifetime":
+             startDate = new Date(now.getFullYear(), now.getMonth() - 6, now.getDate());
+             points = 60;
+             break;
+          default:
+            startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        }
 
-          const now = new Date();
-          let startDate;
-          switch (timeFrame) {
-            case "24 hours":
-              startDate = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-              break;
-            case "7 days":
-              startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-              break;
-            case "14 days":
-              startDate = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
-              break;
-            case "1 month":
-              startDate = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
-              break;
-            case "lifetime":
-              startDate = new Date(data[0].time);
-              break;
-            default:
-              startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-          }
+        const data: { time: string; value: number }[] = [];
+        const interval = (now.getTime() - startDate.getTime()) / points;
 
-          const filteredData = data.filter((entry: { time: string }) => {
-            const entryDate = new Date(entry.time);
-            return entryDate >= startDate && entryDate <= now;
-          });
+        // Generate artificial data based on dataType
+        let baseValue = 0;
+        let variation = 0;
+
+        switch (dataType) {
+          case "temperature": baseValue = 28; variation = 5; break;
+          case "humidity": baseValue = 65; variation = 15; break;
+          case "aqi": baseValue = 45; variation = 30; break;
+          case "heatIndex": baseValue = 32; variation = 4; break;
+          case "pressure": baseValue = 1013; variation = 5; break;
+          case "moisture": baseValue = 50; variation = 20; break;
+        }
+
+        for (let i = 0; i <= points; i++) {
+            const time = new Date(startDate.getTime() + i * interval);
+            const randomVariation = (Math.random() - 0.5) * variation;
+            let val = baseValue + randomVariation;
+            
+            // Add some trend based on time of day for temp/humidity if "24 hours"
+            if (timeFrame === "24 hours") {
+                const hour = time.getHours();
+                if (dataType === "temperature" || dataType === "heatIndex") {
+                    if (hour > 6 && hour < 18) val += 3; // warmer during day
+                    else val -= 2;
+                }
+            }
+
+            data.push({
+                time: time.toISOString(),
+                value: parseFloat(val.toFixed(2)),
+            });
+        }
+
+        if (data.length > 0) {
+          let latestValue = data[data.length - 1].value;
+          setValue(latestValue);
+
+          const filteredData = data; // Already correct timeframe
 
           if (filteredData.length === 0) {
             setChartData({ data: [], ticks: [] });
@@ -123,35 +154,15 @@ export function LineChartComponent({
             return;
           }
 
-          const formattedData = filteredData.map((entry) => ({
-            time: entry.time,
-            value: entry[dataFieldMap[dataType]],
-          }));
+          const formattedData = filteredData; // Data is already in correct format
 
           // Calculate ticks for the X-axis
           const totalPoints = formattedData.length;
-          let tickCount = 0;
-          switch (timeFrame) {
-            case "24 hours":
-              tickCount = 6; // 2 date points
-              break;
-            case "7 days":
-              tickCount = 3; // 3 date points
-              break;
-            case "14 days":
-              tickCount = 6; // 6 date points
-              break;
-            case "1 month":
-              tickCount = 5; // 6 date points
-              break;
-            case "lifetime":
-              tickCount = Math.min(12, totalPoints); // 1 point per month, up to 12 months
-              break;
-          }
-
+          let tickCount = 6;
+          
           // Ensure ticks are evenly distributed
           const ticks = Array.from({ length: tickCount }, (_, i) => {
-            const index = Math.floor((i * totalPoints) / tickCount);
+            const index = Math.floor((i * (totalPoints - 1)) / (tickCount - 1)); 
             return formattedData[index]?.time;
           }).filter(Boolean);
 
@@ -167,19 +178,20 @@ export function LineChartComponent({
           }
 
           let timeFrameAvgValue =
-            filteredData.reduce((sum, entry) => sum + entry[dataFieldMap[dataType]], 0) / filteredData.length;
-          if (dataType === "pressure") timeFrameAvgValue /= 100;
+            filteredData.reduce((sum, entry) => sum + entry.value, 0) / filteredData.length;
+          // Pressure division moved to data generation
+
           const change = ((latestValue - timeFrameAvgValue) / timeFrameAvgValue) * 100;
           setValueChange(parseFloat(change.toFixed(2)));
         }
       } catch (error) {
-        console.error(`Error fetching ${dataType} data:`, error);
+        console.error(`Error generating ${dataType} data:`, error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    generateData();
   }, [dataType, timeFrame]);
 
   const ChartComponent = chartComponents[dataType];

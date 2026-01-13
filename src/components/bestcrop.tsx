@@ -48,7 +48,7 @@ export function MorphingDialogBasicNine() {
             </p>
             <div className="w-full h-[200px] relative">
               <Image
-              src="/Tomato.jpg"
+              src="/Wheat.jpg"
               alt="crop image"
               layout="fill"
               objectFit="cover"
@@ -63,7 +63,7 @@ export function MorphingDialogBasicNine() {
               rel="noopener noreferrer"
               className=" hover:text-blue-400 transition-colors ease-in-out duration-200"
             >
-              Tomato Namdhari 1068
+              Wheat
             </a>
             </div>
         </div>
