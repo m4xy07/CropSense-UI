@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-
   webpack(config) {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>
@@ -15,7 +14,7 @@ const nextConfig = {
         test: /\.svg$/i,
         resourceQuery: /url/, // *.svg?url
       },
-      // Convert all other *.svg imports to React components
+      // Convert all other *.svg imports to React component
       {
         test: /\.svg$/i,
         issuer: fileLoaderRule.issuer,
