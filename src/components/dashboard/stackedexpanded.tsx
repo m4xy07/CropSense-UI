@@ -87,18 +87,26 @@ export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpande
         const data: { time: string; nitrogen: number; phosphorus: number; potassium: number }[] = [];
         const interval = (now.getTime() - startDate.getTime()) / points;
 
+        let currentN = 15;
+        let currentP = 15;
+        let currentK = 15;
+
         for (let i = 0; i <= points; i++) {
             const time = new Date(startDate.getTime() + i * interval);
             
-            const n = 15 + (Math.random() - 0.5) * 8;
-            const p = 15 + (Math.random() - 0.5) * 8;
-            const k = 15 + (Math.random() - 0.5) * 8;
+            const nChange = (Math.random() - 0.5) * 4;
+            const pChange = (Math.random() - 0.5) * 4;
+            const kChange = (Math.random() - 0.5) * 4;
+
+            currentN += nChange + (15 - currentN) * 0.1;
+            currentP += pChange + (15 - currentP) * 0.1;
+            currentK += kChange + (15 - currentK) * 0.1;
 
             data.push({
                 time: time.toISOString(),
-                nitrogen: parseFloat(n.toFixed(2)),
-                phosphorus: parseFloat(p.toFixed(2)),
-                potassium: parseFloat(k.toFixed(2)),
+                nitrogen: parseFloat(currentN.toFixed(2)),
+                phosphorus: parseFloat(currentP.toFixed(2)),
+                potassium: parseFloat(currentK.toFixed(2)),
             });
         }
 

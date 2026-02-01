@@ -32,36 +32,25 @@ export function NPKDonutComponentHardware() {
   const [chartData, setChartData] = useState<any[]>([])
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await fetch("https://data.cropsense.tech/")
-        const data = await res.json()
-        const latest: NPKData = data[0]
-
-        const transformedData = [
-        {
-            label: "Nitrogen",
-            value: parseFloat(latest.npk_uptake_nitrogen.toFixed(2)),
-            fill: "#d7721a", // Cyan
-        },
-        {
-            label: "Phosphorus",
-            value: parseFloat(latest.npk_uptake_phosphorus.toFixed(2)),
-            fill: "#d52c9e", // Orange
-        },
-        {
-            label: "Potassium",
-            value: parseFloat(latest.npk_uptake_potassium.toFixed(2)),
-            fill: "#974ae5", // Purple
-        },
-        ]
-        setChartData(transformedData)
-      } catch (err) {
-        console.error("Failed to fetch NPK data:", err)
-      }
-    }
-
-    fetchData()
+    // Placeholder data matching /dashboard
+    const transformedData = [
+    {
+        label: "Nitrogen",
+        value: 12,
+        fill: "#d7721a", // Cyan
+    },
+    {
+        label: "Phosphorus",
+        value: 2,
+        fill: "#d52c9e", // Orange
+    },
+    {
+        label: "Potassium",
+        value: 6,
+        fill: "#974ae5", // Purple
+    },
+    ]
+    setChartData(transformedData)
   }, [])
 
   const chartConfig: ChartConfig = {

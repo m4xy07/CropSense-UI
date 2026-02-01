@@ -71,18 +71,21 @@ export default function Page() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const totalSlides = 5;
 
+  const getRelativeDateString = (daysOffset: number) => {
+    const date = new Date();
+    date.setDate(date.getDate() + daysOffset);
+    return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  };
+
   useEffect(() => {
-    fetch("https://data.cropsense.tech/")
-      .then((res) => res.json())
-      .then((data) => {
-        // If data is an array, take the latest record
-        if (Array.isArray(data)) {
-          setSensorData(data[data.length - 1]);
-        } else {
-          setSensorData(data);
-        }
-      })
-      .catch(() => setSensorData(null));
+    // Placeholder data matching /dashboard
+    const placeholderData = {
+      temperature: 30,
+      moisture: 52,
+      humidity: 64,
+      // Add other fields if necessary based on usage
+    };
+    setSensorData(placeholderData);
   }, []);
 
   // Carousel functions
@@ -277,9 +280,9 @@ export default function Page() {
                     </div>
                     <p className="text-[16px] font-light text-white/80 ">
                       <span className="font-normal text-[16px]">
-                        <span className="text-yellow-300">H: 29°C</span>
+                        <span className="text-yellow-300">H: 30°C</span>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <span className="text-blue-300">L: 9°C</span>
+                        <span className="text-blue-300">L: 16°C</span>
                       </span>
                     </p>
                     <p className="text-[15px] font-normal mt-2 text-white">
@@ -373,7 +376,7 @@ export default function Page() {
                     <h2 className="text-[24px] font-light text-white">pH Level</h2>
                     <div className="flex flex-row gap-1 items-start pt-2">
                       <p className="text-[36px] !leading-10 !font-medium pricing-card-btn-amount">
-                        7.6
+                        5.7
                       </p>
                     </div>
                     <div className="flex flex-row text-[16px] font-light text-white/80 ">
@@ -444,7 +447,7 @@ export default function Page() {
                     </h2>
                     <div className="flex flex-row gap-1 items-start pt-2">
                       <p className="text-[36px] !leading-10 !font-medium pricing-card-btn-amount">
-                        93
+                        91
                       </p>
                       <p className="!text-[22px] text-white/70">%</p>
                     </div>
@@ -503,7 +506,7 @@ export default function Page() {
                       rice <span className="text-[#9CA3AF]">this season</span>
                     </p>
                     <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
-                      Dec 16, 2025
+                      {getRelativeDateString(0)}
                     </p>
                   </div>
                 </div>
@@ -523,7 +526,7 @@ export default function Page() {
                       tomato <span className="text-[#9CA3AF]">crop</span>
                     </p>
                     <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
-                      Dec 16, 2025
+                      {getRelativeDateString(0)}
                     </p>
                   </div>
                 </div>
@@ -544,7 +547,7 @@ export default function Page() {
                       234-999
                     </p>
                     <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
-                      Dec 16, 2025
+                      {getRelativeDateString(-1)}
                     </p>
                   </div>
                 </div>
@@ -568,7 +571,7 @@ export default function Page() {
                       tomorrow
                     </p>
                     <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
-                      Dec 16, 2025
+                      {getRelativeDateString(0)}
                     </p>
                   </div>
                 </div>
@@ -591,7 +594,7 @@ export default function Page() {
                       tomorrow
                     </p>
                     <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
-                      Dec 16, 2025
+                      {getRelativeDateString(0)}
                     </p>
                   </div>
                 </div>
@@ -614,7 +617,7 @@ export default function Page() {
                       tomorrow
                     </p>
                     <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
-                      Dec 16, 2025
+                      {getRelativeDateString(0)}
                     </p>
                   </div>
                 </div>
@@ -649,7 +652,7 @@ export default function Page() {
                       <span className="text-[#9CA3AF]">since last week</span>
                     </p>
                     <p className="text-[#c0c4cc] font-normal text-[13px] tracking-tighter">
-                      Dec 16, 2025
+                      {getRelativeDateString(-2)}
                     </p>
                   </div>
                 </div>

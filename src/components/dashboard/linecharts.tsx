@@ -121,10 +121,15 @@ export function LineChartComponent({
           case "moisture": baseValue = 50; variation = 20; break;
         }
 
+        let currentValue = baseValue;
+
         for (let i = 0; i <= points; i++) {
             const time = new Date(startDate.getTime() + i * interval);
-            const randomVariation = (Math.random() - 0.5) * variation;
-            let val = baseValue + randomVariation;
+            const change = (Math.random() - 0.5) * (variation / 2);
+            currentValue += change;
+            currentValue += (baseValue - currentValue) * 0.1; // Soft mean reversion
+
+            let val = currentValue;
             
             // Add some trend based on time of day for temp/humidity if "24 hours"
             if (timeFrame === "24 hours") {
