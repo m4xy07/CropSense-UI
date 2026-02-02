@@ -161,15 +161,15 @@ export default function Page() {
                 </h2>
                 <div className="flex flex-row gap-1 items-start pt-2">
                   <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">
-                    23
+                    29
                   </p>
                   <p className="!text-[22px] text-white/70">°C</p>
                 </div>
                 <p className="text-[16px] font-light text-white/80 ">
                   <span className="font-normal text-[14px]">
-                    <span className="text-yellow-300">H:26°C</span>
+                    <span className="text-yellow-300">H: 31°C</span>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <span className="text-blue-300">L: 14°C</span>
+                    <span className="text-blue-300">L: 17°C</span>
                   </span>
                 </p>
                 <p className="text-[15px] font-normal mt-2 text-white">

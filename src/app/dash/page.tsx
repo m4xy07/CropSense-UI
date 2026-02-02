@@ -82,7 +82,7 @@ export default function Page() {
   useEffect(() => {
     // Placeholder data matching /dashboard
     const placeholderData = {
-      temperature: 24,
+      temperature: 29,
       moisture: 52,
       humidity: 64,
       // Add other fields if necessary based on usage
@@ -288,7 +288,7 @@ export default function Page() {
                             </div>
                             <p className="text-[16px] font-light text-white/80 ">
                               <span className="font-normal text-[16px]">
-                                <span className="text-yellow-300">H: 24°C</span>
+                                <span className="text-yellow-300">H: 29°C</span>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <span className="text-blue-300">L: 16°C</span>
                               </span>
