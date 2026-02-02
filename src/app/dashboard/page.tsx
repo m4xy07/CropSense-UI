@@ -131,11 +131,10 @@ export default function Page() {
             <div className="flex flex-row gap-2 items-center">
               {/* <ToastComponent /> */}
               <div className="flex flex-row gap-2 items-center mr-[-10px]">
-                            <NotificationsComponent />
-                            <Separator orientation="vertical" className="mx-2 h-4" />
-                            <NavUser user={data.user} />
-                            
-                            </div>
+                <NotificationsComponent />
+                <Separator orientation="vertical" className="mx-2 h-4" />
+                <NavUser user={data.user} />
+              </div>
             </div>
           </div>
         </header>
@@ -162,15 +161,15 @@ export default function Page() {
                 </h2>
                 <div className="flex flex-row gap-1 items-start pt-2">
                   <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">
-                    30
+                    23
                   </p>
                   <p className="!text-[22px] text-white/70">°C</p>
                 </div>
                 <p className="text-[16px] font-light text-white/80 ">
                   <span className="font-normal text-[14px]">
-                    <span className="text-yellow-300">H: 30°C</span>
+                    <span className="text-yellow-300">H:26°C</span>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <span className="text-blue-300">L: 16°C</span>
+                    <span className="text-blue-300">L: 14°C</span>
                   </span>
                 </p>
                 <p className="text-[15px] font-normal mt-2 text-white">
@@ -244,7 +243,7 @@ export default function Page() {
                 </h2>
                 <div className="flex flex-row gap-1 items-start pt-2">
                   <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">
-                   52
+                    52
                   </p>
                   <p className="!text-[22px] text-white/70">%</p>
                 </div>
@@ -508,7 +507,9 @@ export default function Page() {
                   <div className="w-full mt-1 flex flex-row justify-between">
                     <p className="text-white text-[14px]">
                       Market price<span className="text-[#9CA3AF]"> for </span>
-                      onions <span className="text-[#9CA3AF]">currently</span>{" "}
+                      onions <span className="text-[#9CA3AF]">
+                        currently
+                      </span>{" "}
                       up ₹3{" "}
                       <span className="text-[#9CA3AF]">since last week</span>
                     </p>
