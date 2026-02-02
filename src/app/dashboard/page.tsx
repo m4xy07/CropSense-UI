@@ -161,7 +161,7 @@ export default function Page() {
                 </h2>
                 <div className="flex flex-row gap-1 items-start pt-2">
                   <p className="text-[30px] !leading-10 !font-medium pricing-card-btn-amount">
-                    29
+                    23
                   </p>
                   <p className="!text-[22px] text-white/70">°C</p>
                 </div>
