@@ -24,30 +24,31 @@ interface NPKData {
   npk_uptake_potassium: number;
 }
 
-export function NPKDonutComponentHardware() {
+export function NPKDonutComponentHardware({ data }: { data?: NPKData }) {
   const [chartData, setChartData] = useState<any[]>([]);
 
   useEffect(() => {
-    // Placeholder data matching /dashboard
-    const transformedData = [
-      {
-        label: "Nitrogen",
-        value: 7,
-        fill: "#d7721a", // Cyan
-      },
-      {
-        label: "Phosphorus",
-        value: 2,
-        fill: "#d52c9e", // Orange
-      },
-      {
-        label: "Potassium",
-        value: 4,
-        fill: "#974ae5", // Purple
-      },
-    ];
-    setChartData(transformedData);
-  }, []);
+    if (data) {
+      const transformedData = [
+        {
+          label: "Nitrogen",
+          value: parseFloat(data.npk_uptake_nitrogen.toFixed(2)),
+          fill: "#d7721a", // Cyan
+        },
+        {
+          label: "Phosphorus",
+          value: parseFloat(data.npk_uptake_phosphorus.toFixed(2)),
+          fill: "#d52c9e", // Orange
+        },
+        {
+          label: "Potassium",
+          value: parseFloat(data.npk_uptake_potassium.toFixed(2)),
+          fill: "#974ae5", // Purple
+        },
+      ];
+      setChartData(transformedData);
+    }
+  }, [data]);
 
   const chartConfig: ChartConfig = {
     value: { label: "Uptake" },
@@ -70,7 +71,29 @@ export function NPKDonutComponentHardware() {
             <PieChart>
               <ChartTooltip
                 cursor={false}
-                content={<ChartTooltipContent hideLabel />}
+                content={
+                  <ChartTooltipContent
+                    hideLabel
+                    formatter={(value, name, item, index) => (
+                      <>
+                        <div
+                          className="h-2.5 w-2.5 shrink-0 rounded-[2px] bg-[--color-bg]"
+                          style={
+                            {
+                              "--color-bg": item.payload.fill || item.color,
+                            } as React.CSSProperties
+                          }
+                        />
+                        <div className="flex flex-1 justify-between leading-none items-center gap-2">
+                          <span className="text-muted-foreground">{name}</span>
+                          <span className="font-mono font-medium tabular-nums text-foreground">
+                            {Number(value).toFixed(2)}
+                          </span>
+                        </div>
+                      </>
+                    )}
+                  />
+                }
               />
               <Pie
                 data={chartData}
@@ -87,7 +110,7 @@ export function NPKDonutComponentHardware() {
           </ChartContainer>
         </CardContent>
         <div className="items-center flex flex-col justify-center gap-4">
-          <NPKTableComponent />
+          <NPKTableComponent data={data} />
           <div className="flex flex-row items-center justify-center gap-2 py-2 px-4 border border-zinc-50/10 alert-dashboard-theme rounded-md">
             <div className="h-[10px] w-[10px] rounded-full bg-[#d10412] warning-animation" />
             <span className="text-[13px]">

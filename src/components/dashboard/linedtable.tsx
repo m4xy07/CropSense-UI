@@ -24,7 +24,7 @@ export default function NPKTableComponent({ data }: { data?: any }) {
 
 
 const getStatus = (currentVal: number, idealVal: number) => {
-  const difference = Math.abs(currentVal - idealVal).toFixed(1);
+  const difference = Math.abs(currentVal - idealVal).toFixed(2);
 
   if (currentVal > idealVal) {
     return (
@@ -64,15 +64,15 @@ const getStatus = (currentVal: number, idealVal: number) => {
             Current
           </div>
           <div className="py-2 px-2 text-center border-r border-zinc-50/10 text-[14px] flex flex-row items-center justify-center">
-            {current.nitrogen.toFixed(1)}
+            {current.nitrogen.toFixed(2)}
             <div className="text-xs text-gray-400 flex flex-col justify-center">{getStatus(current.nitrogen, ideal.nitrogen)}</div>
           </div>
           <div className="py-2 px-2 text-center border-r border-zinc-50/10 text-[14px] flex flex-row items-center justify-center">
-            {current.phosphorus.toFixed(1)}
+            {current.phosphorus.toFixed(2)}
             <div className="text-xs text-gray-400 flex flex-col justify-center">{getStatus(current.phosphorus, ideal.phosphorus)}</div>
           </div>
           <div className="py-2 px-2 text-center text-[14px] flex flex-row items-center justify-center">
-            {current.potassium.toFixed(1)}
+            {current.potassium.toFixed(2)}
             <div className="text-xs text-gray-400 flex flex-col justify-center">{getStatus(current.potassium, ideal.potassium)}</div>
           </div>
         </div>

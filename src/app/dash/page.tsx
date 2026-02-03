@@ -80,13 +80,24 @@ export default function Page() {
   };
 
   useEffect(() => {
-    // Placeholder data matching /dashboard
-    const placeholderData = {
-      temperature: 21.92,
-      moisture: 17.23,
-      humidity: 30.03,
+    const fetchData = async () => {
+      try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        if (Array.isArray(data) && data.length > 0) {
+          // Sort by time descending and take the first one (latest)
+          const latestData = data.sort(
+            (a: any, b: any) =>
+              new Date(b.time).getTime() - new Date(a.time).getTime()
+          )[0];
+          setSensorData(latestData);
+        }
+      } catch (error) {
+        console.error("Error fetching sensor data:", error);
+      }
     };
-    setSensorData(placeholderData);
+
+    fetchData();
   }, []);
 
   // Carousel functions
@@ -730,7 +741,7 @@ export default function Page() {
                   <div className="w-full flex-shrink-0 px-4 min-h-[500px]">
                     <div className="flex justify-center items-start w-full h-full">
                       <div className="w-full">
-                        <NPKDonutComponentHardware />
+                        <NPKDonutComponentHardware data={sensorData} />
                       </div>
                     </div>
                   </div>
