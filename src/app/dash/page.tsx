@@ -82,10 +82,9 @@ export default function Page() {
   useEffect(() => {
     // Placeholder data matching /dashboard
     const placeholderData = {
-      temperature: 23,
-      moisture: 52,
-      humidity: 64,
-      // Add other fields if necessary based on usage
+      temperature: 21.92,
+      moisture: 17.23,
+      humidity: 30.03,
     };
     setSensorData(placeholderData);
   }, []);
