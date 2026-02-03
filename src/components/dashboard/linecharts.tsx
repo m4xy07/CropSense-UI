@@ -56,10 +56,12 @@ export function LineChartComponent({
   cardTitle,
   dataType,
   timeFrame,
+  data = [],
 }: {
   cardTitle: string;
   dataType: string;
   timeFrame: string;
+  data?: any[];
 }) {
   const [value, setValue] = useState<number | null>(null);
   const [valueChange, setValueChange] = useState<number | null>(null);
@@ -68,7 +70,7 @@ export function LineChartComponent({
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const generateData = () => {
+    const processData = () => {
       setLoading(true);
       setChartData(null);
       setValue(null);
@@ -76,128 +78,107 @@ export function LineChartComponent({
       setDateRange(null);
 
       try {
-        const now = new Date();
-        let startDate;
-        let points = 24; // Default number of points
+        if (!data || data.length === 0) {
+            setLoading(false);
+            return;
+        }
 
+        const now = new Date();
+        // Since we are simulating a specific date, we use the "now" from the context if possible, 
+        // but "new Date()" in browser will be the real current time. 
+        // The user prompted "The current date is February 2, 2026."
+        // However, standard specific logic usually uses the latest data point as reference or system time.
+        // I will use system time "new Date()" but if the data is all in the past (2025), I might need to adjust.
+        // Let's assume standard filtering: relative to NOW.
+        
+        // Actually, let's use the latest data point as "now" if available, to ensure charts show something for old data
+        // logic: find max date in data.
+        const maxDate = data.reduce((max, d) => (new Date(d.time) > max ? new Date(d.time) : max), new Date(0));
+        // If maxDate is far in the past, effectively we shift the window or just show relative to maxDate?
+        // Let's stick to valid timeFrame filtering. If "24 hours", it's last 24h from maxDate to show "latest 24h of data"
+        // This is a common pattern for dashboards showing historical datasets.
+        
+        const referenceTime = maxDate.getTime() > 0 ? maxDate : now;
+
+        let startTime: number;
         switch (timeFrame) {
           case "24 hours":
-            startDate = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-            points = 24;
+            startTime = referenceTime.getTime() - 24 * 60 * 60 * 1000;
             break;
           case "7 days":
-            startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-            points = 28; // 4 per day
+            startTime = referenceTime.getTime() - 7 * 24 * 60 * 60 * 1000;
             break;
           case "14 days":
-            startDate = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
-            points = 28; // 2 per day
+            startTime = referenceTime.getTime() - 14 * 24 * 60 * 60 * 1000;
             break;
           case "1 month":
-            startDate = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
-            points = 30; // 1 per day
+            startTime = referenceTime.getTime() - 30 * 24 * 60 * 60 * 1000;
             break;
           case "lifetime":
-             startDate = new Date(now.getFullYear(), now.getMonth() - 6, now.getDate());
-             points = 60;
-             break;
+            startTime = 0;
+            break;
           default:
-            startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+            startTime = referenceTime.getTime() - 7 * 24 * 60 * 60 * 1000;
         }
 
-        const data: { time: string; value: number }[] = [];
-        const interval = (now.getTime() - startDate.getTime()) / points;
+        const field = dataFieldMap[dataType as keyof typeof dataFieldMap] || dataType;
 
-        // Generate artificial data based on dataType
-        let baseValue = 0;
-        let variation = 0;
+        const filtered = data
+            .map((d: any) => ({
+                time: d.time,
+                value: d[field],
+                dt: new Date(d.time).getTime()
+            }))
+            .filter((d) => d.dt >= startTime && d.dt <= referenceTime.getTime())
+            .sort((a, b) => a.dt - b.dt);
 
-        switch (dataType) {
-          case "temperature": baseValue = 28; variation = 5; break;
-          case "humidity": baseValue = 65; variation = 15; break;
-          case "aqi": baseValue = 45; variation = 30; break;
-          case "heatIndex": baseValue = 32; variation = 4; break;
-          case "pressure": baseValue = 1013; variation = 5; break;
-          case "moisture": baseValue = 50; variation = 20; break;
-        }
+        if (filtered.length > 0) {
+            const formattedData = filtered.map(d => ({
+                time: d.time,
+                value: Number(Number(d.value).toFixed(2)) // Ensure it's a number
+            }));
 
-        let currentValue = baseValue;
+            // Ticks
+            const totalPoints = formattedData.length;
+            const tickCount = 6;
+            const ticks = Array.from({ length: tickCount }, (_, i) => {
+                const index = Math.floor((i * (totalPoints - 1)) / (tickCount - 1));
+                return formattedData[index]?.time;
+            }).filter(Boolean);
 
-        for (let i = 0; i <= points; i++) {
-            const time = new Date(startDate.getTime() + i * interval);
-            const change = (Math.random() - 0.5) * (variation / 2);
-            currentValue += change;
-            currentValue += (baseValue - currentValue) * 0.1; // Soft mean reversion
+            setChartData({ data: formattedData, ticks });
 
-            let val = currentValue;
-            
-            // Add some trend based on time of day for temp/humidity if "24 hours"
-            if (timeFrame === "24 hours") {
-                const hour = time.getHours();
-                if (dataType === "temperature" || dataType === "heatIndex") {
-                    if (hour > 6 && hour < 18) val += 3; // warmer during day
-                    else val -= 2;
-                }
-            }
+            // Value (Latest)
+            const latestVal = formattedData[formattedData.length - 1].value;
+            setValue(latestVal);
 
-            data.push({
-                time: time.toISOString(),
-                value: parseFloat(val.toFixed(2)),
-            });
-        }
-
-        if (data.length > 0) {
-          let latestValue = data[data.length - 1].value;
-          setValue(latestValue);
-
-          const filteredData = data; // Already correct timeframe
-
-          if (filteredData.length === 0) {
-            setChartData({ data: [], ticks: [] });
-            setDateRange(null);
-            setValueChange(null);
-            return;
-          }
-
-          const formattedData = filteredData; // Data is already in correct format
-
-          // Calculate ticks for the X-axis
-          const totalPoints = formattedData.length;
-          let tickCount = 6;
-          
-          // Ensure ticks are evenly distributed
-          const ticks = Array.from({ length: tickCount }, (_, i) => {
-            const index = Math.floor((i * (totalPoints - 1)) / (tickCount - 1)); 
-            return formattedData[index]?.time;
-          }).filter(Boolean);
-
-          setChartData({ data: formattedData, ticks });
-
-          if (formattedData.length > 0) {
+            // Date Range
             setDateRange(
               formatDateRangeLabel(
                 formattedData[0].time,
                 formattedData[formattedData.length - 1].time,
-              ),
+              )
             );
-          }
 
-          let timeFrameAvgValue =
-            filteredData.reduce((sum, entry) => sum + entry.value, 0) / filteredData.length;
-          // Pressure division moved to data generation
-
-          const change = ((latestValue - timeFrameAvgValue) / timeFrameAvgValue) * 100;
-          setValueChange(parseFloat(change.toFixed(2)));
+            // Change
+            const avg = formattedData.reduce((acc, curr) => acc + curr.value, 0) / totalPoints;
+            if (avg !== 0) {
+                 const change = ((latestVal - avg) / avg) * 100;
+                 setValueChange(parseFloat(change.toFixed(2)));
+            } else {
+                 setValueChange(0);
+            }
         }
+
       } catch (error) {
-        console.error(`Error generating ${dataType} data:`, error);
+        console.error(`Error processing ${dataType} data:`, error);
       } finally {
         setLoading(false);
       }
     };
 
-    generateData();
-  }, [dataType, timeFrame]);
+    processData();
+  }, [dataType, timeFrame, data]);
 
   const ChartComponent = chartComponents[dataType];
 
@@ -208,7 +189,7 @@ export function LineChartComponent({
         <CardTitle>{cardTitle}</CardTitle>
         <CardDescription>{loading ? <Skeleton className="h-4 w-32" /> : dateRange}</CardDescription>
         </div>
-        <div className="font-inter">{loading ? <Skeleton className="h-6 w-20" /> : value !== null ? `${value}${unitMap[dataType]}` : "No data available"}</div>
+        <div className="font-inter">{loading ? <Skeleton className="h-6 w-20" /> : value !== null ? `${value.toFixed(2)}${unitMap[dataType]}` : "No data available"}</div>
       </CardHeader>
       <CardContent>
         {loading ? (

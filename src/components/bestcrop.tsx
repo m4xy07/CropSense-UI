@@ -2,37 +2,13 @@ import { PlusIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-export function MorphingDialogBasicNine() {
-  const [best_crop, setBestCrop] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchBestCrop = async () => {
-      try {
-        const response = await fetch("https://data.cropsense.tech");
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (Array.isArray(data) && data.length > 0) {
-          const latestBestCrop = data[data.length - 1]?.best_crop;
-          setBestCrop(latestBestCrop);
-        } else {
-          console.warn("API returned an empty or invalid response.");
-        }
-      } catch (error) {
-        console.error("Error fetching best crop status:", error);
-      }
-    };
-
-    fetchBestCrop();
-  }, []);
-
+export function MorphingDialogBasicNine({ bestCrop }: { bestCrop?: string }) {
+  
   const capitalize = (str: string) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    return str ? str.charAt(0).toUpperCase() + str.slice(1) : "Unknown";
   };
+
+  const cropName = capitalize(bestCrop || "wheat");
 
   return (
     <div
@@ -63,7 +39,7 @@ export function MorphingDialogBasicNine() {
               rel="noopener noreferrer"
               className=" hover:text-blue-400 transition-colors ease-in-out duration-200"
             >
-              Wheat
+              {cropName}
             </a>
             </div>
         </div>

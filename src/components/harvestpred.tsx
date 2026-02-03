@@ -1,10 +1,16 @@
 import { useState } from "react";
 import AlertComponent from "./trianglealert";
 
-export function HarvestableMonthCards() {
-  const harvestableMonths = [
-    { month: "March", wholesale_price: 22.50, retail_price: 35.00 },
-    { month: "April", wholesale_price: 21.00, retail_price: 32.00 },
+interface HarvestMonth {
+  month: string;
+  wholesale_price: number;
+  retail_price: number;
+}
+
+export function HarvestableMonthCards({ harvestableMonths }: { harvestableMonths?: HarvestMonth[] }) {
+  const monthsToDisplay = harvestableMonths && harvestableMonths.length > 0 ? harvestableMonths.slice(0, 2) : [
+    // Fallback if no data
+    { month: "--", wholesale_price: 0, retail_price: 0 },
   ];
 
   return (
@@ -17,7 +23,7 @@ export function HarvestableMonthCards() {
         are based on the current market trends.
       </p>
       <div className="flex flex-wrap pt-4 gap-[6rem]">
-        {harvestableMonths.map(
+        {monthsToDisplay.map(
           (item, index) =>
             item && (
               <div

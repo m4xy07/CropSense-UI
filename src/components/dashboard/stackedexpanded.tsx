@@ -32,10 +32,11 @@ const chartConfig = {
 } satisfies ChartConfig
 
 interface StackedChartExpandedProps {
-  timeFrame: string
+  timeFrame: string;
+  data?: any[];
 }
 
-export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpandedProps) {
+export function StackedChartExpandedComponent({ timeFrame, data = [] }: StackedChartExpandedProps) {
   const [chartData, setChartData] = useState<
     { time: string; nitrogen: number; phosphorus: number; potassium: number }[]
   >([])
@@ -50,7 +51,7 @@ export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpande
   const [ticks, setTicks] = useState<string[]>([])
 
   useEffect(() => {
-    const generateData = () => {
+    const processData = () => {
       setLoading(true)
       setChartData([])
       setLatestValues(null)
@@ -58,126 +59,97 @@ export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpande
       setDateRange(null)
     
       try {
-        const now = new Date()
-        let startDate
-        let points = 24;
+        if (!data || data.length === 0) {
+            setLoading(false);
+            return;
+        }
 
+        // Determine reference time (max time in data)
+        const maxDate = data.reduce((max, d) => (new Date(d.time) > max ? new Date(d.time) : max), new Date(0));
+        const referenceTime = maxDate.getTime() > 0 ? maxDate : new Date();
+
+        let startTime: number;
         switch (timeFrame) {
           case "24 hours":
-            startDate = new Date(now.getTime() - 24 * 60 * 60 * 1000)
-            points = 24;
-            break
+            startTime = referenceTime.getTime() - 24 * 60 * 60 * 1000;
+            break;
           case "7 days":
-            startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
-            break
+            startTime = referenceTime.getTime() - 7 * 24 * 60 * 60 * 1000;
+            break;
           case "14 days":
-            startDate = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000)
-            break
+            startTime = referenceTime.getTime() - 14 * 24 * 60 * 60 * 1000;
+            break;
           case "1 month":
-            startDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1)) // ✅ Fix UTC issue
-            break
+            startTime = referenceTime.getTime() - 30 * 24 * 60 * 60 * 1000;
+            break;
           case "lifetime":
-             startDate = new Date(now.getFullYear(), now.getMonth() - 6, now.getDate());
-             points = 60;
-             break;
+            startTime = 0;
+            break;
           default:
-            startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+            startTime = referenceTime.getTime() - 7 * 24 * 60 * 60 * 1000;
         }
 
-        const data: { time: string; nitrogen: number; phosphorus: number; potassium: number }[] = [];
-        const interval = (now.getTime() - startDate.getTime()) / points;
+        const filtered = data
+            .map((d: any) => ({
+                time: d.time,
+                nitrogen: d.npk_uptake_nitrogen,
+                phosphorus: d.npk_uptake_phosphorus,
+                potassium: d.npk_uptake_potassium,
+                dt: new Date(d.time).getTime()
+            }))
+            .filter((d) => d.dt >= startTime && d.dt <= referenceTime.getTime())
+            .sort((a, b) => a.dt - b.dt);
 
-        let currentN = 15;
-        let currentP = 15;
-        let currentK = 15;
-
-        for (let i = 0; i <= points; i++) {
-            const time = new Date(startDate.getTime() + i * interval);
+        if (filtered.length > 0) {
+            const formattedData = filtered.map(d => ({
+                time: d.time,
+                nitrogen: Number(Number(d.nitrogen).toFixed(2)),
+                phosphorus: Number(Number(d.phosphorus).toFixed(2)),
+                potassium: Number(Number(d.potassium).toFixed(2))
+            }));
             
-            const nChange = (Math.random() - 0.5) * 4;
-            const pChange = (Math.random() - 0.5) * 4;
-            const kChange = (Math.random() - 0.5) * 4;
+            setChartData(formattedData);
 
-            currentN += nChange + (15 - currentN) * 0.1;
-            currentP += pChange + (15 - currentP) * 0.1;
-            currentK += kChange + (15 - currentK) * 0.1;
+            // Ticks
+            const totalPoints = formattedData.length;
+            const tickCount = 6;
+             const calculatedTicks = Array.from({ length: tickCount }, (_, i) => {
+                const index = Math.floor((i * (totalPoints - 1)) / (tickCount - 1));
+                return formattedData[index]?.time;
+            }).filter(Boolean);
+            setTicks(calculatedTicks);
 
-            data.push({
-                time: time.toISOString(),
-                nitrogen: parseFloat(currentN.toFixed(2)),
-                phosphorus: parseFloat(currentP.toFixed(2)),
-                potassium: parseFloat(currentK.toFixed(2)),
+            const earliestDate = formattedData[0].time;
+            const latestDate = formattedData[formattedData.length - 1].time;
+            setDateRange(formatDateRangeLabel(earliestDate, latestDate));
+
+            // Latest Value
+            const latestEntry = formattedData[formattedData.length - 1];
+            setLatestValues({
+                nitrogen: latestEntry.nitrogen,
+                phosphorus: latestEntry.phosphorus,
+                potassium: latestEntry.potassium,
+            });
+
+            // Change
+            const avgValues = formattedData.reduce((acc, curr) => ({
+                nitrogen: acc.nitrogen + curr.nitrogen,
+                phosphorus: acc.phosphorus + curr.phosphorus,
+                potassium: acc.potassium + curr.potassium
+            }), { nitrogen: 0, phosphorus: 0, potassium: 0 });
+
+            const avgNPK = {
+                nitrogen: avgValues.nitrogen / totalPoints,
+                phosphorus: avgValues.phosphorus / totalPoints,
+                potassium: avgValues.potassium / totalPoints
+            };
+            
+            setValueChange({
+                nitrogen: avgNPK.nitrogen !== 0 ? ((latestEntry.nitrogen - avgNPK.nitrogen) / avgNPK.nitrogen) * 100 : 0,
+                phosphorus: avgNPK.phosphorus !== 0 ? ((latestEntry.phosphorus - avgNPK.phosphorus) / avgNPK.phosphorus) * 100 : 0,
+                potassium: avgNPK.potassium !== 0 ? ((latestEntry.potassium - avgNPK.potassium) / avgNPK.potassium) * 100 : 0
             });
         }
-
-        const formattedData = data;
-        setChartData(formattedData)
-
-          const totalPoints = formattedData.length
-          let tickCount = 0
-          switch (timeFrame) {
-            case "24 hours":
-              tickCount = 6 // 2 date points
-              break
-            case "7 days":
-              tickCount = 3 // 3 date points
-              break
-            case "14 days":
-              tickCount = 5 // 6 date points
-              break
-            case "1 month":
-              tickCount = 5 // 5 date points
-              break
-            case "lifetime":
-              tickCount = Math.min(12, totalPoints) // 1 point per month, up to 12 months
-              break
-            default:
-              tickCount = 5;
-          }
-
-          // Ensure ticks are evenly distributed
-          const calculatedTicks = Array.from({ length: tickCount }, (_, i) => {
-            const index = Math.floor((i * (totalPoints - 1)) / (tickCount - 1))
-            return formattedData[index]?.time
-          }).filter(Boolean)
-          setTicks(calculatedTicks)
-
-          const earliestDate = formattedData[0].time
-          const latestDate = formattedData[formattedData.length - 1].time
-          setDateRange(formatDateRangeLabel(earliestDate, latestDate))
-
-          // Latest values
-          const latestEntry = formattedData[formattedData.length - 1]
-          setLatestValues({
-            nitrogen: latestEntry.nitrogen,
-            phosphorus: latestEntry.phosphorus,
-            potassium: latestEntry.potassium,
-          })
-
-          // Calculate time-frame average
-          const avgValues = formattedData.reduce(
-            (acc, entry) => {
-              acc.nitrogen += entry.nitrogen
-              acc.phosphorus += entry.phosphorus
-              acc.potassium += entry.potassium
-              return acc
-            },
-            { nitrogen: 0, phosphorus: 0, potassium: 0 }
-          )
-
-          const totalEntries = formattedData.length
-          const avgNPK = {
-            nitrogen: avgValues.nitrogen / totalEntries,
-            phosphorus: avgValues.phosphorus / totalEntries,
-            potassium: avgValues.potassium / totalEntries,
-          }
-
-          // Calculate percentage change
-          setValueChange({
-            nitrogen: ((latestEntry.nitrogen - avgNPK.nitrogen) / avgNPK.nitrogen) * 100,
-            phosphorus: ((latestEntry.phosphorus - avgNPK.phosphorus) / avgNPK.phosphorus) * 100,
-            potassium: ((latestEntry.potassium - avgNPK.potassium) / avgNPK.potassium) * 100,
-          })
       } catch (error) {
         console.error("Error generating NPK uptake data:", error)
       } finally {
@@ -185,8 +157,8 @@ export function StackedChartExpandedComponent({ timeFrame }: StackedChartExpande
       }
     }
 
-    generateData()
-  }, [timeFrame])
+    processData()
+  }, [timeFrame, data])
 
   return (
     <Card className="equipment-card-inner border-zinc-50/10">

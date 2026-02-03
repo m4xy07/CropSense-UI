@@ -8,12 +8,12 @@ type NPKData = {
   potassium: number;
 };
 
-export default function NPKTableComponent() {
-  const [current, setCurrent] = useState<NPKData | null>({
-    nitrogen: 12,
-    phosphorus: 2,
-    potassium: 6,
-  });
+export default function NPKTableComponent({ data }: { data?: any }) {
+  const current = {
+    nitrogen: data?.npk_uptake_nitrogen ?? 12,
+    phosphorus: data?.npk_uptake_phosphorus ?? 2,
+    potassium: data?.npk_uptake_potassium ?? 6,
+  };
 
   // Hardcoded ideal values
   const ideal = {

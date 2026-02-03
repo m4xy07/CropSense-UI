@@ -28,21 +28,21 @@ interface NPKData {
   npk_uptake_potassium: number
 }
 
-export function NPKDonutComponent() {
+export function NPKDonutComponent({ data }: { data?: any }) {
   const chartData = [
     {
       label: "Nitrogen",
-      value: 12,
+      value: data?.npk_uptake_nitrogen ? Number(data.npk_uptake_nitrogen.toFixed(2)) : 12,
       fill: "#d7721a", // Cyan
     },
     {
       label: "Phosphorus",
-      value: 2,
+      value: data?.npk_uptake_phosphorus ? Number(data.npk_uptake_phosphorus.toFixed(2)) : 2,
       fill: "#d52c9e", // Orange
     },
     {
       label: "Potassium",
-      value: 6,
+      value: data?.npk_uptake_potassium ? Number(data.npk_uptake_potassium.toFixed(2)) : 6,
       fill: "#974ae5", // Purple
     },
   ]
@@ -85,7 +85,7 @@ export function NPKDonutComponent() {
           </ChartContainer>
         </CardContent>
         <div className="items-center flex flex-col justify-center gap-4">
-          <NPKTableComponent />
+          <NPKTableComponent data={data} />
           <div className="flex flex-row items-center justify-center gap-2 py-2 px-4 border border-zinc-50/10 alert-dashboard-theme rounded-md">
             <div className="h-[10px] w-[10px] rounded-full bg-[#d10412] warning-animation" />
             <span className="text-[13px]">Deficiency detected! Take action now to avoid issues.</span>

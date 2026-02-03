@@ -40,7 +40,7 @@ import { useUser } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 import NotificationsComponent from "@/components/comp-383";
 
-const API_URL = "https://data.cropsense.tech/data";
+const API_URL = "https://data.cropsense.tech/";
 
 export default function Page() {
   const { user } = useUser();
@@ -58,17 +58,19 @@ export default function Page() {
   const [currentTime, setCurrentTime] = useState<string>("");
   const [altitude, setAltitude] = useState<number | null>(null);
   const [timeFrame, setTimeFrame] = useState<string>("7 days");
-  const [chartData, setChartData] = useState<{
-    chartData: { label: string; price: number }[];
-    harvestableMonth: string;
-    bestCrop: string;
-    recommendedFertilizer: string;
-  } | null>(null);
+  const [sensorData, setSensorData] = useState<any>(null);
 
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      setCurrentTime(now.toLocaleTimeString());
+      // Format time as per other pages if needed, but keeping existing localTimeString for now or matching others
+       let hours = now.getHours();
+      const minutes = now.getMinutes();
+      const ampm = hours >= 12 ? "PM" : "AM";
+      hours = hours % 12;
+      hours = hours ? hours : 12; 
+      const minutesStr = minutes < 10 ? "0" + minutes : minutes;
+      setCurrentTime(`${hours}:${minutesStr} ${ampm}`);
     };
 
     updateTime();
@@ -85,20 +87,8 @@ export default function Page() {
 
         const data = await response.json();
         if (Array.isArray(data) && data.length > 0) {
-          const latestRecord = data[data.length - 1];
-          const latestMonthData = latestRecord.harvestable_months[latestRecord.harvestable_months.length - 1];
-
-          setAltitude(parseFloat(latestRecord?.alt?.toFixed(2)));
-
-          setChartData({
-            chartData: [
-              { label: "Wholesale", price: parseFloat(latestMonthData.wholesale_price.toFixed(2)) },
-              { label: "Retail", price: parseFloat(latestMonthData.retail_price.toFixed(2)) },
-            ],
-            harvestableMonth: latestMonthData.month,
-            bestCrop: latestRecord.best_crop || "Unknown",
-            recommendedFertilizer: latestRecord.recommended_fertilizer || "Unknown",
-          });
+          const latestRecord = data[data.length - 1]; // Get the last record which seems to be the latest
+          setSensorData(latestRecord);
         } else {
           console.warn("API returned an empty or invalid response.");
         }
@@ -144,8 +134,8 @@ export default function Page() {
 
         <div className="flex flex-1 flex-col items-start justify-start gap-4 p-4">
           <div className="flex flex-row gap-4 w-full">
-            <MorphingDialogBasicNine />
-            <HarvestableMonthCards />
+            <MorphingDialogBasicNine bestCrop={sensorData?.best_crop} />
+            <HarvestableMonthCards harvestableMonths={sensorData?.harvestable_months} />
             
           </div>
           <div className="flex flex-row gap-4 w-full overflow-hidden">

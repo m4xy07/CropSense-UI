@@ -46,6 +46,7 @@ export default function Page() {
   const [wifiStrength, setWifiStrength] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [timeFrame, setTimeFrame] = useState<string>(Cookies.get("timeFrame") || "7 days");
+  const [sensorData, setSensorData] = useState<any[]>([]);
 
   useEffect(() => {
     const updateTime = () => {
@@ -64,19 +65,40 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    // Artificial data setup
-    setAltitude(21.43);
-    setRainStatus("Sunny");
-    setWifiStrength(-50); // Strong signal
-    setLoading(false);
-  }, []);
+    setLoading(true);
+    fetch("https://data.cropsense.tech/")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setSensorData(data);
+          if (data.length > 0) {
+            const latest = data[data.length - 1];
+            setAltitude(latest.alt ? Number(latest.alt.toFixed(2)) : null);
+            setRainStatus(latest.raining === "yes" ? "Raining" : "Sunny");
+            setWifiStrength(latest.wifiStrength);
+          }
+        }
+      })
+      .catch((err) => console.error("Failed to fetch sensor data", err))
+      .finally(() => setLoading(false));
+  }, []); // Fetch once on mount
 
   useEffect(() => {
     Cookies.set("timeFrame", timeFrame, { expires: 7 });
   }, [timeFrame]);
 
   const getWifiStatus = () => {
-    return { text: "Connected", icon: <WifiHigh className="w-5 h-5  text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] -mt-[6px] mr-[6px]" /> };
+    if (wifiStrength === null) return { text: "Disconnected", icon: <WifiOff className="w-5 h-5 text-gray-400 -mt-[6px] mr-[6px]" /> };
+    
+    if (wifiStrength >= -50) {
+      return { text: "Excellent", icon: <WifiHigh className="w-5 h-5 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] -mt-[6px] mr-[6px]" /> };
+    } else if (wifiStrength >= -60) {
+      return { text: "Good", icon: <WifiHigh className="w-5 h-5 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] -mt-[6px] mr-[6px]" /> };
+    } else if (wifiStrength >= -70) {
+      return { text: "Fair", icon: <WifiLow className="w-5 h-5 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] -mt-[6px] mr-[6px]" /> };
+    } else {
+      return { text: "Weak", icon: <WifiZero className="w-5 h-5 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] -mt-[6px] mr-[6px]" /> };
+    }
   };
 
   const wifiStatus = getWifiStatus();
@@ -147,13 +169,13 @@ export default function Page() {
 
         <div className="flex flex-1 flex-col gap-4 p-4">
           <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <LineChartComponent cardTitle="Temperature" dataType="temperature" timeFrame={timeFrame} />
-            <LineChartComponent cardTitle="Humidity" dataType="humidity" timeFrame={timeFrame} />
-            <LineChartComponent cardTitle="Air Quality Index (AQI)" dataType="aqi" timeFrame={timeFrame} />
-            <LineChartComponent cardTitle="Heat Index (HI)" dataType="heatIndex" timeFrame={timeFrame} />
-            <LineChartComponent cardTitle="Pressure" dataType="pressure" timeFrame={timeFrame} />
-            <LineChartComponent cardTitle="Soil Moisture" dataType="moisture" timeFrame={timeFrame} />
-            <StackedChartExpandedComponent timeFrame={timeFrame} />
+            <LineChartComponent cardTitle="Temperature" dataType="temperature" timeFrame={timeFrame} data={sensorData} />
+            <LineChartComponent cardTitle="Humidity" dataType="humidity" timeFrame={timeFrame} data={sensorData} />
+            <LineChartComponent cardTitle="Air Quality Index (AQI)" dataType="aqi" timeFrame={timeFrame} data={sensorData} />
+            <LineChartComponent cardTitle="Heat Index (HI)" dataType="heatIndex" timeFrame={timeFrame} data={sensorData} />
+            <LineChartComponent cardTitle="Pressure" dataType="pressure" timeFrame={timeFrame} data={sensorData} />
+            <LineChartComponent cardTitle="Soil Moisture" dataType="moisture" timeFrame={timeFrame} data={sensorData} />
+            <StackedChartExpandedComponent timeFrame={timeFrame} data={sensorData} />
           </div>
         </div>
       </SidebarInset>
