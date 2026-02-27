@@ -22,8 +22,8 @@ export function MorphingDialogBasicNine({ bestCrop }: { bestCrop?: string }) {
             </p>
             <div className="w-full h-[200px] relative">
               <Image
-                src="/corn.svg"
-                alt="corn crop image"
+                src="/Tomato.jpg"
+                alt="tomato crop image"
                 fill
                 className="rounded-xl object-cover"
               />
