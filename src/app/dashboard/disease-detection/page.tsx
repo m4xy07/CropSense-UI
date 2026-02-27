@@ -59,21 +59,30 @@ function toNumber(value: unknown): number | null {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
-function calculateTomatoDiseaseRisk(snapshot: SensorSnapshot | null): RiskAssessment {
+function calculateTomatoDiseaseRisk(
+  snapshot: SensorSnapshot | null,
+): RiskAssessment {
   const temperature = toNumber(snapshot?.temperature);
   const humidity = toNumber(snapshot?.humidity);
   const moisture = toNumber(snapshot?.moisture);
   const raining = String(snapshot?.raining ?? "unknown").toLowerCase();
-  const timestamp = snapshot?.time ? new Date(snapshot.time).toLocaleString() : "Unknown";
+  const timestamp = snapshot?.time
+    ? new Date(snapshot.time).toLocaleString()
+    : "Unknown";
 
-  const tempInRange = temperature !== null && temperature >= 24 && temperature <= 29;
+  const tempInRange =
+    temperature !== null && temperature >= 24 && temperature <= 29;
   const highHumidity = humidity !== null && humidity > 80;
-  const continuousMoisture = (moisture !== null && moisture >= 20) || raining === "yes";
+  const continuousMoisture =
+    (moisture !== null && moisture >= 20) || raining === "yes";
 
   const checks = [
     { label: "Temperature between 24-29°C", passed: tempInRange },
     { label: "Humidity above 80%", passed: highHumidity },
-    { label: "Continuous moisture / wetness likely", passed: continuousMoisture },
+    {
+      label: "Continuous moisture / wetness likely",
+      passed: continuousMoisture,
+    },
   ];
 
   const score = checks.filter((check) => check.passed).length;
@@ -131,8 +140,12 @@ export default function Page() {
   const [diseaseName, setDiseaseName] = useState<string | null>(null);
   const [cameraLoading, setCameraLoading] = useState<boolean>(false);
   const [riskLoading, setRiskLoading] = useState<boolean>(true);
-  const [riskAssessment, setRiskAssessment] = useState<RiskAssessment | null>(null);
-  const [diseaseDetails, setDiseaseDetails] = useState<DiseaseDetails | null>(null);
+  const [riskAssessment, setRiskAssessment] = useState<RiskAssessment | null>(
+    null,
+  );
+  const [diseaseDetails, setDiseaseDetails] = useState<DiseaseDetails | null>(
+    null,
+  );
 
   const { user } = useUser();
 
@@ -164,7 +177,7 @@ export default function Page() {
               },
             ],
           }),
-        }
+        },
       );
 
       if (!response.ok) {
@@ -177,12 +190,14 @@ export default function Page() {
       const content = payload?.contents?.[0]?.parts?.[0]?.text || "";
 
       const preventionMatch = content.match(
-        /Prevention[\s\S]*?(?:\n|\r)([\s\S]*?)(?:\n\n|$)/
+        /Prevention[\s\S]*?(?:\n|\r)([\s\S]*?)(?:\n\n|$)/,
       );
       const causeMatch = content.match(
-        /Cause[\s\S]*?(?:\n|\r)([\s\S]*?)(?:\n\n|$)/
+        /Cause[\s\S]*?(?:\n|\r)([\s\S]*?)(?:\n\n|$)/,
       );
-      const cureMatch = content.match(/Cure[\s\S]*?(?:\n|\r)([\s\S]*?)(?:\n\n|$)/);
+      const cureMatch = content.match(
+        /Cure[\s\S]*?(?:\n|\r)([\s\S]*?)(?:\n\n|$)/,
+      );
 
       return {
         prevention: preventionMatch?.[1]?.trim() || "No information available",
@@ -300,7 +315,9 @@ export default function Page() {
                   </BreadcrumbItem>
                   <BreadcrumbSeparator className="hidden md:block" />
                   <BreadcrumbItem>
-                    <BreadcrumbPage className="text-white">Disease Detections</BreadcrumbPage>
+                    <BreadcrumbPage className="text-white">
+                      Disease Detections
+                    </BreadcrumbPage>
                   </BreadcrumbItem>
                 </BreadcrumbList>
               </Breadcrumb>
@@ -317,7 +334,10 @@ export default function Page() {
 
         <div className="flex flex-1 flex-col items-center gap-4 p-4 pt-0 justify-center">
           <div className="w-full max-w-5xl text-center">
-            <UploadComponent onFileUpload={handleImageUpload} loading={cameraLoading} />
+            <UploadComponent
+              onFileUpload={handleImageUpload}
+              loading={cameraLoading}
+            />
 
             {cameraLoading && (
               <TextShimmer className="font-inter mt-4 text-[16px]" duration={1}>
@@ -327,14 +347,17 @@ export default function Page() {
 
             <div className="mt-4 p-4 rounded-xl border border-zinc-50/10 equipment-card-inner text-left">
               <h3 className="text-lg font-medium text-white">
-                Sensor-Based Disease Risk (No Camera)
+                Risk - Detection
               </h3>
               <p className="text-sm text-zinc-300 mt-1">
-                Current planted crop: <span className="text-white font-medium">Tomato</span>
+                Current planted crop:{" "}
+                <span className="text-white font-medium">Tomato</span>
               </p>
 
               {riskLoading || !riskAssessment ? (
-                <p className="text-zinc-300 mt-3">Analyzing live conditions from sensors...</p>
+                <p className="text-zinc-300 mt-3">
+                  Analyzing live conditions from sensors...
+                </p>
               ) : (
                 <div className="mt-3">
                   <div className="flex items-center gap-2">
@@ -369,13 +392,18 @@ export default function Page() {
                     </p>
                     <p className="text-zinc-200">
                       Raining:{" "}
-                      <span className="text-white">{riskAssessment.readings.raining}</span>
+                      <span className="text-white">
+                        {riskAssessment.readings.raining}
+                      </span>
                     </p>
                   </div>
 
                   <div className="mt-4 space-y-2">
                     {riskAssessment.checks.map((check) => (
-                      <div key={check.label} className="flex items-center gap-2 text-sm">
+                      <div
+                        key={check.label}
+                        className="flex items-center gap-2 text-sm"
+                      >
                         {check.passed ? (
                           <CheckCircle2 className="h-4 w-4 text-green-400" />
                         ) : (
