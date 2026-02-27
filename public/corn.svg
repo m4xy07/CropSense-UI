@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" role="img" aria-labelledby="title desc">
+  <title id="title">Corn Cob Illustration</title>
+  <desc id="desc">A stylized corn cob with green leaves on a soft background.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a2f12"/>
+      <stop offset="100%" stop-color="#0f1c0b"/>
+    </linearGradient>
+    <linearGradient id="cob" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffd84d"/>
+      <stop offset="100%" stop-color="#e5b92a"/>
+    </linearGradient>
+    <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#63c66d"/>
+      <stop offset="100%" stop-color="#2d7b3f"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="400" height="280" fill="url(#bg)" />
+  <ellipse cx="200" cy="235" rx="120" ry="24" fill="#000" opacity="0.25" />
+
+  <path d="M108 228 C125 145, 160 98, 194 90 C168 130, 164 192, 166 242 Z" fill="url(#leaf)" />
+  <path d="M292 228 C275 145, 240 98, 206 90 C232 130, 236 192, 234 242 Z" fill="url(#leaf)" />
+
+  <rect x="160" y="52" width="80" height="190" rx="40" fill="url(#cob)" stroke="#c99817" stroke-width="3" />
+
+  <g fill="#ffea75" stroke="#d8ad22" stroke-width="1.5">
+    <circle cx="178" cy="76" r="8"/>
+    <circle cx="200" cy="74" r="8"/>
+    <circle cx="222" cy="76" r="8"/>
+
+    <circle cx="178" cy="98" r="8"/>
+    <circle cx="200" cy="96" r="8"/>
+    <circle cx="222" cy="98" r="8"/>
+
+    <circle cx="178" cy="120" r="8"/>
+    <circle cx="200" cy="118" r="8"/>
+    <circle cx="222" cy="120" r="8"/>
+
+    <circle cx="178" cy="142" r="8"/>
+    <circle cx="200" cy="140" r="8"/>
+    <circle cx="222" cy="142" r="8"/>
+
+    <circle cx="178" cy="164" r="8"/>
+    <circle cx="200" cy="162" r="8"/>
+    <circle cx="222" cy="164" r="8"/>
+
+    <circle cx="178" cy="186" r="8"/>
+    <circle cx="200" cy="184" r="8"/>
+    <circle cx="222" cy="186" r="8"/>
+
+    <circle cx="178" cy="208" r="8"/>
+    <circle cx="200" cy="206" r="8"/>
+    <circle cx="222" cy="208" r="8"/>
+  </g>
+</svg>

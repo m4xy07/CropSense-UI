@@ -1,6 +1,4 @@
-import { PlusIcon } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 
 export function MorphingDialogBasicNine({ bestCrop }: { bestCrop?: string }) {
   
@@ -24,11 +22,10 @@ export function MorphingDialogBasicNine({ bestCrop }: { bestCrop?: string }) {
             </p>
             <div className="w-full h-[200px] relative">
               <Image
-              src="/Wheat.jpg"
-              alt="crop image"
-              layout="fill"
-              objectFit="cover"
-              className="rounded-xl"
+                src="/corn.svg"
+                alt="corn crop image"
+                fill
+                className="rounded-xl object-cover"
               />
             </div>
             </div>

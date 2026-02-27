@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useId, useMemo, useRef, useState } from "react"
+import { FormEvent, useEffect, useId, useRef, useState } from "react"
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -14,6 +14,7 @@ import {
   PaginationState,
   Row,
   SortingState,
+  Table as TanstackTable,
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table"
@@ -28,9 +29,9 @@ import {
   CircleAlertIcon,
   CircleXIcon,
   Columns3Icon,
+  CopyIcon,
   EllipsisIcon,
-  FilterIcon,
-  ListFilterIcon,
+  PencilIcon,
   PlusIcon,
   TrashIcon,
 } from "lucide-react"
@@ -51,18 +52,21 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
@@ -101,7 +105,52 @@ type Item = {
   tasks: string
   location: string
   status: "Active" | "Inactive" | "Pending"
-  lastActive: Date
+  performance: string
+  lastActive: string
+}
+
+type WorkerFormState = Omit<Item, "id">
+
+const WORKERS_STORAGE_KEY = "cropsense-workers"
+const STATUS_OPTIONS: Item["status"][] = ["Active", "Inactive", "Pending"]
+
+function getEmptyWorkerForm(): WorkerFormState {
+  return {
+    name: "",
+    image: "/avatar1.jpg",
+    tasks: "",
+    location: "",
+    status: "Active",
+    performance: "Good",
+    lastActive: new Date().toISOString(),
+  }
+}
+
+function toDateTimeInputValue(value: string): string {
+  const parsed = new Date(value)
+  if (Number.isNaN(parsed.getTime())) return ""
+  const localDate = new Date(parsed.getTime() - parsed.getTimezoneOffset() * 60000)
+  return localDate.toISOString().slice(0, 16)
+}
+
+function normalizeWorker(raw: Partial<Item>, index: number): Item {
+  const parsed = raw.lastActive ? new Date(raw.lastActive) : new Date()
+  const normalizedStatus = STATUS_OPTIONS.includes(raw.status as Item["status"])
+    ? (raw.status as Item["status"])
+    : "Pending"
+
+  return {
+    id: String(raw.id ?? index + 1),
+    name: raw.name?.trim() || `Worker ${index + 1}`,
+    image: raw.image?.trim() || "/avatar1.jpg",
+    tasks: raw.tasks?.trim() || "Not assigned",
+    location: raw.location?.trim() || "Unassigned",
+    status: normalizedStatus,
+    performance: raw.performance?.trim() || "Good",
+    lastActive: Number.isNaN(parsed.getTime())
+      ? new Date().toISOString()
+      : parsed.toISOString(),
+  }
 }
 
 // Custom filter function for multi-column searching
@@ -230,7 +279,7 @@ const columns: ColumnDef<Item>[] = [
   {
     id: "actions",
     header: () => <span className="sr-only">Actions</span>,
-    cell: ({ row }) => <RowActions row={row} />,
+    cell: ({ row, table }) => <RowActions row={row} table={table} />,
     size: 60,
     enableHiding: false,
   },
@@ -254,14 +303,137 @@ export default function WorkerTable() {
   ])
 
   const [data, setData] = useState<Item[]>([])
+  const [hydrated, setHydrated] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [editingWorkerId, setEditingWorkerId] = useState<string | null>(null)
+  const [formState, setFormState] = useState<WorkerFormState>(getEmptyWorkerForm())
+
   useEffect(() => {
-    async function fetchLocalData() {
-      const res = await fetch("/data/workers.json")
-      const data = await res.json()
-      setData(data)
+    let mounted = true
+
+    async function fetchWorkers() {
+      const stored = localStorage.getItem(WORKERS_STORAGE_KEY)
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored)
+          if (Array.isArray(parsed)) {
+            if (mounted) {
+              setData(parsed.map((worker: Partial<Item>, index: number) => normalizeWorker(worker, index)))
+              setHydrated(true)
+            }
+            return
+          }
+        } catch {
+          // Ignore malformed storage and fallback to seeded data.
+        }
+      }
+
+      try {
+        const res = await fetch("/data/workers.json")
+        const fetchedData = await res.json()
+        const normalized = Array.isArray(fetchedData)
+          ? fetchedData.map((worker: Partial<Item>, index: number) =>
+              normalizeWorker(worker, index)
+            )
+          : []
+        if (mounted) {
+          setData(normalized)
+          setHydrated(true)
+        }
+      } catch {
+        if (mounted) {
+          setData([])
+          setHydrated(true)
+        }
+      }
     }
-    fetchLocalData()
+
+    fetchWorkers()
+
+    return () => {
+      mounted = false
+    }
   }, [])
+
+  useEffect(() => {
+    if (!hydrated) return
+    localStorage.setItem(WORKERS_STORAGE_KEY, JSON.stringify(data))
+  }, [data, hydrated])
+
+  const getNextWorkerId = () => {
+    const numericIds = data
+      .map((worker) => Number(worker.id))
+      .filter((value) => Number.isFinite(value))
+
+    return numericIds.length > 0
+      ? String(Math.max(...numericIds) + 1)
+      : String(Date.now())
+  }
+
+  const openAddDialog = () => {
+    setEditingWorkerId(null)
+    setFormState(getEmptyWorkerForm())
+    setIsDialogOpen(true)
+  }
+
+  const openEditDialog = (worker: Item) => {
+    setEditingWorkerId(worker.id)
+    setFormState({
+      name: worker.name,
+      image: worker.image,
+      tasks: worker.tasks,
+      location: worker.location,
+      status: worker.status,
+      performance: worker.performance,
+      lastActive: worker.lastActive,
+    })
+    setIsDialogOpen(true)
+  }
+
+  const handleSaveWorker = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    const parsedLastActive = new Date(formState.lastActive)
+    const payload: WorkerFormState = {
+      name: formState.name.trim(),
+      image: formState.image.trim() || "/avatar1.jpg",
+      tasks: formState.tasks.trim(),
+      location: formState.location.trim(),
+      status: formState.status,
+      performance: formState.performance.trim() || "Good",
+      lastActive: Number.isNaN(parsedLastActive.getTime())
+        ? new Date().toISOString()
+        : parsedLastActive.toISOString(),
+    }
+
+    if (!payload.name || !payload.tasks || !payload.location) return
+
+    if (editingWorkerId) {
+      setData((prev) =>
+        prev.map((worker) =>
+          worker.id === editingWorkerId ? { ...worker, ...payload } : worker
+        )
+      )
+    } else {
+      setData((prev) => [{ id: getNextWorkerId(), ...payload }, ...prev])
+    }
+
+    setIsDialogOpen(false)
+  }
+
+  const handleDeleteSingleRow = (workerId: string) => {
+    setData((prev) => prev.filter((worker) => worker.id !== workerId))
+  }
+
+  const handleDuplicateRow = (worker: Item) => {
+    const duplicate: Item = {
+      ...worker,
+      id: getNextWorkerId(),
+      name: `${worker.name} (Copy)`,
+      lastActive: new Date().toISOString(),
+    }
+    setData((prev) => [duplicate, ...prev])
+  }
 
   const handleDeleteRows = () => {
     const selectedRows = table.getSelectedRowModel().rows
@@ -275,6 +447,11 @@ export default function WorkerTable() {
   const table = useReactTable({
     data,
     columns,
+    meta: {
+      onEditRow: openEditDialog,
+      onDeleteRow: handleDeleteSingleRow,
+      onDuplicateRow: handleDuplicateRow,
+    },
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onSortingChange: setSorting,
@@ -293,31 +470,15 @@ export default function WorkerTable() {
     },
   })
 
-  // Get unique status values
-  const uniqueStatusValues = useMemo(() => {
-    const statusColumn = table.getColumn("status")
-
-    if (!statusColumn) return []
-
-    const values = Array.from(statusColumn.getFacetedUniqueValues().keys())
-
-    return values.sort()
-  }, [table.getColumn("status")?.getFacetedUniqueValues()])
-
-  // Get counts for each status
-  const statusCounts = useMemo(() => {
-    const statusColumn = table.getColumn("status")
-    if (!statusColumn) return new Map()
-    return statusColumn.getFacetedUniqueValues()
-  }, [table.getColumn("status")?.getFacetedUniqueValues()])
-
-  const selectedStatuses = useMemo(() => {
-    const filterValue = table.getColumn("status")?.getFilterValue() as string[]
-    return filterValue ?? []
-  }, [table.getColumn("status")?.getFilterValue()])
+  const statusColumn = table.getColumn("status")
+  const uniqueStatusValues = statusColumn
+    ? Array.from(statusColumn.getFacetedUniqueValues().keys()).sort()
+    : []
+  const statusCounts = statusColumn?.getFacetedUniqueValues() ?? new Map()
+  const selectedStatuses = (statusColumn?.getFilterValue() as string[]) ?? []
 
   const handleStatusChange = (checked: boolean, value: string) => {
-    const filterValue = table.getColumn("status")?.getFilterValue() as string[]
+    const filterValue = statusColumn?.getFilterValue() as string[]
     const newFilterValue = filterValue ? [...filterValue] : []
 
     if (checked) {
@@ -329,9 +490,9 @@ export default function WorkerTable() {
       }
     }
 
-    table
-      .getColumn("status")
-      ?.setFilterValue(newFilterValue.length ? newFilterValue : undefined)
+    statusColumn?.setFilterValue(
+      newFilterValue.length ? newFilterValue : undefined
+    )
   }
 
   return (
@@ -510,14 +671,18 @@ export default function WorkerTable() {
             </AlertDialog>
           )}
           {/* Add user button */}
-          <Button className="!border-none flex items-center cursor-pointer w-fit bg-transparent py-[6px] px-[10px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps !h-fit " variant="outline">
+          <Button
+            className="!border-none flex items-center cursor-pointer w-fit bg-transparent py-[6px] px-[10px] rounded-[8px] relative group hover:bg-[rgba(255,255,255,.025)] transition-colors ease-in-out duration-200 theme-color dashboard-header-gps !h-fit "
+            variant="outline"
+            onClick={openAddDialog}
+          >
             <PlusIcon
               className="-mr-[8px] h-4 w-4 text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff]"
               size={16}
               aria-hidden="true"
             />
             <span className="text-[14px] font-normal text-[rgba(255,255,255,.9)] ease-in-out duration-200 group-hover:text-[#8f8fff] pl-[6px]">
-            Assign tasks
+            Add worker
             </span>
           </Button>
         </div>
@@ -673,7 +838,7 @@ export default function WorkerTable() {
         </div>
 
         {/* Pagination buttons */}
-        <div>
+      <div>
           <Pagination>
             <PaginationContent>
               {/* First page button */}
@@ -732,11 +897,146 @@ export default function WorkerTable() {
           </Pagination>
         </div>
       </div>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="font-inter main-dashboard-theme theme-color border !border-zinc-50/10 text-white">
+          <DialogHeader>
+            <DialogTitle>{editingWorkerId ? "Edit Worker" : "Add Worker"}</DialogTitle>
+            <DialogDescription className="text-[#b2b2b2]">
+              Manage worker details and task assignments.
+            </DialogDescription>
+          </DialogHeader>
+
+          <form onSubmit={handleSaveWorker} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="worker-name">Worker Name</Label>
+              <Input
+                id="worker-name"
+                value={formState.name}
+                onChange={(e) =>
+                  setFormState((prev) => ({ ...prev, name: e.target.value }))
+                }
+                className="equipment-input"
+                placeholder="Enter worker name"
+                required
+              />
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="worker-tasks">Tasks</Label>
+                <Input
+                  id="worker-tasks"
+                  value={formState.tasks}
+                  onChange={(e) =>
+                    setFormState((prev) => ({ ...prev, tasks: e.target.value }))
+                  }
+                  className="equipment-input"
+                  placeholder="Watering, Weeding"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="worker-location">Location</Label>
+                <Input
+                  id="worker-location"
+                  value={formState.location}
+                  onChange={(e) =>
+                    setFormState((prev) => ({ ...prev, location: e.target.value }))
+                  }
+                  className="equipment-input"
+                  placeholder="Plot A"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label>Status</Label>
+                <Select
+                  value={formState.status}
+                  onValueChange={(value: Item["status"]) =>
+                    setFormState((prev) => ({ ...prev, status: value }))
+                  }
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {STATUS_OPTIONS.map((status) => (
+                      <SelectItem key={status} value={status}>
+                        {status}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="worker-performance">Performance</Label>
+                <Input
+                  id="worker-performance"
+                  value={formState.performance}
+                  onChange={(e) =>
+                    setFormState((prev) => ({ ...prev, performance: e.target.value }))
+                  }
+                  className="equipment-input"
+                  placeholder="Good"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="worker-last-active">Last Check-In</Label>
+                <Input
+                  id="worker-last-active"
+                  type="datetime-local"
+                  value={toDateTimeInputValue(formState.lastActive)}
+                  onChange={(e) =>
+                    setFormState((prev) => ({ ...prev, lastActive: e.target.value }))
+                  }
+                  className="equipment-input"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="worker-image">Avatar Path</Label>
+                <Input
+                  id="worker-image"
+                  value={formState.image}
+                  onChange={(e) =>
+                    setFormState((prev) => ({ ...prev, image: e.target.value }))
+                  }
+                  className="equipment-input"
+                  placeholder="/avatar1.jpg"
+                />
+              </div>
+            </div>
+
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
+                Cancel
+              </Button>
+              <Button type="submit" className="equipment-btn">
+                {editingWorkerId ? "Save Changes" : "Add Worker"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
 
-function RowActions({ row }: { row: Row<Item> }) {
+function RowActions({ row, table }: { row: Row<Item>; table: TanstackTable<Item> }) {
+  const tableMeta = table.options.meta as
+    | {
+        onEditRow?: (worker: Item) => void
+        onDeleteRow?: (workerId: string) => void
+        onDuplicateRow?: (worker: Item) => void
+      }
+    | undefined
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -753,42 +1053,22 @@ function RowActions({ row }: { row: Row<Item> }) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="text-white">
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => tableMeta?.onEditRow?.(row.original)}>
+            <PencilIcon className="h-4 w-4 mr-2" />
             <span>Edit</span>
-            <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => tableMeta?.onDuplicateRow?.(row.original)}>
+            <CopyIcon className="h-4 w-4 mr-2" />
             <span>Duplicate</span>
-            <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <span>Archive</span>
-            <DropdownMenuShortcut>⌘A</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger className="font-inter">More</DropdownMenuSubTrigger>
-            <DropdownMenuPortal>
-              <DropdownMenuSubContent className="text-white">
-                <DropdownMenuItem>Move to project</DropdownMenuItem>
-                <DropdownMenuItem>Move to folder</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Advanced options</DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuPortal>
-          </DropdownMenuSub>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>Share</DropdownMenuItem>
-          <DropdownMenuItem>Add to favorites</DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-destructive focus:text-destructive">
+        <DropdownMenuItem
+          className="text-destructive focus:text-destructive"
+          onClick={() => tableMeta?.onDeleteRow?.(row.original.id)}
+        >
+          <TrashIcon className="h-4 w-4 mr-2" />
           <span>Delete</span>
-          <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
